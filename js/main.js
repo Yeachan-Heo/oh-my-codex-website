@@ -32,6 +32,8 @@
     setupCopyButtons();
     setupSmoothScroll();
     hidePageLoader();
+    fetchGitHubStats();
+    fetchNpmDownloads();
 
     AppState.initialized = true;
     console.log('[OMX] Initialization complete');
@@ -276,11 +278,127 @@
     }, 16);
   }
 
+  /**
+   * Format Number
+   * Converts large numbers to abbreviated form (1.2k, 1.2M)
+   */
+  function formatNumber(num) {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + 'M';
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'k';
+    }
+    return num.toString();
+  }
+
+  /**
+   * Fetch GitHub Stats
+   * Fetches GitHub stars and forks with caching
+   */
+  async function fetchGitHubStats() {
+    const cacheKey = 'omx-github-stats';
+    const cacheTTL = 5 * 60 * 1000; // 5 minutes
+
+    try {
+      // Check cache
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < cacheTTL) {
+          updateGitHubUI(data);
+          return;
+        }
+      }
+
+      // Fetch fresh data
+      const response = await fetch('https://api.github.com/repos/Yeachan-Heo/oh-my-codex');
+      if (!response.ok) throw new Error('GitHub API failed');
+
+      const data = await response.json();
+      const stats = {
+        stars: data.stargazers_count,
+        forks: data.forks_count
+      };
+
+      // Cache the result
+      sessionStorage.setItem(cacheKey, JSON.stringify({
+        data: stats,
+        timestamp: Date.now()
+      }));
+
+      updateGitHubUI(stats);
+    } catch (err) {
+      console.error('[OMX] Failed to fetch GitHub stats:', err);
+      updateGitHubUI({ stars: null, forks: null });
+    }
+  }
+
+  function updateGitHubUI(stats) {
+    const starsEl = document.querySelector('[data-stat="github-stars"]');
+    const forksEl = document.querySelector('[data-stat="github-forks"]');
+
+    if (starsEl) {
+      starsEl.textContent = stats.stars !== null ? formatNumber(stats.stars) : '—';
+    }
+    if (forksEl) {
+      forksEl.textContent = stats.forks !== null ? formatNumber(stats.forks) : '—';
+    }
+  }
+
+  /**
+   * Fetch NPM Downloads
+   * Fetches npm download count with caching
+   */
+  async function fetchNpmDownloads() {
+    const cacheKey = 'omx-npm-downloads';
+    const cacheTTL = 5 * 60 * 1000; // 5 minutes
+
+    try {
+      // Check cache
+      const cached = sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < cacheTTL) {
+          updateNpmUI(data);
+          return;
+        }
+      }
+
+      // Fetch fresh data
+      const response = await fetch('https://api.npmjs.org/downloads/point/last-month/oh-my-codex');
+      if (!response.ok) throw new Error('npm API failed');
+
+      const data = await response.json();
+      const downloads = data.downloads;
+
+      // Cache the result
+      sessionStorage.setItem(cacheKey, JSON.stringify({
+        data: downloads,
+        timestamp: Date.now()
+      }));
+
+      updateNpmUI(downloads);
+    } catch (err) {
+      console.error('[OMX] Failed to fetch npm downloads:', err);
+      updateNpmUI(null);
+    }
+  }
+
+  function updateNpmUI(downloads) {
+    const downloadsEl = document.querySelector('[data-stat="npm-downloads"]');
+    if (downloadsEl) {
+      downloadsEl.textContent = downloads !== null ? formatNumber(downloads) : '—';
+    }
+  }
+
   // Expose public API for debugging
   window.OMX = {
     version: '0.3.5',
     state: AppState,
-    refresh: init
+    refresh: init,
+    fetchGitHubStats,
+    fetchNpmDownloads
   };
 
 })();

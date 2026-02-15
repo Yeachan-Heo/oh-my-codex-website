@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oh-my-codex - A weapon, not a tool. Multi-agent orchestration layer for OpenAI Codex CLI with 30 specialized agents and 40+ skills.">
+  <meta name="description" content="oh-my-codex - Your codex is not alone. Multi-agent orchestration layer for OpenAI Codex CLI with 30 specialized agents and 40+ skills.">
   <meta name="keywords" content="OpenAI Codex, AI agents, multi-agent, orchestration, automation, CLI, developer tools, Codex CLI">
   <meta name="author" content="oh-my-codex">
 
   <!-- Open Graph / Social -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex">
-  <meta property="og:title" content="oh-my-codex - A weapon, not a tool">
+  <meta property="og:title" content="oh-my-codex - Your codex is not alone">
   <meta property="og:description" content="Multi-agent orchestration layer for OpenAI Codex CLI. 30 specialized agents, 40+ skills, full autonomous execution.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex/social-preview.jpg">
   <meta property="og:image:width" content="1280">
@@ -18,18 +18,18 @@
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="oh-my-codex - A weapon, not a tool">
+  <meta name="twitter:title" content="oh-my-codex - Your codex is not alone">
   <meta name="twitter:description" content="Multi-agent orchestration layer for OpenAI Codex CLI. 30 specialized agents, 40+ skills.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex/social-preview.jpg">
 
-  <title>oh-my-codex - A weapon, not a tool</title>
+  <title>oh-my-codex - Your codex is not alone</title>
 
   <!-- Preconnect to external resources -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <!-- Critical CSS - Inline for faster FCP -->
   <style>
@@ -100,6 +100,11 @@
       margin-bottom: 1rem;
     }
 
+    .hero__title.pixel-font {
+      font-size: clamp(1.5rem, 4vw, 2.5rem) !important;
+      line-height: 1.4 !important;
+    }
+
     .hero__tagline {
       font-size: clamp(1.25rem, 3vw, 1.75rem);
       font-weight: 500;
@@ -108,7 +113,7 @@
 
     /* Gradient text animation */
     .gradient-text {
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color-light) 50%, var(--accent-color) 100%);
+      background: linear-gradient(135deg, #34d399 0%, #10a37f 50%, #ffffff 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -922,15 +927,26 @@
   <section class="hero" id="hero" data-reveal>
     <div class="hero__content">
       <div class="hero__text">
-        <h1 class="hero__title">
+        <div class="scanlines"></div>
+        <h1 class="hero__title pixel-font">
           <span class="gradient-text">oh-my-codex</span>
         </h1>
-        <p class="hero__tagline">A weapon, not a tool.</p>
+        <p class="hero__tagline">Your codex is not alone.<span class="terminal-cursor"></span></p>
         <p class="hero__description">
           Multi-agent orchestration layer for OpenAI Codex CLI. 30 specialized agents, 40+ skills, full autonomous execution.
         </p>
 
         <div class="hero-stats">
+          <a href="https://github.com/Yeachan-Heo/oh-my-codex" class="hero-stat-badge hero-stat-badge--dynamic" target="_blank">
+            <span class="hero-stat-badge__icon">&#9733;</span>
+            <span class="hero-stat-badge__value" data-stat="github-stars">—</span>
+            <span class="hero-stat-badge__label">Stars</span>
+          </a>
+          <a href="https://www.npmjs.com/package/oh-my-codex" class="hero-stat-badge hero-stat-badge--dynamic" target="_blank">
+            <span class="hero-stat-badge__icon">&#8595;</span>
+            <span class="hero-stat-badge__value" data-stat="npm-downloads">—</span>
+            <span class="hero-stat-badge__label">Downloads/mo</span>
+          </a>
           <span class="hero-stat-badge">
             <span class="hero-stat-badge__icon">⚡</span>
             <span class="hero-stat-badge__value">30</span>
@@ -978,7 +994,7 @@
     </div>
 
     <div class="features-grid">
-      <div class="feature-card">
+      <div class="feature-card pixel-border">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -991,7 +1007,7 @@
         <p class="feature-card__description">30 specialized agent prompts via /prompts:name for targeted expertise across every development domain.</p>
       </div>
 
-      <div class="feature-card">
+      <div class="feature-card pixel-border">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -1001,7 +1017,7 @@
         <p class="feature-card__description">40+ repeatable execution modes via $name syntax for autopilot, team orchestration, planning, and QA cycles.</p>
       </div>
 
-      <div class="feature-card">
+      <div class="feature-card pixel-border">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
@@ -1012,7 +1028,7 @@
         <p class="feature-card__description">Parallel workers in tmux sessions via omx team for coordinated multi-agent task execution.</p>
       </div>
 
-      <div class="feature-card">
+      <div class="feature-card pixel-border">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
@@ -1024,7 +1040,7 @@
         <p class="feature-card__description">State, memory, code intelligence, and trace servers for persistent context and cross-session learning.</p>
       </div>
 
-      <div class="feature-card">
+      <div class="feature-card pixel-border">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
@@ -1034,7 +1050,7 @@
         <p class="feature-card__description">plan → prd → exec → verify → fix lifecycle for structured, evidence-based development workflows.</p>
       </div>
 
-      <div class="feature-card">
+      <div class="feature-card pixel-border">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="1" x2="12" y2="23"></line>
@@ -1242,6 +1258,11 @@
         <div class="footer__links">
           <a href="https://github.com/Yeachan-Heo/oh-my-codex" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="https://www.npmjs.com/package/oh-my-codex" class="footer__link" target="_blank" rel="noopener noreferrer">npm</a>
+        </div>
+        <div class="footer__badges">
+          <img src="https://img.shields.io/github/stars/Yeachan-Heo/oh-my-codex?style=flat-square&color=10a37f" alt="GitHub stars">
+          <img src="https://img.shields.io/npm/dm/oh-my-codex?style=flat-square&color=10a37f" alt="npm downloads">
+          <img src="https://img.shields.io/npm/v/oh-my-codex?style=flat-square&color=10a37f" alt="npm version">
         </div>
       </div>
 

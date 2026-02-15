@@ -508,3 +508,27 @@
     transform: none !important;
   }
 }
+
+/* ========================================
+   Pixel Art Theme Animations
+   ======================================== */
+
+/* CRT flicker effect */
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+
+.hero {
+  animation: crt-flicker 0.15s infinite;
+}
+
+/* Pixel scale-in effect */
+@keyframes pixel-in {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.pixel-border {
+  animation: pixel-in 0.4s steps(5, end) both;
+}

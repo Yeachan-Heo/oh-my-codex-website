@@ -1,7 +1,7 @@
 const OMX_CONFIG = {
   projectName: "oh-my-codex",
   shortName: "OMX",
-  tagline: "A weapon, not a tool.",
+  tagline: "Your codex is not alone.",
   description: "Multi-agent orchestration layer for OpenAI Codex CLI",
   githubUrl: "https://github.com/Yeachan-Heo/oh-my-codex",
   npmUrl: "https://www.npmjs.com/package/oh-my-codex",
