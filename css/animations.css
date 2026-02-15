@@ -513,22 +513,12 @@
    Pixel Art Theme Animations
    ======================================== */
 
-/* CRT flicker effect */
-@keyframes crt-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.98; }
+/* Subtle CRT scanline pulse - decorative only, no opacity conflict */
+@keyframes crt-pulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(16, 163, 127, 0.2); }
+  50% { text-shadow: 0 0 12px rgba(16, 163, 127, 0.35); }
 }
 
-.hero {
-  animation: crt-flicker 0.15s infinite;
-}
-
-/* Pixel scale-in effect */
-@keyframes pixel-in {
-  from { transform: scale(0); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.pixel-border {
-  animation: pixel-in 0.4s steps(5, end) both;
+.hero__title.pixel-font {
+  animation: crt-pulse 3s ease-in-out infinite;
 }

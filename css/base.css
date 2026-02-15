@@ -38,6 +38,8 @@
   /* Typography */
   --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-mono: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace;
+  --font-pixel: 'Press Start 2P', monospace;
+  --pixel-size: 4px;
 
   /* Font Sizes */
   --text-xs: 0.75rem;

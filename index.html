@@ -372,10 +372,16 @@
     .hero-stats {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       gap: 0.75rem;
       margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 968px) {
+      .hero-stats {
+        justify-content: center;
+      }
     }
 
     .hero-stat-badge {
@@ -436,7 +442,7 @@
 
     .hero__illustration {
       width: 100%;
-      max-width: 340px;
+      max-width: 500px;
       position: relative;
     }
 
@@ -926,8 +932,8 @@
   <!-- Hero Section -->
   <section class="hero" id="hero" data-reveal>
     <div class="hero__content">
+      <div class="scanlines"></div>
       <div class="hero__text">
-        <div class="scanlines"></div>
         <h1 class="hero__title pixel-font">
           <span class="gradient-text">oh-my-codex</span>
         </h1>
@@ -980,7 +986,7 @@
 
       <div class="hero__visual">
         <div class="hero__illustration">
-          <img src="omx-character.jpg" alt="oh-my-codex character illustration" loading="eager">
+          <img src="omx-character.png" alt="oh-my-codex character illustration" loading="eager">
         </div>
       </div>
     </div>
