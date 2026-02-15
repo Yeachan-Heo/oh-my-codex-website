@@ -722,9 +722,10 @@
   50% { opacity: 0; }
 }
 
-/* Retro glow on character image */
+/* Retro glow on character image - invert + screen removes background */
 .hero__illustration img {
-  filter: drop-shadow(0 0 20px rgba(16, 163, 127, 0.3)) drop-shadow(0 0 40px rgba(16, 163, 127, 0.15));
+  filter: invert(1) drop-shadow(0 0 20px rgba(16, 163, 127, 0.4)) drop-shadow(0 0 40px rgba(16, 163, 127, 0.2));
+  mix-blend-mode: screen;
 }
 
 /* Green glow on gradient text */
