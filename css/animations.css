@@ -513,12 +513,7 @@
    Pixel Art Theme Animations
    ======================================== */
 
-/* Subtle CRT scanline pulse - decorative only, no opacity conflict */
-@keyframes crt-pulse {
-  0%, 100% { text-shadow: 0 0 8px rgba(16, 163, 127, 0.2); }
-  50% { text-shadow: 0 0 12px rgba(16, 163, 127, 0.35); }
-}
-
+/* Green glow on pixel title - applied after entrance animation completes */
 .hero__title.pixel-font {
-  animation: crt-pulse 3s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(16, 163, 127, 0.25);
 }

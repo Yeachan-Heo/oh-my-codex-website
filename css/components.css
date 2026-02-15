@@ -724,7 +724,7 @@
 
 /* Retro glow on character image */
 .hero__illustration img {
-  filter: invert(1) drop-shadow(0 0 20px rgba(16, 163, 127, 0.4)) drop-shadow(0 0 40px rgba(16, 163, 127, 0.2));
+  filter: drop-shadow(0 0 20px rgba(16, 163, 127, 0.4)) drop-shadow(0 0 40px rgba(16, 163, 127, 0.2));
 }
 
 /* Green glow on gradient text */
