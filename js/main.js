@@ -394,7 +394,7 @@
 
   // Expose public API for debugging
   window.OMX = {
-    version: '0.3.5',
+    version: '0.4.0',
     state: AppState,
     refresh: init,
     fetchGitHubStats,

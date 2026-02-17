@@ -2,7 +2,7 @@
   "agents": 30,
   "skills": 40,
   "mcpServers": 4,
-  "version": "0.3.5",
+  "version": "0.4.0",
   "promptFiles": 30,
   "skillFiles": 40
 }
