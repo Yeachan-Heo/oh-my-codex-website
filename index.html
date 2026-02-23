@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oh-my-codex v0.4.0 - Multi-agent orchestration layer for OpenAI Codex CLI with 30 specialized agents, 40+ skills, team mode, and hook extensions.">
+  <meta name="description" content="oh-my-codex v0.6.0 - Multi-agent orchestration layer for OpenAI Codex CLI with mixed-model team workers, adaptive retry reliability, and hardened claim lifecycle.">
   <meta name="keywords" content="OpenAI Codex, AI agents, multi-agent, orchestration, automation, CLI, developer tools, Codex CLI">
   <meta name="author" content="oh-my-codex">
 
@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex">
   <meta property="og:title" content="oh-my-codex - Your codex is not alone">
-  <meta property="og:description" content="v0.4.0 is live: hook extensions, team orchestration, MCP memory/state, and 30 specialized agents for Codex CLI.">
+  <meta property="og:description" content="v0.6.0 is live: mixed-model team workers, adaptive retry reliability, hardened claim lifecycle, and more for Codex CLI.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
@@ -19,7 +19,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="oh-my-codex - Your codex is not alone">
-  <meta name="twitter:description" content="v0.4.0 is live: hook extensions, team orchestration, MCP memory/state, and 30 specialized agents for Codex CLI.">
+  <meta name="twitter:description" content="v0.6.0 is live: mixed-model team workers, adaptive retry reliability, hardened claim lifecycle, and more for Codex CLI.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>oh-my-codex - Your codex is not alone</title>
@@ -946,7 +946,7 @@
         <div class="hero-stats">
           <span class="hero-stat-badge">
             <span class="hero-stat-badge__icon">🚀</span>
-            <span class="hero-stat-badge__value">v0.4.0</span>
+            <span class="hero-stat-badge__value">v0.6.0</span>
             <span class="hero-stat-badge__label">Latest Release</span>
           </span>
           <a href="https://github.com/Yeachan-Heo/oh-my-codex" class="hero-stat-badge hero-stat-badge--dynamic" target="_blank">
@@ -1001,21 +1001,20 @@
   <!-- Release Highlights Section -->
   <section class="section release-section" id="release" data-reveal>
     <div class="section__header">
-      <h2 class="section__title">What’s New in v0.4.0</h2>
-      <p class="section__subtitle">This release hardens day-to-day execution and expands extension points for custom workflows.</p>
+      <h2 class="section__title">What’s New in v0.6.0</h2>
+      <p class="section__subtitle">Mixed-model team workers, smarter adaptive retry, and a hardened claim lifecycle for rock-solid multi-agent execution.</p>
     </div>
 
     <div class="features-grid">
       <div class="feature-card pixel-border">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2v20"></path>
-            <path d="m17 5-5-3-5 3v6l5 3 5-3z"></path>
-            <path d="m17 13-5 3-5-3v6l5 3 5-3z"></path>
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Hook Extensions</h3>
-        <p class="feature-card__description">Add custom plugin handlers with <code>omx hooks</code> (init/status/validate/test) and opt-in event dispatch.</p>
+        <h3 class="feature-card__title">Mixed-Model Team Workers</h3>
+        <p class="feature-card__description">Run Codex and Claude workers side-by-side in a single <code>$team</code> session via <code>OMX_TEAM_WORKER_CLI_MAP</code>. Assign the right model to each workstream without splitting teams.</p>
       </div>
 
       <div class="feature-card pixel-border">
@@ -1024,19 +1023,18 @@
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
           </svg>
         </div>
-        <h3 class="feature-card__title">Native Lifecycle Events</h3>
-        <p class="feature-card__description">Native hooks now emit structured events across session start/end/idle and turn completion flows.</p>
+        <h3 class="feature-card__title">Adaptive Retry Reliability</h3>
+        <p class="feature-card__description">A new retry guard eliminates false-positive resend escalation. Fallback now uses clear-line + resend instead of interrupt, keeping workers unblocked in auto mode.</p>
       </div>
 
       <div class="feature-card pixel-border">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"></path>
-            <path d="m12 5 7 7-7 7"></path>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">tmux Reliability</h3>
-        <p class="feature-card__description">Submit behavior is standardized to <code>C-m</code> for more consistent execution in tmux-based automation.</p>
+        <h3 class="feature-card__title">Hardened Claim Lifecycle</h3>
+        <p class="feature-card__description">Pre-assigned workers can now claim their tasks in <code>pending</code> state, unblocking Codex bootstrap flows. Map parsing validates entries and <code>auto</code> mode correctly resolves from launch args.</p>
       </div>
     </div>
   </section>
