@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Oh My Codex Documentation - Multi-agent orchestration layer for OpenAI Codex CLI">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
+  <meta property="og:title" content="Documentation | Oh My Codex">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.7.2 - 30 prompts, 39 skills, team orchestration in tmux.">
+  <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
+
+  <title>Documentation | Oh My Codex</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="css/design-system.css">
+
+  <style>
+    /* =========================================
+       DOCS LAYOUT & THEME OVERRIDES
+       ========================================= */
+    :root {
+      --sidebar-width: 280px;
+      --header-height-mobile: 60px;
+      --content-max-width: 960px;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    /* Layout */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .docs-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-default);
+      overflow-y: auto;
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .docs-main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-width: 0;
+      padding: 2rem 4rem;
+    }
+
+    .docs-content {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+
+    /* Typography Overrides */
+    .docs-content h1 {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      padding-bottom: 1rem;
+    }
+
+    .docs-content h2 {
+      margin-top: 3.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-default);
+      position: relative;
+    }
+
+    .docs-content h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .docs-content h4 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .docs-content p, .docs-content ul, .docs-content ol {
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+    }
+
+    .docs-content ul, .docs-content ol {
+      padding-left: 1.5rem;
+    }
+
+    .docs-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .docs-content code {
+      font-size: 0.85em;
+    }
+
+    /* Anchor Links */
+    .anchor-link {
+      position: absolute;
+      left: -1.25rem;
+      opacity: 0;
+      color: var(--accent-primary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+      font-weight: 400;
+    }
+
+    h2:hover .anchor-link,
+    h3:hover .anchor-link {
+      opacity: 1;
+    }
+
+    /* Sidebar Components */
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .sidebar-brand__icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent-primary), #059669);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-brand__version {
+      font-size: 0.75rem;
+      background: var(--bg-tertiary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-secondary);
+      margin-left: auto;
+      border: 1px solid var(--border-default);
+    }
+
+    .sidebar-search {
+      padding: 1rem 1.5rem 0.5rem;
+      position: sticky;
+      top: 0;
+      background: var(--bg-secondary);
+      z-index: 10;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 1.5rem 2rem;
+    }
+
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.4rem 0.75rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
+
+    .sidebar-link:hover {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+      text-decoration: none;
+    }
+
+    .sidebar-link.active {
+      color: var(--accent-primary);
+      background: rgba(16, 163, 127, 0.05);
+      border-left-color: var(--accent-primary);
+      font-weight: 500;
+    }
+
+    /* Collapsible */
+    .collapsible { margin-bottom: 0.25rem; }
+    .collapsible-toggle {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .collapsible-toggle:hover { color: var(--text-primary); }
+    .submenu { padding-left: 0.75rem; list-style: none !important; }
+
+    /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-default);
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-default);
+      color: var(--text-secondary);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface-hover); }
+
+    /* Callouts */
+    .callout {
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      border-radius: 0.5rem;
+      border-left: 4px solid;
+      background: var(--bg-tertiary);
+    }
+    .callout-title { font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .callout p { margin: 0; }
+    .callout.warning { border-color: var(--accent-warning); background: rgba(245, 158, 11, 0.05); }
+    .callout.info { border-color: var(--accent-info); background: rgba(59, 130, 246, 0.05); }
+
+    /* Pipeline Diagram */
+    .pipeline-diagram {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: var(--bg-secondary);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-default);
+      margin: 2rem 0;
+    }
+    .pipeline-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+      min-width: 100px;
+    }
+    .pipeline-stage__icon {
+      width: 28px;
+      height: 28px;
+      background: var(--surface-default);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--accent-primary);
+      border: 1px solid var(--border-default);
+    }
+    .pipeline-stage__label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    .pipeline-arrow {
+      color: var(--text-tertiary);
+      font-size: 1.25rem;
+    }
+
+    /* Mode Cards */
+    .mode-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .mode-card:hover { border-color: var(--accent-primary); }
+    .mode-card__header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .mode-card__icon {
+      width: 48px; height: 48px; border-radius: 0.5rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; background: var(--bg-tertiary);
+    }
+    .mode-card__title { margin: 0; font-size: 1.1rem; color: var(--text-primary); }
+    .mode-card__keyword {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      padding: 2px 6px; background: var(--surface-hover);
+      border-radius: 4px; color: var(--accent-primary);
+    }
+    .mode-card__description { margin-bottom: 1rem; font-size: 0.95rem; }
+    .mode-card__features { list-style: none; padding: 0; margin: 0; }
+    .mode-card__features li {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      font-size: 0.85rem; margin-bottom: 0.25rem;
+    }
+    .mode-card__features li::before {
+      content: '•'; color: var(--accent-primary); font-weight: bold;
+    }
+
+    /* Lane Cards */
+    .lane-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .lane-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .lane-card--build::before { background: #3b82f6; }
+    .lane-card--review::before { background: #8b5cf6; }
+    .lane-card--domain::before { background: #f59e0b; }
+    .lane-card--product::before { background: #22c55e; }
+    .lane-card--coord::before { background: #ec4899; }
+
+    .lane-card__badge {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em;
+    }
+    .lane-card--build .lane-card__badge { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+    .lane-card--review .lane-card__badge { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+    .lane-card--domain .lane-card__badge { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+    .lane-card--product .lane-card__badge { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+    .lane-card--coord .lane-card__badge { background: rgba(236, 72, 153, 0.1); color: #ec4899; }
+
+    .lane-card__title { margin: 0.75rem 0 1rem; font-size: 1.1rem; }
+    .lane-card__agents { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .agent-tag {
+      font-family: var(--font-mono); font-size: 0.8rem;
+      background: var(--bg-tertiary); border: 1px solid var(--border-default);
+      padding: 4px 8px; border-radius: 4px; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .agent-tag small { color: var(--text-tertiary); font-size: 0.7rem; }
+
+    /* Quick Start Steps */
+    .quick-start-steps { list-style: none; padding: 0; counter-reset: step; }
+    .quick-start-steps li {
+      display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border-default);
+      counter-increment: step;
+    }
+    .quick-start-steps li:last-child { border-bottom: none; }
+    .quick-start-steps li::before {
+      content: counter(step); width: 24px; height: 24px;
+      background: var(--accent-primary); color: white;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .qs-content h4 { margin: 0 0 0.25rem 0; font-size: 0.95rem; }
+    .qs-content p { margin: 0; font-size: 0.85rem; }
+
+    /* Workflow Diagram */
+    .workflow {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+      background: var(--bg-tertiary); padding: 1rem; border-radius: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.85rem; margin: 1rem 0;
+    }
+    .workflow__step {
+      background: var(--bg-secondary); border: 1px solid var(--border-default);
+      padding: 0.25rem 0.5rem; border-radius: 0.25rem; color: var(--accent-primary);
+    }
+    .workflow__arrow { color: var(--text-tertiary); }
+
+    /* Mobile Responsive */
+    .mobile-menu-btn {
+      display: none; position: fixed; top: 1rem; left: 1rem; z-index: 100;
+      background: var(--bg-secondary); border: 1px solid var(--border-default);
+      padding: 0.5rem; border-radius: 0.5rem; cursor: pointer;
+      touch-action: manipulation;
+    }
+    .mobile-menu-btn svg { width: 24px; height: 24px; color: var(--text-primary); }
+    .sidebar-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 40; opacity: 0; visibility: hidden; transition: all 0.3s;
+      backdrop-filter: blur(2px);
+    }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+    @media (max-width: 1024px) {
+      .docs-sidebar { transform: translateX(-100%); }
+      .docs-sidebar.open { transform: translateX(0); }
+      .docs-main { margin-left: 0; padding: 5rem 1.5rem 2rem; }
+      .mobile-menu-btn { display: block; }
+    }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 40px; height: 40px; background: var(--accent-primary);
+      color: white; border: none; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s;
+      z-index: 90;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { transform: translateY(-2px); background: var(--accent-primary-hover); }
+
+    /* Utility */
+    .skip-to-content {
+      position: absolute; top: -100px; left: 0; background: var(--accent-primary);
+      color: white; padding: 0.5rem 1rem; z-index: 200; transition: top 0.2s;
+    }
+    .skip-to-content:focus { top: 0; }
+    .search-results {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--bg-secondary); border: 1px solid var(--border-default);
+      border-radius: 0.5rem; max-height: 300px; overflow-y: auto;
+      z-index: 100; display: none; margin-top: 0.5rem;
+    }
+    .search-overlay { position: fixed; inset: 0; z-index: 9; display: none; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+  </button>
+
+  <div class="docs-layout">
+    <!-- SIDEBAR -->
+    <aside class="docs-sidebar" id="sidebar">
+      <a href="index.html" class="sidebar-brand">
+        <div class="sidebar-brand__icon">OMX</div>
+        <span class="sidebar-brand__text">Oh My Codex</span>
+        <span class="sidebar-brand__version">v0.7.2</span>
+      </a>
+
+      <div class="sidebar-search">
+        <div class="search-input-wrapper">
+          <input type="search" id="search-input" class="search__input" placeholder="Search docs..." autocomplete="off">
+          <div id="search-results" class="search-results"></div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <!-- Getting Started -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Getting Started</div>
+          <a href="#introduction" class="sidebar-link" data-section="introduction">Introduction</a>
+          <a href="#release-notes" class="sidebar-link" data-section="release-notes">Release Notes</a>
+          <a href="#installation" class="sidebar-link" data-section="installation">Installation</a>
+          <a href="#quick-start" class="sidebar-link" data-section="quick-start">Quick Start</a>
+        </div>
+
+        <!-- Architecture -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Architecture</div>
+          <a href="#philosophy" class="sidebar-link" data-section="philosophy">Conductor Philosophy</a>
+          <a href="#team-architecture" class="sidebar-link" data-section="team-architecture">Team Architecture</a>
+          <a href="#model-routing" class="sidebar-link" data-section="model-routing">Model Routing</a>
+          <a href="#delegation" class="sidebar-link" data-section="delegation">Delegation Rules</a>
+        </div>
+
+        <!-- Execution Modes -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Execution Modes</div>
+          <div class="collapsible">
+            <button class="collapsible-toggle">Core Modes <span>▾</span></button>
+            <div class="submenu">
+              <a href="#autopilot" class="sidebar-link" data-section="autopilot">Autopilot</a>
+              <a href="#ralph" class="sidebar-link" data-section="ralph">Ralph</a>
+              <a href="#ultrawork" class="sidebar-link" data-section="ultrawork">Ultrawork</a>
+            </div>
+          </div>
+          <a href="#team-compositions" class="sidebar-link" data-section="team-compositions">Team Compositions</a>
+        </div>
+
+        <!-- Agent Catalog (link to team compositions in execution modes) -->
+
+
+        <!-- Tools & Config -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Tools & Config</div>
+          <a href="#mcp-tools" class="sidebar-link" data-section="mcp-tools">MCP Tools</a>
+          <a href="#skills" class="sidebar-link" data-section="skills">Skills & Commands</a>
+          <a href="#state-memory" class="sidebar-link" data-section="state-memory">State & Memory</a>
+          <a href="#configuration" class="sidebar-link" data-section="configuration">Configuration</a>
+        </div>
+
+        <!-- CLI Reference -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">CLI Reference</div>
+          <a href="#cli-getting-started" class="sidebar-link" data-section="cli-getting-started">Getting Started</a>
+          <a href="#cli-commands" class="sidebar-link" data-section="cli-commands">Core Commands</a>
+          <a href="#cli-launch-flags" class="sidebar-link" data-section="cli-launch-flags">Launch Flags</a>
+          <a href="#cli-team" class="sidebar-link" data-section="cli-team">Team Commands</a>
+          <a href="#cli-other" class="sidebar-link" data-section="cli-other">Other Commands</a>
+        </div>
+
+        <!-- Notifications -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Notifications</div>
+          <a href="#notify-overview" class="sidebar-link" data-section="notify-overview">Overview</a>
+          <a href="#notify-setup" class="sidebar-link" data-section="notify-setup">Quick Setup</a>
+          <a href="#notify-platforms" class="sidebar-link" data-section="notify-platforms">Platforms</a>
+          <a href="#notify-events" class="sidebar-link" data-section="notify-events">Events</a>
+          <a href="#notify-verbosity" class="sidebar-link" data-section="notify-verbosity">Verbosity</a>
+          <a href="#notify-env-vars" class="sidebar-link" data-section="notify-env-vars">Environment Variables</a>
+          <a href="#notify-templates" class="sidebar-link" data-section="notify-templates">Templates</a>
+          <a href="#notify-example-config" class="sidebar-link" data-section="notify-example-config">Example Config</a>
+          <a href="#notify-reply" class="sidebar-link" data-section="notify-reply">Reply Injection</a>
+        </div>
+
+        <!-- Workflows -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Workflows</div>
+          <a href="#wf-full-auto" class="sidebar-link" data-section="wf-full-auto">Full-Auto from PRD</a>
+          <a href="#wf-no-brainer" class="sidebar-link" data-section="wf-no-brainer">No-Brainer</a>
+          <a href="#wf-fix-debug" class="sidebar-link" data-section="wf-fix-debug">Fix / Debugging</a>
+          <a href="#wf-parallel-issues" class="sidebar-link" data-section="wf-parallel-issues">Parallel Issues</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="docs-main" id="main-content">
+      <div class="docs-content">
+        
+        <!-- Introduction -->
+        <section id="introduction" data-section>
+          <h1>Oh My Codex Documentation</h1>
+          <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem;">
+            Turn Codex CLI into an intelligent multi-agent orchestration system. You become the conductor, not the performer.
+          </p>
+
+          <div class="grid grid--2">
+            <div class="card">
+              <h3 style="margin-top:0">30 Agent Prompts</h3>
+              <p>Specialized prompt catalog across 5 functional lanes, with role-specific agent files.</p>
+            </div>
+            <div class="card">
+              <h3 style="margin-top:0">39 Skills</h3>
+              <p>From Autopilot for full autonomy to Team mode for tmux coordination and Ralph for persistence.</p>
+            </div>
+            <div class="card">
+              <h3 style="margin-top:0">25+ MCP Tools</h3>
+              <p>Integrated toolchain with Language Servers, AST grep, Python REPL, and state management.</p>
+            </div>
+            <div class="card">
+              <h3 style="margin-top:0">tmux Teams</h3>
+              <p>Spawn parallel worker panes in tmux with mixed Codex/Claude CLI workers.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Release Notes -->
+        <section id="release-notes" data-section>
+          <h2><span class="anchor-link">#</span>Release Notes</h2>
+          <div class="callout info">
+            <div class="callout-title">Quick Summary</div>
+            <p>These updates improve team workflows, notifications, security, and reliability. Open each version to see the details.</p>
+          </div>
+          <!-- One mode-card per version with collapsible details -->
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.7.2</span>
+              Team Shutdown Force Flag (Hotfix)
+            </div>
+            <details>
+              <summary>View changes in v0.7.2</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Fix:</strong> Team shutdown <code>--force</code> now parses correctly from CLI arguments.</li>
+                <li><strong>Audit:</strong> Added the <code>shutdown_gate_forced</code> audit event.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.7.0</span>
+              Major Release (153 files changed)
+            </div>
+            <details>
+              <summary>View changes in v0.7.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Scaling:</strong> Added dynamic team worker scaling (Phase 1 manual <code>scale_up</code> and <code>scale_down</code>).</li>
+                <li><strong>Planning:</strong> Added RALPLAN-DR structured deliberation for consensus planning.</li>
+                <li><strong>Scoping:</strong> Added a task-size detector for pre-execution guidance.</li>
+                <li><strong>Triggers:</strong> Added a keyword trigger registry with 31 keyword triggers.</li>
+                <li><strong>Notifications:</strong> Overhauled notifications across Slack, Discord, and Telegram.</li>
+                <li><strong>Integration:</strong> Added OpenClaw gateway integration.</li>
+                <li><strong>CLI:</strong> Added the star-prompt command.</li>
+                <li><strong>Setup:</strong> Simplified setup from 3 scopes to 2 scopes (user and project).</li>
+                <li><strong>MCP:</strong> Added an MCP bootstrap module.</li>
+                <li><strong>HUD:</strong> Added watch render serialization, quota rendering, and session duration improvements.</li>
+                <li><strong>Tests:</strong> Reached 1,472 tests across 308 suites.</li>
+                <li><strong>Security:</strong> Hardened MCP <code>workingDirectory</code>, prevented path traversal, and blocked HUD escape injection.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.6.x</span>
+              Mixed Team Workers and Reliability
+            </div>
+            <details>
+              <summary>View changes in v0.6.x</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Routing:</strong> Added mixed team worker CLI routing via <code>OMX_TEAM_WORKER_CLI_MAP</code> (Codex and Claude together).</li>
+                <li><strong>Fallback:</strong> Added leader-side all-workers-idle nudge fallback.</li>
+                <li><strong>Reliability:</strong> Added an adaptive trigger submit retry guard.</li>
+                <li><strong>Startup:</strong> Fixed team Claude worker startup issues.</li>
+                <li><strong>HUD:</strong> Added a HUD reconcile hook for detached launches.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.5.x</span>
+              Worktree and Ralph CLI
+            </div>
+            <details>
+              <summary>View changes in v0.5.x</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Worktrees:</strong> Added native worktree orchestration for team mode.</li>
+                <li><strong>State:</strong> Added cross-worktree team state resolution.</li>
+                <li><strong>CLI:</strong> Added the <code>omx ralph</code> subcommand.</li>
+                <li><strong>Persistence:</strong> Added scoped ralph state with canonical persistence migration.</li>
+                <li><strong>Interop:</strong> Added a claim-safe team transition tool for MCP interop.</li>
+                <li><strong>Notifications:</strong> Cleaned tmux pane output for notifications.</li>
+                <li><strong>Startup:</strong> Added a startup codebase map injection hook.</li>
+                <li><strong>Security:</strong> Added command injection prevention and path traversal prevention.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.5.0</span>
+              Catalog Consolidation
+            </div>
+            <details>
+              <summary>View changes in v0.5.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Setup:</strong> Added scope-aware setup (user and project).</li>
+                <li><strong>Routing:</strong> Added Spark worker routing via <code>--spark</code> and <code>--madmax-spark</code>.</li>
+                <li><strong>Cleanup:</strong> Consolidated the catalog by removing deprecated prompts and 9 skills.</li>
+                <li><strong>Logging:</strong> Added notifier verbosity levels.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.4.x</span>
+              Hook Extensibility and Auto-nudge
+            </div>
+            <details>
+              <summary>View changes in v0.4.x</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Hooks:</strong> Added hook extensibility runtime with CLI integration.</li>
+                <li><strong>Detection:</strong> Expanded auto-nudge stall detection patterns.</li>
+                <li><strong>Notifications:</strong> Added worker-idle aggregation notifications.</li>
+                <li><strong>Tmux:</strong> Enabled automatic tmux mouse scrolling for team sessions.</li>
+                <li><strong>Agents:</strong> Registered OMX agents as Codex native multi-agent roles.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+        <!-- Installation -->
+        <section id="installation" data-section>
+          <h2><span class="anchor-link">#</span>Installation</h2>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># 1. Install globally
+npm install -g oh-my-codex
+
+# 2. Run setup
+omx setup
+
+# 3. Verify installation
+omx doctor</code></pre>
+          </div>
+        </section>
+
+        <!-- Quick Start -->
+        <section id="quick-start" data-section>
+          <h2><span class="anchor-link">#</span>Quick Start</h2>
+          <p>OMX uses "Magic Keywords" and <code>$skill</code> commands to detect your intent. Just describe what you want.</p>
+
+          <ul class="quick-start-steps">
+            <li>
+              <div class="qs-content">
+                <h4>Autonomous Building</h4>
+                <p><code>"autopilot build a React dashboard"</code> &mdash; Full autonomous execution from idea to code.</p>
+              </div>
+            </li>
+            <li>
+              <div class="qs-content">
+                <h4>Refactoring</h4>
+                <p><code>"ralph refactor the API"</code> &mdash; Persists until verified clean ("The boulder never stops").</p>
+              </div>
+            </li>
+            <li>
+              <div class="qs-content">
+                <h4>Parallel Work</h4>
+                <p><code>"ulw fix all errors"</code> &mdash; Runs multiple agents in parallel for speed.</p>
+              </div>
+            </li>
+            <li>
+              <div class="qs-content">
+                <h4>tmux Teams</h4>
+                <p><code>"team 5:executor refactor backend"</code> &mdash; Spawns a team of 5 agents coordinated by a lead.</p>
+              </div>
+            </li>
+            <li>
+              <div class="qs-content">
+                <h4>Planning</h4>
+                <p><code>"plan the auth system"</code> &mdash; Starts an interactive planning interview.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Architecture -->
+        <section id="philosophy" data-section>
+          <h2><span class="anchor-link">#</span>Conductor Philosophy</h2>
+          <p>The core principle of OMX is: <strong>You are the conductor, not the performer.</strong></p>
+
+          <div class="callout warning">
+            <div class="callout-title">Golden Rule</div>
+            <p>NEVER make code changes directly. ALWAYS delegate to specialized agents. Your role is to guide, review, and orchestrate.</p>
+          </div>
+          <p>Agents have specialized roles. The <strong>architect</strong> sees the big picture, the <strong>executor</strong> writes the code, and the <strong>verifier</strong> proves it works. Respecting this division ensures higher quality output.</p>
+        </section>
+
+        <section id="team-architecture" data-section>
+          <h2><span class="anchor-link">#</span>Team Architecture</h2>
+          <p>OMX uses a staged pipeline for teams in tmux. Transitions are strictly defined to ensure quality gates.</p>
+
+          <div class="pipeline-diagram">
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">1</div>
+              <div class="pipeline-stage__label">team-plan</div>
+            </div>
+            <div class="pipeline-arrow">&rarr;</div>
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">2</div>
+              <div class="pipeline-stage__label">team-prd</div>
+            </div>
+            <div class="pipeline-arrow">&rarr;</div>
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">3</div>
+              <div class="pipeline-stage__label">team-exec</div>
+            </div>
+            <div class="pipeline-arrow">&rarr;</div>
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">4</div>
+              <div class="pipeline-stage__label">team-verify</div>
+            </div>
+            <div class="pipeline-arrow">&rarr;</div>
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">5</div>
+              <div class="pipeline-stage__label">team-fix</div>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>From</th><th>To</th><th>Trigger Condition</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>team-plan</td><td>team-prd</td><td>Planning and decomposition complete</td></tr>
+                <tr><td>team-prd</td><td>team-exec</td><td>Acceptance criteria explicitly defined</td></tr>
+                <tr><td>team-exec</td><td>team-verify</td><td>All tasks reach terminal state</td></tr>
+                <tr><td>team-verify</td><td>team-fix / complete</td><td>Verification outcome</td></tr>
+                <tr><td>team-fix</td><td>team-exec / team-verify</td><td>Fix strategies defined</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="model-routing" data-section>
+          <h3><span class="anchor-link">#</span>Model Routing</h3>
+          <p>OMX intelligently routes tasks to the most appropriate model tier to balance cost and capability.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Complexity</th><th>Model</th><th>Use Case</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Simple</strong></td><td>Spark</td><td>Lookups, formatting, simple docs ("What does this return?")</td></tr>
+                <tr><td><strong>Standard</strong></td><td>Default</td><td>Implementation, tests, refactoring ("Add error handling")</td></tr>
+                <tr><td><strong>Complex</strong></td><td>xhigh reasoning</td><td>Architecture, deep debugging, planning ("Refactor auth system")</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="delegation" data-section>
+          <h3><span class="anchor-link">#</span>Delegation Rules</h3>
+          <ul style="list-style-type: none; padding: 0;">
+            <li style="margin-bottom: 1rem;">
+              <strong>✅ Delegate:</strong> Multi-file implementations, refactors, debugging, reviews, planning, research, verification.
+            </li>
+            <li>
+              <strong>🛑 Do It Yourself:</strong> Small clarifications, quick status checks, single-command operations. Direct writes are OK for <code>.omx/</code>, <code>.codex/</code> config files.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Execution Modes -->
+        <section id="execution-modes" data-section>
+          <h2><span class="anchor-link">#</span>Execution Modes</h2>
+          
+          <div id="autopilot">
+            <div class="mode-card">
+              <div class="mode-card__header">
+                <div class="mode-card__icon">🤖</div>
+                <div>
+                  <h3 class="mode-card__title">Autopilot</h3>
+                  <span class="mode-card__keyword">autopilot</span>
+                </div>
+              </div>
+              <p class="mode-card__description">The flagship mode. Full autonomous execution from idea to delivered code. Self-correcting loop.</p>
+              <ul class="mode-card__features">
+                <li>Expansion (Analyst + Architect)</li>
+                <li>Planning (Architect + Critic)</li>
+                <li>Execution (Ralph + Ultrawork)</li>
+                <li>QA Cycling (UltraQA)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="ralph">
+            <div class="mode-card">
+              <div class="mode-card__header">
+                <div class="mode-card__icon">🔄</div>
+                <div>
+                  <h3 class="mode-card__title">Ralph</h3>
+                  <span class="mode-card__keyword">ralph</span>
+                </div>
+              </div>
+              <p class="mode-card__description">"The boulder never stops." Persistence mode. Keeps working until the Architect verifies the goal is met.</p>
+              <ul class="mode-card__features">
+                <li>Infinite persistence loop</li>
+                <li>Includes Ultrawork automatically</li>
+                <li>Strong verification requirements</li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="ultrawork">
+            <div class="mode-card">
+              <div class="mode-card__header">
+                <div class="mode-card__icon">⚡</div>
+                <div>
+                  <h3 class="mode-card__title">Ultrawork</h3>
+                  <span class="mode-card__keyword">ulw</span>
+                </div>
+              </div>
+              <p class="mode-card__description">Maximum parallelism. Aggressively delegates subtasks to multiple background agents.</p>
+              <ul class="mode-card__features">
+                <li>Up to 5+ concurrent agents</li>
+                <li>Smart model routing</li>
+                <li>Non-blocking background execution</li>
+              </ul>
+            </div>
+          </div>
+          <h3 id="team-compositions"><span class="anchor-link">#</span>Team Compositions</h3>
+          <div class="workflow">
+            <strong>Feature Dev:</strong>
+            <span class="workflow__step">analyst</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">planner</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">executor</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">test-engineer</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">verifier</span>
+          </div>
+          <div class="workflow">
+            <strong>Bug Fix:</strong>
+            <span class="workflow__step">explore</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">debugger</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">executor</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">verifier</span>
+          </div>
+        </section>
+
+        <!-- MCP Tools -->
+        <section id="mcp-tools" data-section>
+          <h2><span class="anchor-link">#</span>MCP Tools</h2>
+          
+          <h3>State & Runtime</h3>
+          <ul>
+            <li><strong>State tools:</strong> <code>state_read</code>, <code>state_write</code>, <code>state_clear</code> for managing execution mode state.</li>
+            <li><strong>Notepad:</strong> <code>notepad_read</code>, <code>notepad_write_priority</code>, <code>notepad_write_working</code>, <code>notepad_write_manual</code>.</li>
+          </ul>
+
+          <h3>Code Intelligence</h3>
+          <p><strong>LSP Tools:</strong> <code>lsp_hover</code>, <code>lsp_goto_definition</code>, <code>lsp_find_references</code>, <code>lsp_diagnostics</code>, <code>lsp_rename</code>.</p>
+          <p><strong>AST Grep:</strong> <code>ast_grep_search</code>, <code>ast_grep_replace</code> for structural refactoring.</p>
+
+          <h3>Utilities</h3>
+          <p><strong>Python REPL:</strong> Persistent environment for data analysis.</p>
+          
+        </section>
+
+        <!-- Skills & Commands -->
+        <section id="skills" data-section>
+          <h2><span class="anchor-link">#</span>Skills & Commands</h2>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td><code>autopilot</code></td><td>Autonomous execution</td><td>"autopilot build a login page"</td></tr>
+                <tr><td><code>ralph</code></td><td>Persistence mode</td><td>"ralph refactor the API"</td></tr>
+                <tr><td><code>ulw</code></td><td>Ultrawork (Parallel)</td><td>"ulw fix these 5 bugs"</td></tr>
+                <tr><td><code>$team</code></td><td>tmux Team workers</td><td>"$team 3:executor build it"</td></tr>
+                <tr><td><code>plan</code></td><td>Strategic planning</td><td>"plan the migration"</td></tr>
+                <tr><td><code>$ralplan</code></td><td>Consensus planning</td><td>"$ralplan the API"</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Skills are invoked with <code>$name</code> inside Codex CLI. Agent prompts are loaded with <code>/prompts:name</code>.</p>
+          <p><strong>Utility Skills:</strong> <code>$cancel</code>, <code>$note</code>, <code>$hud</code>, <code>$omc-doctor</code>.</p>
+        </section>
+
+        <!-- State & Memory -->
+        <section id="state-memory" data-section>
+          <h2><span class="anchor-link">#</span>State & Memory</h2>
+          
+          <h3>Notepad System</h3>
+          <p>Located at <code>.omx/notepad.md</code>. Resilient memory surviving context pruning.</p>
+          <ul>
+            <li><strong>Priority:</strong> Always injected into context.</li>
+            <li><strong>Working:</strong> Auto-pruned after 7 days.</li>
+            <li><strong>Manual:</strong> Never pruned.</li>
+          </ul>
+
+          <h3>Project Memory</h3>
+          <p>Located at <code>.omx/project-memory.json</code>. Stores tech stack, conventions, and architectural directives.</p>
+        </section>
+
+        <!-- Configuration -->
+        <section id="configuration" data-section>
+          <h2><span class="anchor-link">#</span>Configuration</h2>
+          <p>Run <code>omx setup</code> to configure defaults. Use <code>--scope user</code> or <code>--scope project</code> to control where files are installed.</p>
+          <p><strong>Worktree Paths:</strong></p>
+          <ul>
+            <li><code>.omx/state/</code> - Mode state files</li>
+            <li><code>.omx/logs/</code> - Audit logs</li>
+            <li><code>.omx/plans/</code> - Planning documents</li>
+          </ul>
+        </section>
+
+        <!-- CLI Reference -->
+        <section id="cli-reference" data-section>
+          <h2><span class="anchor-link">#</span>CLI Reference</h2>
+          <p>The <code>omx</code> command-line tool lets you launch, configure, and manage OMX from your terminal.</p>
+
+          <h3 id="cli-getting-started">Getting Started</h3>
+          <p>Run these commands to install and start fast.</p>
+          <ul>
+            <li>Install: <code>npm install -g oh-my-codex</code></li>
+            <li>Launch: <code>omx</code> (launches Codex CLI with HUD in tmux)</li>
+            <li>Setup: <code>omx setup</code></li>
+            <li>Doctor: <code>omx doctor</code></li>
+          </ul>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code>npm install -g oh-my-codex
+        omx
+        omx setup
+        omx doctor
+        omx --xhigh --madmax</code></pre>
+          </div>
+          <div class="callout info">
+            <div class="callout-title">Tip</div>
+            <p>For maximum power, run <code>omx --xhigh --madmax</code>.</p>
+          </div>
+
+          <h3 id="cli-commands">Core Commands</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>What It Does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>omx</code></td><td>Launch Codex CLI (HUD auto-attaches in tmux)</td></tr>
+                <tr><td><code>omx setup</code></td><td>Install skills, prompts, MCP servers, and AGENTS.md</td></tr>
+                <tr><td><code>omx doctor</code></td><td>Check installation health</td></tr>
+                <tr><td><code>omx doctor --team</code></td><td>Check team/swarm runtime diagnostics</td></tr>
+                <tr><td><code>omx team</code></td><td>Spawn parallel worker panes in tmux</td></tr>
+                <tr><td><code>omx ralph</code></td><td>Launch Codex with ralph persistence mode active</td></tr>
+                <tr><td><code>omx version</code></td><td>Show version information</td></tr>
+                <tr><td><code>omx tmux-hook</code></td><td>Manage tmux prompt injection workaround (init|status|validate|test)</td></tr>
+                <tr><td><code>omx hooks</code></td><td>Manage hook plugins (init|status|validate|test)</td></tr>
+                <tr><td><code>omx hud</code></td><td>Show HUD statusline (--watch, --json, --preset=NAME)</td></tr>
+                <tr><td><code>omx status</code></td><td>Show active modes and state</td></tr>
+                <tr><td><code>omx cancel</code></td><td>Cancel active execution modes</td></tr>
+                <tr><td><code>omx reasoning</code></td><td>Show or set model reasoning effort (low|medium|high|xhigh)</td></tr>
+                <tr><td><code>omx help</code></td><td>Show this help message</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="cli-launch-flags">Launch Flags</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Flag</th>
+                  <th>What It Does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>--yolo</code></td><td>Launch Codex in yolo mode</td></tr>
+                <tr><td><code>--high</code></td><td>High reasoning effort</td></tr>
+                <tr><td><code>--xhigh</code></td><td>Extra high reasoning effort</td></tr>
+                <tr><td><code>--madmax</code></td><td>DANGEROUS: bypass Codex approvals and sandbox</td></tr>
+                <tr><td><code>--spark</code></td><td>Use Codex spark model (~1.3x faster) for team workers only</td></tr>
+                <tr><td><code>--madmax-spark</code></td><td>Spark model + bypass approvals</td></tr>
+                <tr><td><code>-w, --worktree[=&lt;name&gt;]</code></td><td>Launch in a git worktree</td></tr>
+                <tr><td><code>--force</code></td><td>Force reinstall (overwrite existing)</td></tr>
+                <tr><td><code>--dry-run</code></td><td>Show what would be done</td></tr>
+                <tr><td><code>--verbose</code></td><td>Detailed output</td></tr>
+                <tr><td><code>--scope</code></td><td>Setup scope: user | project</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="cli-team">Team Commands</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>What It Does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>omx team start &lt;N&gt; &lt;task&gt;</code></td><td>Start N workers on a task</td></tr>
+                <tr><td><code>omx team status &lt;team-name&gt;</code></td><td>Check team status</td></tr>
+                <tr><td><code>omx team resume &lt;team-name&gt;</code></td><td>Resume team</td></tr>
+                <tr><td><code>omx team shutdown &lt;team-name&gt; [--force]</code></td><td>Shutdown team</td></tr>
+                <tr><td>Env vars</td><td><code>OMX_TEAM_WORKER_CLI</code> (auto|codex|claude), <code>OMX_TEAM_WORKER_CLI_MAP</code> (per-worker mix like codex,codex,claude,claude)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="cli-other">Other Commands</h3>
+          <ul>
+            <li><code>omx hud --watch</code> - Live HUD refresh</li>
+            <li><code>omx hud --json</code> - JSON output</li>
+            <li><code>omx hud --preset=NAME</code> - Use a preset layout</li>
+          </ul>
+        </section>
+
+        <!-- Notifications -->
+        <section id="notifications" data-section>
+          <h2><span class="anchor-link">#</span>Notifications</h2>
+          <p>Get alerts when your OMX session changes state or needs your input.</p>
+
+          <h3 id="notify-overview">Overview</h3>
+          <ul>
+            <li>OMX can send alerts when a Codex session starts, stops, goes idle, or asks for input.</li>
+            <li>Five platforms are supported: Discord (webhook), Discord (bot API), Telegram, Slack, and generic webhook.</li>
+            <li>You can configure notifications in <code>config.toml</code> or with environment variables.</li>
+          </ul>
+
+          <div class="callout info">
+            <div class="callout-title">Tip</div>
+            <p>Start with environment variables, then run <code>omx setup</code> to write a config file.</p>
+          </div>
+
+          <h3 id="notify-setup">Quick Setup</h3>
+          <p>The fastest setup is exporting env vars, then running setup.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code>export OMX_TELEGRAM_BOT_TOKEN=xxx
+        export OMX_TELEGRAM_CHAT_ID=xxx
+        export OMX_DISCORD_WEBHOOK_URL=xxx
+        export OMX_SLACK_WEBHOOK_URL=xxx
+
+        omx setup</code></pre>
+          </div>
+
+          <h3 id="notify-platforms">Platforms</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Platform</th>
+                  <th>Config Fields</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Telegram</td>
+                  <td><code>botToken</code>, <code>chatId</code>, <code>parseMode</code> (<code>Markdown</code> | <code>HTML</code>)</td>
+                </tr>
+                <tr>
+                  <td>Discord Webhook</td>
+                  <td><code>webhookUrl</code>, <code>username</code> (optional), <code>mention</code> (optional, example: <code>&lt;@123456&gt;</code>)</td>
+                </tr>
+                <tr>
+                  <td>Discord Bot API</td>
+                  <td><code>botToken</code>, <code>channelId</code>, <code>mention</code> (optional)</td>
+                </tr>
+                <tr>
+                  <td>Slack</td>
+                  <td><code>webhookUrl</code>, <code>channel</code> (optional), <code>username</code> (optional), <code>mention</code> (optional, example: <code>&lt;!here&gt;</code>, <code>&lt;@UXXXXXXXX&gt;</code>)</td>
+                </tr>
+                <tr>
+                  <td>Generic Webhook</td>
+                  <td><code>url</code>, <code>headers</code> (optional), <code>method</code> (<code>POST</code> | <code>PUT</code>)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="notify-events">Events</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Event</th>
+                  <th>When It Fires</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>session-start</code></td><td>Fires when Codex session starts.</td></tr>
+                <tr><td><code>session-stop</code></td><td>Fires when session stops (mode complete or user interrupt).</td></tr>
+                <tr><td><code>session-end</code></td><td>Fires when session exits.</td></tr>
+                <tr><td><code>session-idle</code></td><td>Fires when session is idle (waiting for input).</td></tr>
+                <tr><td><code>ask-user-question</code></td><td>Fires when agent asks user a question.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="notify-verbosity">Verbosity</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>Behavior</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>verbose</code></td><td>All text and tool call output.</td></tr>
+                <tr><td><code>agent</code></td><td>Per-agent-call events (includes <code>ask-user-question</code>).</td></tr>
+                <tr><td><code>session</code></td><td>Start, idle, stop, and end events plus tmux tail snippet (default).</td></tr>
+                <tr><td><code>minimal</code></td><td>Start, stop, and end only. No idle, no tmux tail.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="notify-env-vars">Environment Variables</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>OMX_DISCORD_WEBHOOK_URL</code></td><td>Discord webhook endpoint.</td></tr>
+                <tr><td><code>OMX_DISCORD_NOTIFIER_BOT_TOKEN</code></td><td>Discord bot token for Bot API mode.</td></tr>
+                <tr><td><code>OMX_DISCORD_NOTIFIER_CHANNEL</code></td><td>Discord channel ID for Bot API mode.</td></tr>
+                <tr><td><code>OMX_DISCORD_MENTION</code></td><td>Optional mention target for Discord notifications.</td></tr>
+                <tr><td><code>OMX_TELEGRAM_BOT_TOKEN</code></td><td>Telegram bot token.</td></tr>
+                <tr><td><code>OMX_TELEGRAM_CHAT_ID</code></td><td>Telegram chat ID.</td></tr>
+                <tr><td><code>OMX_SLACK_WEBHOOK_URL</code></td><td>Slack webhook endpoint.</td></tr>
+                <tr><td><code>OMX_SLACK_MENTION</code></td><td>Optional mention target for Slack notifications.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="notify-templates">Templates</h3>
+          <ul>
+            <li>Custom message templates use <code>{{variable}}</code> syntax.</li>
+            <li>Available variables: <code>event</code>, <code>sessionId</code>, <code>timestamp</code>, <code>projectName</code>, <code>activeMode</code>, <code>question</code>, <code>tmuxTail</code>.</li>
+          </ul>
+
+          <h3 id="notify-example-config">Example Config</h3>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">TOML</span></div>
+            <pre><code>[notifications]
+        enabled = true
+        verbosity = "session"
+
+        [notifications.telegram]
+        enabled = true
+        botToken = "123456:ABC-DEF"
+        chatId = "-100123456789"</code></pre>
+          </div>
+
+          <h3 id="notify-reply">Reply Injection</h3>
+          <ul>
+            <li>You can reply from Telegram, Discord, or Slack to inject text into the Codex session.</li>
+            <li>This feature requires tmux and authorized user IDs.</li>
+            <li>Core config fields are <code>enabled</code>, <code>pollIntervalMs</code>, <code>maxMessageLength</code>, and <code>rateLimitPerMinute</code>.</li>
+          </ul>
+        </section>
+
+        <!-- Recommended Workflows -->
+        <section id="workflows" data-section>
+          <h2><span class="anchor-link">#</span>Recommended Workflows</h2>
+          <p>Battle-tested patterns for common tasks. Pick the one that fits.</p>
+
+          <article class="mode-card" id="wf-full-auto">
+            <h3>Full-Auto from PRD</h3>
+            <p>For big features that need a plan first.</p>
+            <div class="workflow">
+              <span class="workflow__step">$ralplan</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$team</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralph</span>
+            </div>
+            <ol>
+              <li>$ralplan gathers requirements and creates a plan with planner + architect + critic consensus.</li>
+              <li>$team spawns parallel tmux workers to build in parallel.</li>
+              <li>$ralph persists until everything is verified complete.</li>
+            </ol>
+          </article>
+
+          <article class="mode-card" id="wf-no-brainer">
+            <h3>No-Brainer</h3>
+            <p>When the task is clear and you just want it done.</p>
+            <div class="workflow">
+              <span class="workflow__step">$autopilot</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ultrawork</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralph</span>
+            </div>
+            <ol>
+              <li>$autopilot takes the wheel and runs autonomously.</li>
+              <li>$ultrawork parallelizes subtasks for speed.</li>
+              <li>$ralph persists until verified ("The boulder never stops").</li>
+            </ol>
+          </article>
+
+          <article class="mode-card" id="wf-fix-debug">
+            <h3>Fix / Debugging</h3>
+            <p>For bugs and errors.</p>
+            <div class="workflow">
+              <span class="workflow__step">$plan</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralph</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ultraqa</span>
+            </div>
+            <ol>
+              <li>$plan investigates the problem and creates a fix strategy.</li>
+              <li>$ralph implements fixes and keeps going until done.</li>
+              <li>$ultraqa cycles through test -&gt; verify -&gt; fix until all tests pass.</li>
+            </ol>
+          </article>
+
+          <article class="mode-card" id="wf-parallel-issues">
+            <h3>Parallel Issue Handling</h3>
+            <p>For handling multiple issues or tickets at the same time.</p>
+            <div class="workflow">
+              <span class="workflow__step">omx team (architect)</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">omx team (workers)</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralplan</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralph + $ultrawork</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ultraqa</span>
+            </div>
+            <ol>
+              <li>Start architect workers to analyze all issues and draft one complete plan.</li>
+              <li>Run workers in parallel on separate worktrees, each submitting a PR to dev.</li>
+              <li>Review and merge open PRs, then run $ralplan to resolve conflicts safely.</li>
+              <li>Finish with $ralph, $ultrawork, and $ultraqa until all tests pass.</li>
+            </ol>
+          </article>
+
+          <div class="callout info">
+            <div class="callout-title">Good to know</div>
+            <p>These four patterns cover most real-world work. Other skills exist for specific tasks, but you rarely need them day-to-day.</p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <div id="search-overlay" class="search-overlay"></div>
+
+  <script type="module">
+    import { SidebarSpy } from './js/ui/sidebarSpy.js';
+    import { SearchService } from './js/ui/searchService.js';
+    import { Accordion } from './js/ui/accordion.js';
+    import { CodeBlocks } from './js/ui/codeBlocks.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new SidebarSpy({
+        sidebar: '.docs-sidebar',
+        content: '.docs-content',
+        links: '.sidebar-link',
+        sections: '[data-section]'
+      });
+
+      new SearchService({
+        contentSelector: '.docs-content',
+        searchInput: '#search-input',
+        results: '#search-results',
+        overlay: '#search-overlay'
+      });
+
+      new Accordion();
+      new CodeBlocks();
+
+      // Mobile Menu Logic
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const docsMain = document.querySelector('.docs-main');
+
+      function toggleMenu() {
+        const isOpen = sidebar.classList.contains('open');
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+        mobileBtn.setAttribute('aria-expanded', String(!isOpen));
+        document.body.style.overflow = isOpen ? '' : 'hidden';
+
+        if (!isOpen) {
+          docsMain?.setAttribute('inert', '');
+          sidebar.querySelector('.sidebar-link')?.focus();
+        } else {
+          docsMain?.removeAttribute('inert');
+        }
+      }
+
+      function closeMenu() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        mobileBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        docsMain?.removeAttribute('inert');
+        mobileBtn.focus();
+      }
+
+      mobileBtn.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+
+      // Close on link click (mobile)
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 1024) closeMenu();
+        });
+      });
+
+      // Back to top
+      const backToTop = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => {
+        backToTop.classList.toggle('visible', window.scrollY > 500);
+      });
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
