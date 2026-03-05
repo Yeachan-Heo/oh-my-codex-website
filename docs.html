@@ -594,9 +594,11 @@
         <div class="sidebar-section">
           <div class="sidebar-title">Architecture</div>
           <a href="#philosophy" class="sidebar-link" data-section="philosophy">Conductor Philosophy</a>
+          <a href="#agent-tiers" class="sidebar-link" data-section="agent-tiers">Agent Tiers</a>
           <a href="#team-architecture" class="sidebar-link" data-section="team-architecture">Team Architecture</a>
           <a href="#model-routing" class="sidebar-link" data-section="model-routing">Model Routing</a>
           <a href="#delegation" class="sidebar-link" data-section="delegation">Delegation Rules</a>
+          <a href="#advanced-orchestration" class="sidebar-link" data-section="advanced-orchestration">Advanced Orchestration</a>
         </div>
 
         <!-- Execution Modes -->
@@ -1003,6 +1005,65 @@ omx team shutdown &lt;team-name&gt;</code></pre>
           <p>Agents have specialized roles. The <strong>architect</strong> sees the big picture, the <strong>executor</strong> writes the code, and the <strong>verifier</strong> proves it works. Respecting this division ensures higher quality output.</p>
         </section>
 
+        <section id="agent-tiers" data-section>
+          <h2><span class="anchor-link">#</span>Agent Tiers & Catalog</h2>
+          <p>OMX organizes 30+ specialized agents into functional lanes. Use <code>/prompts:name</code> to invoke them.</p>
+
+          <div class="grid grid--2">
+            <!-- Build/Analysis -->
+            <div class="lane-card lane-card--build">
+              <span class="lane-card__badge">Build & Analysis</span>
+              <h4 class="lane-card__title">Implementation Core</h4>
+              <div class="lane-card__agents">
+                <span class="agent-tag">explore <small>Search</small></span>
+                <span class="agent-tag">planner <small>Sequence</small></span>
+                <span class="agent-tag">architect <small>Design</small></span>
+                <span class="agent-tag">executor <small>Code</small></span>
+                <span class="agent-tag">debugger <small>Fix</small></span>
+                <span class="agent-tag">verifier <small>Evidence</small></span>
+              </div>
+            </div>
+
+            <!-- Review -->
+            <div class="lane-card lane-card--review">
+              <span class="lane-card__badge">Review Lane</span>
+              <h4 class="lane-card__title">Quality Gates</h4>
+              <div class="lane-card__agents">
+                <span class="agent-tag">code-reviewer</span>
+                <span class="agent-tag">security-reviewer</span>
+                <span class="agent-tag">performance-reviewer</span>
+                <span class="agent-tag">api-reviewer</span>
+                <span class="agent-tag">style-reviewer</span>
+              </div>
+            </div>
+
+            <!-- Domain Specialists -->
+            <div class="lane-card lane-card--domain">
+              <span class="lane-card__badge">Domain Specialists</span>
+              <h4 class="lane-card__title">Deep Expertise</h4>
+              <div class="lane-card__agents">
+                <span class="agent-tag">dependency-expert</span>
+                <span class="agent-tag">test-engineer</span>
+                <span class="agent-tag">git-master</span>
+                <span class="agent-tag">designer</span>
+                <span class="agent-tag">researcher</span>
+              </div>
+            </div>
+
+            <!-- Product & Coordination -->
+            <div class="lane-card lane-card--product">
+              <span class="lane-card__badge">Product & Coordination</span>
+              <h4 class="lane-card__title">Strategy & Feedback</h4>
+              <div class="lane-card__agents">
+                <span class="agent-tag">product-manager</span>
+                <span class="agent-tag">ux-researcher</span>
+                <span class="agent-tag">critic <small>Challenge</small></span>
+                <span class="agent-tag">vision <small>Images</small></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="team-architecture" data-section>
           <h2><span class="anchor-link">#</span>Team Architecture</h2>
           <p>OMX uses a staged pipeline for teams in tmux. Transitions are strictly defined to ensure quality gates.</p>
@@ -1264,20 +1325,16 @@ omx --xhigh --madmax</code></pre>
               </thead>
               <tbody>
                 <tr><td><code>omx</code></td><td>Launch Codex CLI (HUD auto-attaches in tmux)</td></tr>
-                <tr><td><code>omx setup</code></td><td>Install skills, prompts, MCP servers, and AGENTS.md</td></tr>
-                <tr><td><code>omx doctor</code></td><td>Check installation health</td></tr>
-                <tr><td><code>omx doctor --team</code></td><td>Check team/swarm runtime diagnostics</td></tr>
-                <tr><td><code>omx ask</code></td><td>Ask local provider advisor (claude|gemini), writes .omx/artifacts/*</td></tr>
-                <tr><td><code>omx team</code></td><td>Spawn parallel worker panes in tmux</td></tr>
-                <tr><td><code>omx ralph</code></td><td>Launch Codex with ralph persistence mode active</td></tr>
-                <tr><td><code>omx version</code></td><td>Show version information</td></tr>
-                <tr><td><code>omx tmux-hook</code></td><td>Manage tmux prompt injection workaround (init|status|validate|test)</td></tr>
-                <tr><td><code>omx hooks</code></td><td>Manage hook plugins (init|status|validate|test)</td></tr>
-                <tr><td><code>omx hud</code></td><td>Show HUD statusline (--watch, --json, --preset=NAME)</td></tr>
-                <tr><td><code>omx status</code></td><td>Show active modes and state</td></tr>
-                <tr><td><code>omx cancel</code></td><td>Cancel active execution modes</td></tr>
-                <tr><td><code>omx reasoning</code></td><td>Show or set model reasoning effort (low|medium|high|xhigh)</td></tr>
-                <tr><td><code>omx help</code></td><td>Show this help message</td></tr>
+                <tr><td><code>omx setup</code></td><td>Install skills, prompts, MCP servers, and AGENTS.md. Supports <code>--scope user|project</code>.</td></tr>
+                <tr><td><code>omx doctor</code></td><td>Check installation health. Use <code>--team</code> for worker diagnostics.</td></tr>
+                <tr><td><code>omx ask &lt;provider&gt;</code></td><td>Directly query advisor (claude|gemini). Supports <code>--agent-prompt &lt;name&gt;</code>.</td></tr>
+                <tr><td><code>omx team</code></td><td>Spawn/status/resume/shutdown parallel worker panes in tmux.</td></tr>
+                <tr><td><code>omx ralph</code></td><td>Launch Codex with ralph persistence mode active.</td></tr>
+                <tr><td><code>omx status</code></td><td>Show active modes and execution state.</td></tr>
+                <tr><td><code>omx cancel</code></td><td>Cancel active execution modes (autopilot, team, etc.).</td></tr>
+                <tr><td><code>omx reasoning [mode]</code></td><td>Show or set model reasoning effort (low|medium|high|xhigh).</td></tr>
+                <tr><td><code>omx version</code></td><td>Show version information.</td></tr>
+                <tr><td><code>omx help</code></td><td>Show the help message.</td></tr>
               </tbody>
             </table>
           </div>
@@ -1292,21 +1349,35 @@ omx --xhigh --madmax</code></pre>
                 </tr>
               </thead>
               <tbody>
-                <tr><td><code>--yolo</code></td><td>Launch Codex in yolo mode</td></tr>
-                <tr><td><code>--high</code></td><td>High reasoning effort</td></tr>
-                <tr><td><code>--xhigh</code></td><td>Extra high reasoning effort</td></tr>
-                <tr><td><code>--madmax</code></td><td>DANGEROUS: bypass Codex approvals and sandbox</td></tr>
-                <tr><td><code>--spark</code></td><td>Use Codex spark model (~1.3x faster) for team workers only</td></tr>
-                <tr><td><code>--madmax-spark</code></td><td>Spark model + bypass approvals</td></tr>
-                <tr><td><code>-w, --worktree[=&lt;name&gt;]</code></td><td>Launch in a git worktree</td></tr>
-                <tr><td><code>--force</code></td><td>Force reinstall (overwrite existing)</td></tr>
-                <tr><td><code>--keep-config</code></td><td>Skip config.toml cleanup during uninstall</td></tr>
-                <tr><td><code>--purge</code></td><td>Remove .omx/ cache directory during uninstall</td></tr>
-                <tr><td><code>--dry-run</code></td><td>Show what would be done</td></tr>
-                <tr><td><code>--verbose</code></td><td>Detailed output</td></tr>
-                <tr><td><code>--scope</code></td><td>Setup scope: user | project</td></tr>
+                <tr><td><code>--yolo</code></td><td>Launch Codex in yolo mode.</td></tr>
+                <tr><td><code>--high / --xhigh</code></td><td>Shorthand for high/extra-high reasoning effort.</td></tr>
+                <tr><td><code>--madmax</code></td><td>DANGEROUS: bypass Codex approvals and sandbox.</td></tr>
+                <tr><td><code>--spark</code></td><td>Use Codex spark model (~1.3x faster) for team workers.</td></tr>
+                <tr><td><code>--madmax-spark</code></td><td>Spark model + bypass approvals for leader and workers.</td></tr>
+                <tr><td><code>-w, --worktree[=&lt;name&gt;]</code></td><td>Launch in a git worktree (isolated environment).</td></tr>
+                <tr><td><code>--force</code></td><td>Force reinstall (overwrite existing files) during setup.</td></tr>
+                <tr><td><code>--dry-run</code></td><td>Show what would be done without doing it.</td></tr>
+                <tr><td><code>--verbose</code></td><td>Show detailed output for debugging.</td></tr>
+                <tr><td><code>--scope &lt;user|project&gt;</code></td><td>Control installation target (global or local).</td></tr>
               </tbody>
             </table>
+          </div>
+
+          <h3 id="cli-ask-examples">Advisor (Ask) Examples</h3>
+          <p>The <code>omx ask</code> command allows you to query specialized advisors directly from your terminal.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Simple queries
+omx ask claude "review this diff"
+omx ask gemini "brainstorm alternatives for the auth system"
+
+# Role-specific queries
+omx ask claude --agent-prompt executor "implement feature X with tests"
+omx ask gemini --agent-prompt planner "draft a rollout plan for v0.9"
+
+# Shorthand prompt flags
+omx ask claude -p "summarize the recent changes"
+omx ask gemini --prompt "check this regex for errors"</code></pre>
           </div>
 
           <h3 id="cli-team">Team Commands</h3>
@@ -1328,12 +1399,25 @@ omx --xhigh --madmax</code></pre>
             </table>
           </div>
 
-          <h3 id="cli-other">Other Commands</h3>
-          <ul>
-            <li><code>omx hud --watch</code> - Live HUD refresh</li>
-            <li><code>omx hud --json</code> - JSON output</li>
-            <li><code>omx hud --preset=NAME</code> - Use a preset layout</li>
-          </ul>
+          <h3 id="cli-other">Hooks & Extensions</h3>
+          <p>OMX provides a powerful hook system for extending functionality and integrating with external tools.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>omx hooks init</code></td><td>Scaffold a new hook plugin in <code>.omx/hooks/</code>.</td></tr>
+                <tr><td><code>omx hooks status</code></td><td>Show status of installed hook plugins.</td></tr>
+                <tr><td><code>omx hooks validate</code></td><td>Validate hook plugin implementation.</td></tr>
+                <tr><td><code>omx tmux-hook init</code></td><td>Initialize tmux prompt injection workaround.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Plugins are disabled by default. Enable them by setting <code>OMX_HOOK_PLUGINS=1</code> in your environment.</p>
         </section>
 
         <!-- Notifications -->
@@ -1366,38 +1450,84 @@ omx setup</code></pre>
           </div>
 
           <h3 id="notify-platforms">Platforms</h3>
+          <p>OMX supports multiple platforms to ensure you stay informed wherever you work.</p>
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
                   <th>Platform</th>
-                  <th>Config Fields</th>
+                  <th>Key Config Fields</th>
+                  <th>Details</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Telegram</td>
-                  <td><code>botToken</code>, <code>chatId</code>, <code>parseMode</code> (<code>Markdown</code> | <code>HTML</code>)</td>
+                  <td><strong>Telegram</strong></td>
+                  <td><code>botToken</code>, <code>chatId</code></td>
+                  <td>Supports <code>parseMode</code> (Markdown or HTML). Responds to authorized chat IDs for reply injection.</td>
                 </tr>
                 <tr>
-                  <td>Discord Webhook</td>
-                  <td><code>webhookUrl</code>, <code>username</code> (optional), <code>mention</code> (optional, example: <code>&lt;@123456&gt;</code>)</td>
+                  <td><strong>Discord (Webhook)</strong></td>
+                  <td><code>webhookUrl</code></td>
+                  <td>Simple one-way alerts. Supports custom <code>username</code> and <code>mention</code> target (e.g. <code>&lt;@123456&gt;</code>).</td>
                 </tr>
                 <tr>
-                  <td>Discord Bot API</td>
-                  <td><code>botToken</code>, <code>channelId</code>, <code>mention</code> (optional)</td>
+                  <td><strong>Discord (Bot API)</strong></td>
+                  <td><code>botToken</code>, <code>channelId</code></td>
+                  <td>Recommended for two-way communication. Requires a Discord bot with <code>Send Messages</code> permissions.</td>
                 </tr>
                 <tr>
-                  <td>Slack</td>
-                  <td><code>webhookUrl</code>, <code>channel</code> (optional), <code>username</code> (optional), <code>mention</code> (optional, example: <code>&lt;!here&gt;</code>, <code>&lt;@UXXXXXXXX&gt;</code>)</td>
+                  <td><strong>Slack</strong></td>
+                  <td><code>webhookUrl</code></td>
+                  <td>Supports custom <code>channel</code>, <code>username</code>, and <code>mention</code> target (e.g. <code>&lt;!here&gt;</code>).</td>
                 </tr>
                 <tr>
-                  <td>Generic Webhook</td>
-                  <td><code>url</code>, <code>headers</code> (optional), <code>method</code> (<code>POST</code> | <code>PUT</code>)</td>
+                  <td><strong>Generic Webhook</strong></td>
+                  <td><code>url</code></td>
+                  <td>POST or PUT JSON payloads to any endpoint. Supports custom <code>headers</code> for auth.</td>
+                </tr>
+                <tr>
+                  <td><strong>OpenClaw</strong></td>
+                  <td><code>openclaw: { enabled: true }</code></td>
+                  <td>Advanced gateway for programmable hook orchestration. See <a href="#notify-openclaw">OpenClaw Configuration</a>.</td>
                 </tr>
               </tbody>
             </table>
           </div>
+
+          <h3 id="notify-openclaw">OpenClaw Configuration</h3>
+          <p>OpenClaw is the recommended path for production-grade notification orchestration. It allows you to trigger agent turns and complex follow-up behaviors.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">JSON (openclaw profile)</span></div>
+            <pre><code>{
+  "notifications": {
+    "verbosity": "verbose",
+    "openclaw": {
+      "enabled": true,
+      "gateways": {
+        "local": {
+          "type": "http",
+          "url": "http://127.0.0.1:18789/hooks/agent",
+          "headers": { "Authorization": "Bearer ${HOOKS_TOKEN}" }
+        }
+      },
+      "hooks": {
+        "session-start": {
+          "enabled": true,
+          "gateway": "local",
+          "instruction": "[session-start|exec] project={{projectName}} session={{sessionId}}"
+        },
+        "ask-user-question": {
+          "enabled": true,
+          "gateway": "local",
+          "instruction": "[ask-user-question|exec] session={{sessionId}} question={{question}}"
+        }
+      }
+    }
+  }
+}</code></pre>
+          </div>
+          <p>For more details, see the <a href="https://github.com/Yeachan-Heo/oh-my-codex/blob/main/docs/openclaw-integration.md" target="_blank" rel="noopener noreferrer">Full OpenClaw Integration Guide</a>.</p>
 
           <h3 id="notify-events">Events</h3>
           <div class="table-wrapper">
@@ -1464,9 +1594,10 @@ omx setup</code></pre>
             <li>Available variables: <code>event</code>, <code>sessionId</code>, <code>timestamp</code>, <code>projectName</code>, <code>activeMode</code>, <code>question</code>, <code>tmuxTail</code>.</li>
           </ul>
 
-          <h3 id="notify-example-config">Example Config</h3>
+          <h3 id="notify-example-config">Example Configuration</h3>
+          <p>Configurations are stored in <code>~/.codex/config.toml</code> (Codex native) or <code>.omx-config.json</code> (OMX advanced).</p>
           <div class="code-block-wrapper">
-            <div class="code-block-header"><span class="code-lang">TOML</span></div>
+            <div class="code-block-header"><span class="code-lang">TOML (Codex Native)</span></div>
             <pre><code>[notifications]
 enabled = true
 verbosity = "session"
@@ -1474,7 +1605,50 @@ verbosity = "session"
 [notifications.telegram]
 enabled = true
 botToken = "123456:ABC-DEF"
-chatId = "-100123456789"</code></pre>
+chatId = "-100123456789"
+
+[notifications.slack]
+enabled = true
+webhookUrl = "https://hooks.slack.com/services/xxx"
+mention = "@U12345"</code></pre>
+          </div>
+
+          <p>For more advanced routing, you can use generic command or webhook aliases:</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">JSON (.omx-config.json)</span></div>
+            <pre><code>{
+  "notifications": {
+    "custom_webhook_command": {
+      "enabled": true,
+      "url": "https://api.example.com/hooks",
+      "method": "POST",
+      "headers": { "X-Api-Key": "my-secret-key" },
+      "events": ["session-end", "ask-user-question"]
+    },
+    "custom_cli_command": {
+      "enabled": true,
+      "command": "notify-send \"OMX: {{event}}\" \"{{message}}\"",
+      "events": ["session-start", "session-end"]
+    }
+  }
+}</code></pre>
+          </div>
+
+          <h3 id="advanced-team-config">Advanced Team Configuration</h3>
+          <p>You can fine-tune team behavior using environment variables or <code>.omx-config.json</code>.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Mix different AI providers in one team
+export OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini
+omx team 3:executor "parallel refactoring"
+
+# Force a specific model for workers
+export OMX_TEAM_WORKER_LAUNCH_ARGS="--model gpt-5.3-codex-spark"
+omx team 2:architect "design the system"
+
+# Enable dynamic scaling
+export OMX_TEAM_SCALING_ENABLED=1
+omx team 2:executor "task"</code></pre>
           </div>
 
           <h3 id="notify-reply">Reply Injection</h3>
@@ -1566,6 +1740,48 @@ chatId = "-100123456789"</code></pre>
           <div class="callout info">
             <div class="callout-title">Good to know</div>
             <p>These four patterns cover most real-world work. Other skills exist for specific tasks, but you rarely need them day-to-day.</p>
+          </div>
+        </section>
+
+        <!-- Advanced Orchestration -->
+        <section id="advanced-orchestration" data-section>
+          <h2><span class="anchor-link">#</span>Advanced Orchestration</h2>
+          <p>For large-scale engineering, OMX supports complex team configurations, mixed CLI workers, and git worktree isolation.</p>
+
+          <h3>Mixed CLI Teams</h3>
+          <p>You can mix different AI providers (Codex, Claude, etc.) within a single team to leverage their unique strengths.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Mix 3 Codex workers and 3 Claude workers
+export OMX_TEAM_WORKER_CLI_MAP=codex,codex,codex,claude,claude,claude
+omx team 6:executor "refactor the entire backend"</code></pre>
+          </div>
+
+          <h3>Team CLI API</h3>
+          <p>All mutations and coordination should use the CLI interop API for stable JSON-based state transitions. This is critical for automated tooling and complex worker coordination.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Create a task programmatically
+omx team api create-task --input '{"team_name":"my-team","subject":"Fix bug","description":"..."}' --json
+
+# Claim a task with versioned safety
+omx team api claim-task --input '{"team_name":"my-team","task_id":"1","worker":"worker-1"}' --json
+
+# Transition task status
+omx team api transition-task-status --input '{"team_name":"my-team","task_id":"1","from":"pending","to":"in_progress"}' --json</code></pre>
+          </div>
+
+          <h3>Worktree Isolation</h3>
+          <p>Launch teams in dedicated git worktrees to prevent parallel workers from clobbering each other's files. OMX handles state resolution across these worktrees automatically.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Launch in a new worktree
+omx team 4:executor "feature work" --worktree=feature-branch</code></pre>
+          </div>
+
+          <div class="callout info">
+            <div class="callout-title">Architecture Insight</div>
+            <p>OMX maintains a durable, claim-safe lifecycle for every task. If a worker fails or a session is interrupted, the state is preserved in <code>.omx/state/team/</code>, allowing for safe resumes with <code>omx team resume &lt;team-name&gt;</code>.</p>
           </div>
         </section>
 
