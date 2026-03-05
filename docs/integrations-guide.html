@@ -25,9 +25,6 @@
   <link rel="stylesheet" href="../css/components.css">
 
   <style>
-    /* =========================================
-       DOCS LAYOUT & THEME OVERRIDES
-       ========================================= */
     :root {
       --sidebar-width: 280px;
       --header-height-mobile: 60px;
@@ -39,7 +36,6 @@
       color: var(--text-primary);
     }
 
-    /* Layout */
     .docs-layout {
       display: flex;
       min-height: 100vh;
@@ -72,7 +68,6 @@
       padding-bottom: 4rem;
     }
 
-    /* Typography Overrides */
     .docs-content h1 {
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border-default);
@@ -102,7 +97,6 @@
       padding-left: 1.5rem;
     }
 
-    /* Sidebar Components */
     .sidebar-brand {
       display: flex;
       align-items: center;
@@ -166,7 +160,6 @@
       font-weight: 500;
     }
 
-    /* Anchor Links */
     .anchor-link {
       position: absolute;
       left: -1.25rem;
@@ -181,7 +174,6 @@
       opacity: 1;
     }
 
-    /* Mobile Menu Button */
     .mobile-menu-btn {
       display: none;
       position: fixed;
@@ -215,6 +207,31 @@
       border: 1px solid var(--border-default);
     }
 
+    .skill-invoke-box {
+      background: linear-gradient(135deg, rgba(16, 163, 127, 0.1), rgba(16, 163, 127, 0.05));
+      border: 2px solid var(--accent-primary);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .skill-invoke-box h3 {
+      margin-top: 0;
+      color: var(--accent-primary);
+    }
+
+    .skill-command {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      background: var(--bg-primary);
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      display: inline-block;
+      margin: 1rem 0;
+      color: var(--text-primary);
+    }
+
     @media (max-width: 1024px) {
       .docs-sidebar {
         transform: translateX(-100%);
@@ -241,7 +258,6 @@
   </button>
 
   <div class="docs-layout">
-    <!-- SIDEBAR -->
     <aside class="docs-sidebar" id="sidebar">
       <a href="../index.html" class="sidebar-brand">
         <div class="sidebar-brand__icon">OMX</div>
@@ -251,8 +267,9 @@
       <nav class="sidebar-nav">
         <div class="sidebar-section">
           <div class="sidebar-title">Integrations</div>
-          <a href="#discord" class="sidebar-link">Discord Webhooks</a>
-          <a href="#telegram" class="sidebar-link">Telegram Bot</a>
+          <a href="#skill-setup" class="sidebar-link">Skill-Based Setup</a>
+          <a href="#discord" class="sidebar-link">Discord</a>
+          <a href="#telegram" class="sidebar-link">Telegram</a>
           <a href="#openclaw" class="sidebar-link">OpenClaw Gateway</a>
           <a href="#routing" class="sidebar-link">Notification Routing</a>
         </div>
@@ -266,20 +283,38 @@
       </nav>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="docs-main">
       <div class="docs-content">
         <section id="integrations">
           <h1>Integrations Guide</h1>
           <p class="text-body-lg">
-            Stay informed and in control. Oh My Codex supports deep integration with popular communication platforms to keep you updated on long-running orchestrations.
+            Stay informed and in control. Oh My Codex supports deep integration with popular communication platforms through the <code>configure-notifications</code> skill.
           </p>
         </section>
 
-        <!-- Discord -->
+        <section id="skill-setup">
+          <h2><span class="anchor-link">#</span>Skill-Based Setup</h2>
+          <p>Instead of manual configuration, OMX uses the <strong>configure-notifications</strong> skill to set up integrations interactively. Simply invoke the skill inside Codex CLI:</p>
+
+          <div class="skill-invoke-box">
+            <h3>Invoke the Configuration Skill</h3>
+            <div class="skill-command">/configure-notifications</div>
+            <p>or ask naturally:</p>
+            <div class="skill-command">"configure discord notifications"</div>
+          </div>
+
+          <p>The skill will guide you through:</p>
+          <ul>
+            <li>Selecting which platform to configure (Discord, Telegram, Slack, or OpenClaw)</li>
+            <li>Choosing webhook or bot integration</li>
+            <li>Securely storing credentials in your environment</li>
+            <li>Testing the connection</li>
+          </ul>
+        </section>
+
         <section id="discord">
           <h2><span class="anchor-link">#</span>Discord Integration</h2>
-          <p>Discord is the most popular way to receive real-time alerts from OMX. You can use simple webhooks for one-way alerts or the Bot API for interactive sessions.</p>
+          <p>Discord is the most popular way to receive real-time alerts from OMX.</p>
 
           <div class="platform-card card glass pixel-border">
             <div class="platform-icon">
@@ -288,47 +323,16 @@
               </svg>
             </div>
             <div style="flex: 1;">
-              <h3>Webhook Setup</h3>
-              <p>The fastest way to get notifications. Webhooks are one-way: OMX sends, you receive.</p>
-              <ol>
-                <li>Open your Discord Server Settings > Integrations > Webhooks.</li>
-                <li>Create a new Webhook and copy the <strong>Webhook URL</strong>.</li>
-                <li>Export the URL to your environment:</li>
-              </ol>
-              <div class="code-block">
-                <div class="code-block__header">
-                  <span class="code-block__lang">bash</span>
-                  <button class="code-block__copy" data-copy="export OMX_DISCORD_WEBHOOK_URL='https://discord.com/api/webhooks/...' ">Copy</button>
-                </div>
-                <div class="code-block__content">
-                  <pre><code>export OMX_DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/..."</code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card glass tilt-3d pixel-border" style="padding: 2rem; margin-top: 1rem;">
-            <h3>Advanced: Bot API</h3>
-            <p>Required for two-way communication (replying to a notification to inject a command into OMX).</p>
-            <ul>
-              <li><strong>Bot Token:</strong> Create an application on the <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a>.</li>
-              <li><strong>Channel ID:</strong> Right-click a channel in Discord and select "Copy Channel ID" (requires Developer Mode).</li>
-            </ul>
-            <div class="code-block">
-              <div class="code-block__header">
-                <span class="code-block__lang">bash</span>
-                <button class="code-block__copy" data-copy="export OMX_DISCORD_NOTIFIER_BOT_TOKEN='your-token'
-export OMX_DISCORD_NOTIFIER_CHANNEL='your-channel-id'">Copy</button>
-              </div>
-              <div class="code-block__content">
-                <pre><code>export OMX_DISCORD_NOTIFIER_BOT_TOKEN="your-token"
-export OMX_DISCORD_NOTIFIER_CHANNEL="your-channel-id"</code></pre>
-              </div>
+              <h3>Setup Options</h3>
+              <ul>
+                <li><strong>Webhook:</strong> One-way notifications to a channel</li>
+                <li><strong>Bot API:</strong> Two-way communication (reply to control OMX)</li>
+              </ul>
+              <p>Just say: <code>"setup discord webhook"</code> or <code>"configure discord bot"</code></p>
             </div>
           </div>
         </section>
 
-        <!-- Telegram -->
         <section id="telegram">
           <h2><span class="anchor-link">#</span>Telegram Bot</h2>
           <p>Telegram offers excellent support for interactive bots and secure communication.</p>
@@ -341,62 +345,27 @@ export OMX_DISCORD_NOTIFIER_CHANNEL="your-channel-id"</code></pre>
             </div>
             <div style="flex: 1;">
               <h3>Configuration</h3>
-              <ol>
-                <li>Message <a href="https://t.me/botfather" target="_blank">@BotFather</a> on Telegram to create a new bot.</li>
-                <li>Copy the <strong>HTTP API Token</strong>.</li>
-                <li>To get your <strong>Chat ID</strong>, message your new bot and then visit <code>https://api.telegram.org/bot<token>/getUpdates</code>.</li>
-              </ol>
-              <div class="code-block">
-                <div class="code-block__header">
-                  <span class="code-block__lang">bash</span>
-                  <button class="code-block__copy" data-copy="export OMX_TELEGRAM_BOT_TOKEN='your-token'
-export OMX_TELEGRAM_CHAT_ID='your-chat-id'">Copy</button>
-                </div>
-                <div class="code-block__content">
-                  <pre><code>export OMX_TELEGRAM_BOT_TOKEN="your-token"
-export OMX_TELEGRAM_CHAT_ID="your-chat-id"</code></pre>
-                </div>
-              </div>
+              <p>Simply invoke:</p>
+              <div class="skill-command">"configure telegram notifications"</div>
+              <p>The skill will guide you through creating a bot with @BotFather and getting your Chat ID.</p>
             </div>
           </div>
         </section>
 
-        <!-- OpenClaw -->
         <section id="openclaw">
           <h2><span class="anchor-link">#</span>OpenClaw Gateway</h2>
-          <p>OpenClaw is a programmable gateway for deep agentic integration. It allows you to trigger automated follow-up actions based on OMX events.</p>
+          <p>OpenClaw is a programmable gateway for deep agentic integration.</p>
 
           <div class="card glass pixel-border" style="padding: 2rem;">
-            <h3>Local HTTP Gateway</h3>
-            <p>OMX can POST JSON payloads to a local or remote HTTP endpoint. This is the foundation for custom orchestration loops.</p>
-            <div class="code-block">
-              <div class="code-block__header">
-                <span class="code-block__lang">json (config.json)</span>
-                <button class="code-block__copy" data-copy='{
-  "openclaw": {
-    "enabled": true,
-    "url": "http://localhost:18789/hooks/agent",
-    "headers": { "Authorization": "Bearer my-secret" }
-  }
-}'>Copy</button>
-              </div>
-              <div class="code-block__content">
-                <pre><code>{
-  "openclaw": {
-    "enabled": true,
-    "url": "http://localhost:18789/hooks/agent",
-    "headers": { "Authorization": "Bearer my-secret" }
-  }
-}</code></pre>
-              </div>
-            </div>
+            <h3>Custom Integration</h3>
+            <p>For OpenClaw or custom webhook endpoints:</p>
+            <div class="skill-command">"configure openclaw gateway"</div>
             <p class="text-caption" style="margin-top: 1rem;">
-              When enabled, OMX will send full state snapshots (including tmux buffer snippets) to the gateway on every major lifecycle event.
+              The skill will prompt for your HTTP endpoint URL and any required headers.
             </p>
           </div>
         </section>
 
-        <!-- Routing -->
         <section id="routing">
           <h2><span class="anchor-link">#</span>Notification Routing</h2>
           <p>Control exactly what notifications you receive and how they are formatted.</p>
@@ -429,27 +398,12 @@ export OMX_TELEGRAM_CHAT_ID="your-chat-id"</code></pre>
               </tbody>
             </table>
           </div>
-
-          <div class="card glass pixel-border" style="padding: 2rem; margin-top: 2rem;">
-            <h3>Custom Templates</h3>
-            <p>Customize the message content using <code>{{variable}}</code> syntax.</p>
-            <ul>
-              <li><code>{{sessionId}}</code> - Unique ID for the current session.</li>
-              <li><code>{{projectName}}</code> - Name of the project root directory.</li>
-              <li><code>{{question}}</code> - The text of a prompt if waiting for input.</li>
-              <li><code>{{tmuxTail}}</code> - The last 10 lines of the tmux buffer.</li>
-            </ul>
-          </div>
         </section>
 
         <div style="margin-top: 4rem; text-align: center; padding: 3rem; background: rgba(16, 163, 127, 0.05); border-radius: 1rem;">
           <h3>Ready to configure?</h3>
-          <p>Run the interactive setup command to configure all integrations at once.</p>
-          <div class="code-block" style="max-width: 300px; margin: 1rem auto;">
-            <div class="code-block__content" style="text-align: center;">
-              <pre><code>omx setup</code></pre>
-            </div>
-          </div>
+          <p>Invoke the skill to set up all your integrations interactively.</p>
+          <div class="skill-command">/configure-notifications</div>
         </div>
       </div>
     </main>
@@ -461,7 +415,6 @@ export OMX_TELEGRAM_CHAT_ID="your-chat-id"</code></pre>
     document.addEventListener('DOMContentLoaded', () => {
       new CodeBlocks();
 
-      // Mobile Menu Logic
       const mobileBtn = document.getElementById('mobile-menu-btn');
       const sidebar = document.getElementById('sidebar');
 
@@ -469,7 +422,6 @@ export OMX_TELEGRAM_CHAT_ID="your-chat-id"</code></pre>
         sidebar.classList.toggle('open');
       });
 
-      // Smooth Scroll Active Link
       const links = document.querySelectorAll('.sidebar-link');
       window.addEventListener('scroll', () => {
         let current = '';
