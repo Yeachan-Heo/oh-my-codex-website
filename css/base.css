@@ -9,21 +9,16 @@
 :root {
   /* Accent Color */
   --accent-color: #10a37f;
-  --accent-color-light: #14b8a6;
-  --accent-color-dark: #0d9488;
+  --accent-color-light: #34d399;
+  --accent-color-dark: #059669;
   --accent-color-rgb: 16, 163, 127;
 
   /* Background Colors */
-  --bg-primary: #050508;
-  --bg-secondary: #0a0a0f;
-  --bg-tertiary: #12121a;
-  --bg-elevated: #1a1a24;
-  --bg-overlay: rgba(5, 5, 8, 0.85);
-
-  /* Glassmorphism Defaults */
-  --glass-bg: rgba(10, 10, 15, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-blur: 12px;
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-elevated: #222222;
+  --bg-overlay: rgba(0, 0, 0, 0.8);
 
   /* Text Colors */
   --text-primary: #ffffff;
@@ -32,8 +27,8 @@
   --text-muted: #52525b;
 
   /* Border Colors */
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-color-light: rgba(255, 255, 255, 0.15);
+  --border-color: #27272a;
+  --border-color-light: #3f3f46;
   --border-color-accent: rgba(var(--accent-color-rgb), 0.5);
 
   /* Skeleton Colors */
