@@ -83,6 +83,69 @@
   margin-top: var(--space-2);
 }
 
+/* Discord Specific Card */
+.card--discord {
+  border-color: rgba(var(--accent-discord-rgb), 0.3);
+}
+
+.card--discord:hover {
+  border-color: var(--accent-discord);
+  box-shadow: 0 20px 40px rgba(var(--accent-discord-rgb), 0.2);
+}
+
+.card--discord .card__icon {
+  background: linear-gradient(135deg, var(--accent-discord-dark), var(--accent-discord));
+}
+
+.card--discord.pixel-border:hover {
+  border-color: var(--accent-discord);
+  box-shadow:
+    inset 0 0 0 1px var(--accent-discord),
+    6px 6px 0 0 rgba(var(--accent-discord-rgb), 0.25);
+}
+
+/* OpenClaw Specific Card */
+.card--openclaw {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.card--openclaw:hover {
+  border-color: #ef4444;
+  box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2);
+}
+
+.card--openclaw .card__icon {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.card--openclaw.pixel-border:hover {
+  border-color: #ef4444;
+  box-shadow:
+    inset 0 0 0 1px #ef4444,
+    6px 6px 0 0 rgba(239, 68, 68, 0.25);
+}
+
+/* Telegram Specific Card */
+.card--telegram {
+  border-color: rgba(var(--accent-telegram-rgb), 0.3);
+}
+
+.card--telegram:hover {
+  border-color: var(--accent-telegram);
+  box-shadow: 0 20px 40px rgba(var(--accent-telegram-rgb), 0.2);
+}
+
+.card--telegram .card__icon {
+  background: linear-gradient(135deg, var(--accent-telegram-dark), var(--accent-telegram));
+}
+
+.card--telegram.pixel-border:hover {
+  border-color: var(--accent-telegram);
+  box-shadow:
+    inset 0 0 0 1px var(--accent-telegram),
+    6px 6px 0 0 rgba(var(--accent-telegram-rgb), 0.25);
+}
+
 /* ========================================
    Buttons
    ======================================== */
@@ -150,9 +213,16 @@
   border: 1px solid var(--accent-color);
 }
 
-.btn--outline:hover:not(:disabled) {
-  background-color: var(--accent-color);
+.btn--discord {
+  background-color: var(--accent-discord);
   color: white;
+  border: none;
+}
+
+.btn--discord:hover:not(:disabled) {
+  background-color: var(--accent-discord-dark);
+  box-shadow: 0 4px 12px rgba(var(--accent-discord-rgb), 0.4);
+  transform: translateY(-1px);
 }
 
 .btn--lg {

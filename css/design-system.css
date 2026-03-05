@@ -43,6 +43,12 @@
   --accent-warning: #f59e0b;
   --accent-error: #ef4444;
   --accent-info: #3b82f6;
+  --accent-discord: #5865F2;
+  --accent-discord-dark: #454FBF;
+  --accent-discord-rgb: 88, 101, 242;
+  --accent-telegram: #0088cc;
+  --accent-telegram-dark: #006699;
+  --accent-telegram-rgb: 0, 136, 204;
 
   /* Skeleton Colors */
   --skeleton-base: #1a1a2e;
