@@ -1,0 +1,2 @@
+{"timestamp":"2026-03-05T14:14:04.936Z","type":"worker_idle_notification","team":"analyze-the-oh-my-codex-websit","tmux_target":"%1338","worker":"worker-1","prev_state":"unknown","task_id":null}
+{"timestamp":"2026-03-05T14:18:53.600Z","type":"worker_idle_notification","team":"refactor-the-oh-my-codex-websi","tmux_target":"%1338","worker":"worker-2","prev_state":"unknown","task_id":null}

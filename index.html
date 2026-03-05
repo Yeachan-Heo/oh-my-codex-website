@@ -895,7 +895,7 @@
 </head>
 <body>
   <!-- Navigation -->
-  <nav class="nav" id="nav">
+  <nav class="nav glass" id="nav">
     <div class="nav__inner">
       <a href="#" class="nav__logo" aria-label="oh-my-codex home">
         <div class="nav__logo-icon">
@@ -932,10 +932,14 @@
 
   <!-- Hero Section -->
   <section class="hero" id="hero">
+    <div class="hero-glow-container">
+      <div class="hero-glow-blob hero-glow-blob--1"></div>
+      <div class="hero-glow-blob hero-glow-blob--2"></div>
+    </div>
     <div class="hero__content">
       <div class="scanlines"></div>
       <div class="hero__text">
-        <h1 class="hero__title pixel-font">
+        <h1 class="hero__title pixel-font glow-text-pulse">
           <span class="gradient-text">oh-my-codex</span>
         </h1>
         <p class="hero__tagline">Your codex is not alone.<span class="terminal-cursor"></span></p>
@@ -990,7 +994,7 @@
         </div>
       </div>
 
-      <div class="hero__visual">
+      <div class="hero__visual tilt-3d">
         <div class="hero__illustration">
           <img src="omx-character-nobg.png" alt="oh-my-codex character illustration" loading="eager">
         </div>
@@ -1006,7 +1010,7 @@
     </div>
 
     <div class="features-grid">
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
@@ -1017,7 +1021,7 @@
         <p class="feature-card__description">Use <code>omx ask</code> to route prompts to <code>ask-claude</code> or <code>ask-gemini</code>, then execute with deep-interview’s Socratic ambiguity gating and the new <code>web-clone</code> skill for end-to-end website replication flows.</p>
       </div>
 
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
@@ -1027,7 +1031,7 @@
         <p class="feature-card__description">OpenClaw gateway integration unifies outbound delivery, while the notification engine overhaul streamlines Discord/Slack/Telegram/OpenClaw routing with clearer configuration and more reliable status signaling.</p>
       </div>
 
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
@@ -1047,7 +1051,7 @@
     </div>
 
     <div class="features-grid">
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -1060,7 +1064,7 @@
         <p class="feature-card__description">30 specialized agent prompts via /prompts:name for targeted expertise across every development domain.</p>
       </div>
 
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -1070,7 +1074,7 @@
         <p class="feature-card__description">40+ repeatable execution modes via $name syntax for autopilot, team orchestration, planning, and QA cycles.</p>
       </div>
 
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
@@ -1081,7 +1085,7 @@
         <p class="feature-card__description">Parallel workers in tmux sessions via omx team for coordinated multi-agent task execution.</p>
       </div>
 
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
@@ -1093,7 +1097,7 @@
         <p class="feature-card__description">State, memory, code intelligence, and trace servers for persistent context and cross-session learning.</p>
       </div>
 
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
@@ -1103,7 +1107,7 @@
         <p class="feature-card__description">plan → prd → exec → verify → fix lifecycle for structured, evidence-based development workflows.</p>
       </div>
 
-      <div class="feature-card pixel-border">
+      <div class="feature-card pixel-border glass tilt-3d">
         <div class="feature-card__icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="1" x2="12" y2="23"></line>
@@ -1126,7 +1130,7 @@
     <div class="install-steps">
       <div class="install-step">
         <div class="install-step__label">Step 1: Install via npm</div>
-        <div class="code-block">
+        <div class="code-block glass">
           <div class="code-block__header">
             <div class="code-block__dots">
               <span class="code-block__dot code-block__dot--red"></span>
@@ -1143,7 +1147,7 @@
 
       <div class="install-step">
         <div class="install-step__label">Step 2: Setup and verify</div>
-        <div class="code-block">
+        <div class="code-block glass">
           <div class="code-block__header">
             <div class="code-block__dots">
               <span class="code-block__dot code-block__dot--red"></span>
@@ -1168,7 +1172,7 @@
     </div>
 
     <div class="tiers-grid">
-      <div class="tier-card tier-card--build">
+      <div class="tier-card tier-card--build glass tilt-3d">
         <div class="tier-card__header">
           <span class="tier-card__badge">Build/Analysis</span>
         </div>
@@ -1183,7 +1187,7 @@
         </div>
       </div>
 
-      <div class="tier-card tier-card--review">
+      <div class="tier-card tier-card--review glass tilt-3d">
         <div class="tier-card__header">
           <span class="tier-card__badge">Review Lane</span>
         </div>
@@ -1197,7 +1201,7 @@
         </div>
       </div>
 
-      <div class="tier-card tier-card--domain">
+      <div class="tier-card tier-card--domain glass tilt-3d">
         <div class="tier-card__header">
           <span class="tier-card__badge">Specialists</span>
         </div>
@@ -1212,7 +1216,7 @@
         </div>
       </div>
 
-      <div class="tier-card tier-card--product">
+      <div class="tier-card tier-card--product glass tilt-3d">
         <div class="tier-card__header">
           <span class="tier-card__badge">Product</span>
         </div>

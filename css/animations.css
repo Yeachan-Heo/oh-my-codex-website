@@ -407,6 +407,91 @@
 }
 
 /* ========================================
+   3D Tilt and Hover Effects
+   ======================================== */
+
+.tilt-3d {
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.tilt-3d:hover {
+  transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) translateY(-8px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(var(--accent-color-rgb), 0.2);
+}
+
+.tilt-3d > * {
+  transform: translateZ(20px);
+}
+
+/* ========================================
+   Glow and Depth Effects
+   ======================================== */
+
+.hero-glow-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-glow-blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(var(--accent-color-rgb), 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: float-slow 20s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+.hero-glow-blob--1 {
+  top: -10%;
+  left: -10%;
+  animation-delay: 0s;
+}
+
+.hero-glow-blob--2 {
+  bottom: -10%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+  animation-delay: -5s;
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(100px, 50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-50px, 100px) scale(0.9);
+  }
+}
+
+.glow-text-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(16, 163, 127, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 25px rgba(16, 163, 127, 0.5), 0 0 10px rgba(16, 163, 127, 0.2);
+  }
+}
+
+/* ========================================
    Special Effects
    ======================================== */
 

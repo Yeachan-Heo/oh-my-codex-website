@@ -1,0 +1,9 @@
+{
+  "pid": 950065,
+  "started_at": "2026-02-23T10:09:44.831Z",
+  "cwd": "/home/bellman/Workspace/oh-my-codex-website",
+  "notify_script": "/home/bellman/Workspace/oh-my-codex/scripts/notify-hook.js",
+  "poll_ms": 700,
+  "tracked_files": 10,
+  "seen_turns": 1
+}

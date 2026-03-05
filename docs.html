@@ -934,6 +934,20 @@ omx doctor</code></pre>
           <h2><span class="anchor-link">#</span>Quick Start</h2>
           <p>OMX uses "Magic Keywords" and <code>$skill</code> commands to detect your intent. Just describe what you want.</p>
 
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">EXAMPLES</span></div>
+            <pre><code># Inside Codex CLI:
+/prompts:architect "analyze current auth boundaries"
+/prompts:executor "implement input validation in login"
+$plan "ship OAuth callback safely"
+$team 3:executor "fix all TypeScript errors"
+
+# From terminal:
+omx team 4:executor "parallelize a multi-module refactor"
+omx team status &lt;team-name&gt;
+omx team shutdown &lt;team-name&gt;</code></pre>
+          </div>
+
           <ul class="quick-start-steps">
             <li>
               <div class="qs-content">
@@ -970,6 +984,15 @@ omx doctor</code></pre>
 
         <!-- Architecture -->
         <section id="philosophy" data-section>
+          <h2><span class="anchor-link">#</span>Why OMX</h2>
+          <p>Codex CLI is strong for direct tasks. OMX adds structure for larger work:</p>
+          <ul>
+            <li><strong>Decomposition and staged execution:</strong> Managed through <code>team-plan &rarr; team-prd &rarr; team-exec &rarr; team-verify &rarr; team-fix</code> pipeline.</li>
+            <li><strong>Persistent mode lifecycle state:</strong> Stored in <code>.omx/state/</code> for resumable execution.</li>
+            <li><strong>Memory + notepad surfaces:</strong> Dedicated workspace for long-running sessions.</li>
+            <li><strong>Operational controls:</strong> Fine-grained control over launch, verification, and cancellation.</li>
+          </ul>
+
           <h2><span class="anchor-link">#</span>Conductor Philosophy</h2>
           <p>The core principle of OMX is: <strong>You are the conductor, not the performer.</strong></p>
 
@@ -1147,6 +1170,13 @@ omx doctor</code></pre>
           <h3>Utilities</h3>
           <p><strong>Python REPL:</strong> Persistent environment for data analysis.</p>
           
+          <h3 id="mcp-working-directory-policy">MCP workingDirectory policy (optional hardening)</h3>
+          <p>By default, MCP state/memory/trace tools accept caller-provided <code>workingDirectory</code>. To constrain this, set an allowlist of roots:</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code>export OMX_MCP_WORKDIR_ROOTS="/path/to/project:/path/to/another-root"</code></pre>
+          </div>
+          <p>When set, <code>workingDirectory</code> values outside these roots will be rejected by the tools for security.</p>
         </section>
 
         <!-- Skills & Commands -->
@@ -1237,6 +1267,7 @@ omx --xhigh --madmax</code></pre>
                 <tr><td><code>omx setup</code></td><td>Install skills, prompts, MCP servers, and AGENTS.md</td></tr>
                 <tr><td><code>omx doctor</code></td><td>Check installation health</td></tr>
                 <tr><td><code>omx doctor --team</code></td><td>Check team/swarm runtime diagnostics</td></tr>
+                <tr><td><code>omx ask</code></td><td>Ask local provider advisor (claude|gemini), writes .omx/artifacts/*</td></tr>
                 <tr><td><code>omx team</code></td><td>Spawn parallel worker panes in tmux</td></tr>
                 <tr><td><code>omx ralph</code></td><td>Launch Codex with ralph persistence mode active</td></tr>
                 <tr><td><code>omx version</code></td><td>Show version information</td></tr>
@@ -1269,6 +1300,8 @@ omx --xhigh --madmax</code></pre>
                 <tr><td><code>--madmax-spark</code></td><td>Spark model + bypass approvals</td></tr>
                 <tr><td><code>-w, --worktree[=&lt;name&gt;]</code></td><td>Launch in a git worktree</td></tr>
                 <tr><td><code>--force</code></td><td>Force reinstall (overwrite existing)</td></tr>
+                <tr><td><code>--keep-config</code></td><td>Skip config.toml cleanup during uninstall</td></tr>
+                <tr><td><code>--purge</code></td><td>Remove .omx/ cache directory during uninstall</td></tr>
                 <tr><td><code>--dry-run</code></td><td>Show what would be done</td></tr>
                 <tr><td><code>--verbose</code></td><td>Detailed output</td></tr>
                 <tr><td><code>--scope</code></td><td>Setup scope: user | project</td></tr>

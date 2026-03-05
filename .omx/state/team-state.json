@@ -1,0 +1,16 @@
+{
+  "active": false,
+  "mode": "team",
+  "iteration": 0,
+  "max_iterations": 50,
+  "current_phase": "cancelled",
+  "task_description": "Refactor the oh-my-codex website at /home/bellman/Workspace/oh-my-codex-website. The main oh-my-codex project is now at v0.8.1 (package.json confirms this). The website has severe version drift. KEY TASKS: 1) In index.html: update meta description from v0.6.0 to v0.8.1, update OG/Twitter descriptions to mention v0.8.1 features, update the hero version badge from 0.7.6 to 0.8.1, update the Release Highlights section - replace v0.6.0 highlights with v0.8.1 highlights covering: omx ask command (ask claude/gemini), deep-interview workflow with Socratic ambiguity gating, web-clone skill, OpenClaw gateway integration, RALPLAN-DR consensus planning, dynamic team scaling, worktree orchestration, notification engine overhaul, 1472+ tests. 2) In data/stats.json: update version to 0.8.1. 3) In js/config.js: update version to 0.8.1. Do NOT create new files. --cwd /home/bellman/Workspace/oh-my-codex-website",
+  "started_at": "2026-03-05T14:16:57.468Z",
+  "tmux_pane_id": "%1338",
+  "tmux_pane_set_at": "2026-03-05T14:16:57.468Z",
+  "linked_ralph": false,
+  "team_name": "refactor-the-oh-my-codex-websi",
+  "agent_count": 2,
+  "agent_types": "gemini",
+  "completed_at": "2026-03-05T14:19:46.289Z"
+}

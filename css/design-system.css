@@ -156,6 +156,7 @@ body {
   background: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  perspective: 1200px;
 }
 
 /* Selection */

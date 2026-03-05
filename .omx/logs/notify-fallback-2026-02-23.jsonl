@@ -1,0 +1,6 @@
+{"timestamp":"2026-02-23T10:09:35.697Z","type":"watcher_start","cwd":"/home/bellman/Workspace/oh-my-codex-website","notify_script":"/home/bellman/Workspace/oh-my-codex/scripts/notify-hook.js","poll_ms":700,"once":false}
+{"timestamp":"2026-02-23T10:09:41.808Z","type":"watcher_start","cwd":"/home/bellman/Workspace/oh-my-codex-website","notify_script":"/home/bellman/Workspace/oh-my-codex/scripts/notify-hook.js","poll_ms":700,"once":true}
+{"timestamp":"2026-02-23T10:09:41.842Z","type":"watcher_once_complete","seen_turns":0}
+{"timestamp":"2026-02-23T10:09:41.848Z","type":"watcher_stop","signal":"SIGTERM"}
+{"timestamp":"2026-02-23T10:09:44.831Z","type":"watcher_start","cwd":"/home/bellman/Workspace/oh-my-codex-website","notify_script":"/home/bellman/Workspace/oh-my-codex/scripts/notify-hook.js","poll_ms":700,"once":false}
+{"timestamp":"2026-02-23T10:28:12.359Z","type":"fallback_notify","ok":true,"thread_id":"019c89f9-fad7-7993-ac20-57321e7e5ae3","turn_id":"019c8a0a-6cf3-7022-a7ca-0586dde64fce","file":"/home/bellman/.codex/sessions/2026/02/23/rollout-2026-02-23T10-09-47-019c89f9-fad7-7993-ac20-57321e7e5ae3.jsonl","reason":"sent"}
