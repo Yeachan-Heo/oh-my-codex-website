@@ -8,7 +8,7 @@ const OMX_CONFIG = {
   docsUrl: "https://yeachan-heo.github.io/oh-my-codex",
   installCommand: "npm install -g oh-my-codex",
   setupCommand: "omx setup",
-  version: "0.4.0",
+  version: "0.8.1",
   stats: {
     agents: 30,
     skills: 40,

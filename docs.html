@@ -9,7 +9,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
   <meta property="og:title" content="Documentation | Oh My Codex">
-  <meta property="og:description" content="Complete documentation for oh-my-codex v0.7.2 - 30 prompts, 39 skills, team orchestration in tmux.">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.8.1 - 29 prompts, 35 skills, team orchestration in tmux.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>Documentation | Oh My Codex</title>
@@ -565,7 +565,7 @@
       <a href="index.html" class="sidebar-brand">
         <div class="sidebar-brand__icon">OMX</div>
         <span class="sidebar-brand__text">Oh My Codex</span>
-        <span class="sidebar-brand__version">v0.7.2</span>
+        <span class="sidebar-brand__version">v0.8.1</span>
       </a>
 
       <div class="sidebar-search">
@@ -581,6 +581,11 @@
           <div class="sidebar-title">Getting Started</div>
           <a href="#introduction" class="sidebar-link" data-section="introduction">Introduction</a>
           <a href="#release-notes" class="sidebar-link" data-section="release-notes">Release Notes</a>
+          <a href="#v08-feature-guides" class="sidebar-link" data-section="v08-feature-guides">v0.8 Feature Guides</a>
+          <a href="#feat-dynamic-scaling" class="sidebar-link" data-section="feat-dynamic-scaling">Dynamic Scaling</a>
+          <a href="#feat-ralplan-dr" class="sidebar-link" data-section="feat-ralplan-dr">RALPLAN-DR</a>
+          <a href="#feat-openclaw" class="sidebar-link" data-section="feat-openclaw">OpenClaw</a>
+          <a href="#feat-worktree-orchestration" class="sidebar-link" data-section="feat-worktree-orchestration">Worktree Orchestration</a>
           <a href="#installation" class="sidebar-link" data-section="installation">Installation</a>
           <a href="#quick-start" class="sidebar-link" data-section="quick-start">Quick Start</a>
         </div>
@@ -696,6 +701,74 @@
           <!-- One mode-card per version with collapsible details -->
           <div class="mode-card">
             <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.8.1</span>
+              Team CLI Interop API
+            </div>
+            <details>
+              <summary>View changes in v0.8.1</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>API:</strong> Added Team CLI interop API for specialized worker coordination.</li>
+                <li><strong>Config:</strong> Unified <code>configure-notifications</code> skill.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.8.0</span>
+              Model Ask and Socratic Interview
+            </div>
+            <details>
+              <summary>View changes in v0.8.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>CLI:</strong> Added <code>omx ask</code> command for direct claude/gemini querying.</li>
+                <li><strong>Workflow:</strong> Added <code>deep-interview</code> workflow with Socratic ambiguity gating.</li>
+                <li><strong>Skills:</strong> Added <code>web-clone</code> skill.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.7.6</span>
+              Hotfix
+            </div>
+            <details>
+              <summary>View changes in v0.7.6</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Fix:</strong> Hotfix after 0.7.5 release.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.7.5</span>
+              Ralph Cleanup and Worker Routing
+            </div>
+            <details>
+              <summary>View changes in v0.7.5</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Refactor:</strong> 26 commits including <code>ralph auto-run</code> cleanup.</li>
+                <li><strong>Mode:</strong> Added tmux session mode.</li>
+                <li><strong>Routing:</strong> Added per-worker role routing.</li>
+                <li><strong>Fix:</strong> OpenClaw notification fixes.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.7.3</span>
+              Pipeline Orchestrator
+            </div>
+            <details>
+              <summary>View changes in v0.7.3</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Skill:</strong> Added <code>pipeline</code> orchestrator.</li>
+                <li><strong>CLI:</strong> Added <code>uninstall</code> command.</li>
+                <li><strong>Core:</strong> Team dispatch hardening.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card">
+            <div class="mode-card__header">
               <span class="mode-card__keyword">v0.7.2</span>
               Team Shutdown Force Flag (Hotfix)
             </div>
@@ -796,6 +869,48 @@
               </ul>
             </details>
           </div>
+        </section>
+
+        <section id="v08-feature-guides" data-section>
+          <h2><span class="anchor-link">#</span>v0.8 Feature Guides</h2>
+          <p>v0.7 introduced team scaling, consensus planning upgrades, OpenClaw integration, and better worktree operations. Use these quick references when setting up production workflows.</p>
+
+          <article class="mode-card">
+            <h3 id="feat-dynamic-scaling"><span class="anchor-link">#</span>Dynamic Team Worker Scaling</h3>
+            <ul style="list-style-type: disc;">
+              <li>Phase 1 supports manual <code>scale_up</code> / <code>scale_down</code> while a team is running.</li>
+              <li>Enable scaling with <code>OMX_TEAM_SCALING_ENABLED=1</code>.</li>
+              <li><code>scale_down</code> drains workers safely before removal, and scaling operations are lock-protected to prevent overlapping changes.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3 id="feat-ralplan-dr"><span class="anchor-link">#</span>RALPLAN-DR Consensus Planning</h3>
+            <ul style="list-style-type: disc;">
+              <li><code>$ralplan</code> is shorthand for <code>$plan --consensus</code>.</li>
+              <li>Workflow uses Planner → Architect → Critic with a structured RALPLAN-DR summary before execution.</li>
+              <li>Default mode is short consensus; use <code>--deliberate</code> for high-risk work (security, migrations, destructive operations, public API breakage).</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3 id="feat-openclaw"><span class="anchor-link">#</span>OpenClaw Integration</h3>
+            <ul style="list-style-type: disc;">
+              <li>OpenClaw can be configured with explicit <code>notifications.openclaw</code> hooks or generic command/webhook aliases.</li>
+              <li>Set <code>OMX_OPENCLAW=1</code> to enable the dispatch path. For command gateways, also set <code>OMX_OPENCLAW_COMMAND=1</code>.</li>
+              <li>Common hook events: <code>session-start</code>, <code>session-idle</code>, <code>ask-user-question</code>, <code>session-stop</code>, and <code>session-end</code>.</li>
+            </ul>
+            <p>Full guide: <a href="https://github.com/Yeachan-Heo/oh-my-codex/blob/main/docs/openclaw-integration.md" target="_blank" rel="noopener noreferrer">OpenClaw / Generic Notification Gateway Integration Guide</a>.</p>
+          </article>
+
+          <article class="mode-card">
+            <h3 id="feat-worktree-orchestration"><span class="anchor-link">#</span>Worktree Orchestration</h3>
+            <ul style="list-style-type: disc;">
+              <li>Native team worktree orchestration enables isolated parallel streams for multi-worker execution.</li>
+              <li>Use launch flag <code>-w, --worktree[=&lt;name&gt;]</code> to run in a git worktree.</li>
+              <li>Cross-worktree team state resolution keeps dispatch, claims, and lifecycle updates consistent across lanes.</li>
+            </ul>
+          </article>
         </section>
 
         <!-- Installation -->
