@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Skills & Workflows | Oh My Codex - 40+ skills and automated engineering workflows">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs/skills-workflows.html">
+  <meta property="og:title" content="Skills & Workflows | Oh My Codex">
+  <meta property="og:description" content="Master the 40+ skills and complex multi-agent workflows of oh-my-codex.">
+  <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
+
+  <title>Skills & Workflows | Oh My Codex</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/design-system.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/components.css">
+
+  <style>
+    /* =========================================
+       DOCS LAYOUT & THEME OVERRIDES
+       ========================================= */
+    :root {
+      --sidebar-width: 280px;
+      --header-height-mobile: 60px;
+      --content-max-width: 960px;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    /* Layout */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .docs-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-default);
+      overflow-y: auto;
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .docs-main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-width: 0;
+      padding: 2rem 4rem;
+    }
+
+    .docs-content {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+
+    /* Typography Overrides */
+    .docs-content h1 {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      padding-bottom: 1rem;
+    }
+
+    .docs-content h2 {
+      margin-top: 3.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-default);
+      position: relative;
+    }
+
+    .docs-content h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .docs-content p, .docs-content ul, .docs-content ol {
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+    }
+
+    .docs-content ul, .docs-content ol {
+      padding-left: 1.5rem;
+    }
+
+    /* Sidebar Components */
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .sidebar-brand__icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent-primary), #059669);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 1.5rem 2rem;
+    }
+
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.4rem 0.75rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
+
+    .sidebar-link:hover {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+      text-decoration: none;
+    }
+
+    .sidebar-link.active {
+      color: var(--accent-primary);
+      background: rgba(16, 163, 127, 0.05);
+      border-left-color: var(--accent-primary);
+      font-weight: 500;
+    }
+
+    /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+      background: var(--bg-secondary);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-default);
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-default);
+      color: var(--text-secondary);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface-hover); }
+
+    /* Workflow Diagram */
+    .workflow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: var(--bg-tertiary);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-default);
+      margin: 1.5rem 0;
+    }
+    .workflow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+      min-width: 90px;
+    }
+    .workflow-step__label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      font-family: var(--font-mono);
+    }
+    .workflow-arrow {
+      color: var(--text-tertiary);
+      font-size: 1.25rem;
+    }
+
+    /* Anchor Links */
+    .anchor-link {
+      position: absolute;
+      left: -1.25rem;
+      opacity: 0;
+      color: var(--accent-primary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    h2:hover .anchor-link,
+    h3:hover .anchor-link {
+      opacity: 1;
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 200;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .docs-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .docs-sidebar.open {
+        transform: translateX(0);
+      }
+      .docs-main {
+        margin-left: 0;
+        padding: 4rem 1.5rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <div class="docs-layout">
+    <!-- SIDEBAR -->
+    <aside class="docs-sidebar" id="sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-brand__icon">OMX</div>
+        <span class="sidebar-brand__text">Oh My Codex</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-title">Getting Started</div>
+          <a href="getting-started.html" class="sidebar-link">Installation</a>
+          <a href="getting-started.html#quick-start" class="sidebar-link">Quick Start</a>
+          <a href="getting-started.html#first-workflow" class="sidebar-link">First Workflow</a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Skills & Workflows</div>
+          <a href="#skills-catalog" class="sidebar-link active">Skills Catalog</a>
+          <a href="#magic-keywords" class="sidebar-link">Magic Keywords</a>
+          <a href="#workflows" class="sidebar-link">Workflows</a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Other Docs</div>
+          <a href="agents-reference.html" class="sidebar-link">Agents Reference</a>
+          <a href="integrations-guide.html" class="sidebar-link">Integrations</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <section id="skills-workflows">
+          <h1>Skills & Workflows</h1>
+          <p class="text-body-lg">
+            Master the deep orchestration capabilities of Oh My Codex. From single-command helpers to complex multi-agent parallel workflows.
+          </p>
+        </section>
+
+        <!-- Skills Catalog -->
+        <section id="skills-catalog">
+          <h2><span class="anchor-link">#</span>Skills Catalog</h2>
+          <p>OMX provides over 40 built-in skills to handle everything from git management to parallel test execution.</p>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Keyword</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>analyze</code></td><td>Deep analysis and investigation</td><td><code>$analyze the codebase</code></td></tr>
+                <tr><td><code>ask-claude</code></td><td>Directly query Claude CLI</td><td><code>$ask-claude "review this"</code></td></tr>
+                <tr><td><code>ask-gemini</code></td><td>Directly query Gemini CLI</td><td><code>$ask-gemini "brainstorm"</code></td></tr>
+                <tr><td><code>autopilot</code></td><td>Full autonomous execution</td><td><code>$autopilot build auth</code></td></tr>
+                <tr><td><code>build-fix</code></td><td>Fix build/TypeScript errors</td><td><code>$build-fix</code></td></tr>
+                <tr><td><code>cancel</code></td><td>Stop active execution</td><td><code>$cancel</code></td></tr>
+                <tr><td><code>code-review</code></td><td>Comprehensive code review</td><td><code>$code-review</code></td></tr>
+                <tr><td><code>deepsearch</code></td><td>Thorough codebase search</td><td><code>$deepsearch "regex"</code></td></tr>
+                <tr><td><code>deepinit</code></td><td>Initialize AGENTS.md hierarchy</td><td><code>$deepinit</code></td></tr>
+                <tr><td><code>deep-interview</code></td><td>Socratic ambiguity gating</td><td><code>$deep-interview "fix bug"</code></td></tr>
+                <tr><td><code>doctor</code></td><td>Diagnose installation health</td><td><code>$doctor</code></td></tr>
+                <tr><td><code>ecomode</code></td><td>Token-efficient routing</td><td><code>$ecomode on</code></td></tr>
+                <tr><td><code>frontend-ui-ux</code></td><td>Designer-developer for UI/UX</td><td><code>$frontend-ui-ux "polish"</code></td></tr>
+                <tr><td><code>git-master</code></td><td>Atomic commits and rebasing</td><td><code>$git-master commit</code></td></tr>
+                <tr><td><code>hud</code></td><td>Configure the OMX HUD</td><td><code>$hud toggle</code></td></tr>
+                <tr><td><code>learner</code></td><td>Extract skills from context</td><td><code>$learner</code></td></tr>
+                <tr><td><code>note</code></td><td>Save to persistent notepad</td><td><code>$note "API change"</code></td></tr>
+                <tr><td><code>pipeline</code></td><td>Configurable sequence engine</td><td><code>$pipeline start</code></td></tr>
+                <tr><td><code>plan</code></td><td>Strategic planning workflow</td><td><code>$plan the feature</code></td></tr>
+                <tr><td><code>psm</code></td><td>Manage worktree sessions</td><td><code>$psm create fix-bug</code></td></tr>
+                <tr><td><code>ralph</code></td><td>Persistent persistence loop</td><td><code>$ralph implementation</code></td></tr>
+                <tr><td><code>ralplan</code></td><td>Consensus-based planning</td><td><code>$ralplan architecture</code></td></tr>
+                <tr><td><code>release</code></td><td>Automated release workflow</td><td><code>$release</code></td></tr>
+                <tr><td><code>research</code></td><td>Parallel research agents</td><td><code>$research "new tech"</code></td></tr>
+                <tr><td><code>security-review</code></td><td>Full security audit</td><td><code>$security-review</code></td></tr>
+                <tr><td><code>skill</code></td><td>Manage local skill catalog</td><td><code>$skill list</code></td></tr>
+                <tr><td><code>swarm</code></td><td>N coordinated workers</td><td><code>$swarm 3 "refactor"</code></td></tr>
+                <tr><td><code>tdd</code></td><td>Test-Driven Development</td><td><code>$tdd "add tests"</code></td></tr>
+                <tr><td><code>team</code></td><td>tmux-based team workers</td><td><code>$team 4 "build"</code></td></tr>
+                <tr><td><code>trace</code></td><td>Show flow trace timeline</td><td><code>$trace</code></td></tr>
+                <tr><td><code>ultrapilot</code></td><td>Parallel partitioned autopilot</td><td><code>$ultrapilot "fix all"</code></td></tr>
+                <tr><td><code>ultraqa</code></td><td>Test-Verify-Fix cycle</td><td><code>$ultraqa</code></td></tr>
+                <tr><td><code>ultrawork</code></td><td>High-throughput engine</td><td><code>$ultrawork "batch"</code></td></tr>
+                <tr><td><code>web-clone</code></td><td>Visual website cloning</td><td><code>$web-clone https://...</code></td></tr>
+                <tr><td><code>writer-memory</code></td><td>Agentic memory for writers</td><td><code>$writer-memory</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout info">
+            <div class="callout-title">Pro Tip</div>
+            <p>You can list all available skills by running <code>omx skill list</code> in your terminal.</p>
+          </div>
+        </section>
+
+        <!-- Magic Keywords -->
+        <section id="magic-keywords">
+          <h2><span class="anchor-link">#</span>Magic Keywords</h2>
+          <p>OMX detects your intent using "Magic Keywords". These trigger specialized modes without requiring the <code>$</code> prefix.</p>
+
+          <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+            <div class="card glass tilt-3d pixel-border" style="padding: 1.5rem;">
+              <h3 style="margin-top:0; color: var(--accent-primary);">ralph</h3>
+              <p>Triggers the persistence loop. Codex will keep trying until the architect verifies the change. Automatically includes <code>ultrawork</code>.</p>
+              <code>"ralph fix all the bugs"</code>
+            </div>
+            <div class="card glass tilt-3d pixel-border" style="padding: 1.5rem;">
+              <h3 style="margin-top:0; color: var(--accent-primary);">ralplan</h3>
+              <p>Triggers iterative consensus planning. Planner, Architect, and Critic agents deliberate before execution.</p>
+              <code>"ralplan this new feature"</code>
+            </div>
+            <div class="card glass tilt-3d pixel-border" style="padding: 1.5rem;">
+              <h3 style="margin-top:0; color: var(--accent-primary);">ulw / ultrawork</h3>
+              <p>Triggers max parallelism. Splits tasks across multiple workers for maximum throughput.</p>
+              <code>"ulw refactor the API"</code>
+            </div>
+            <div class="card glass tilt-3d pixel-border" style="padding: 1.5rem;">
+              <h3 style="margin-top:0; color: var(--accent-primary);">plan</h3>
+              <p>Triggers the strategic planning interview to clarify requirements before starting.</p>
+              <code>"plan the new endpoints"</code>
+            </div>
+          </div>
+
+          <h3>Stopping Execution</h3>
+          <p>You can stop any active mode by simply saying:</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">COMMANDS</span></div>
+            <pre><code>"stop"
+"cancel"
+"abort"</code></pre>
+          </div>
+        </section>
+
+        <!-- Workflows -->
+        <section id="workflows">
+          <h2><span class="anchor-link">#</span>Workflow Examples</h2>
+          <p>Combine skills to create powerful, automated engineering pipelines.</p>
+
+          <article class="card glass" style="margin-bottom: 2rem; padding: 2rem;">
+            <h3>The "Full-Auto" Pipeline</h3>
+            <p>Best for large features. Combines consensus planning, parallel execution, and persistent verification.</p>
+            <div class="workflow">
+              <div class="workflow-step"><span class="workflow-step__label">ralplan</span></div>
+              <div class="workflow-arrow">&rarr;</div>
+              <div class="workflow-step"><span class="workflow-step__label">team</span></div>
+              <div class="workflow-arrow">&rarr;</div>
+              <div class="workflow-step"><span class="workflow-step__label">ralph</span></div>
+            </div>
+            <div class="code-block-wrapper">
+              <div class="code-block-header"><span class="code-lang">BASH</span></div>
+              <pre><code># 1. Plan with consensus
+$ralplan "implement user dashboard"
+
+# 2. Build in parallel
+$team 4 "follow the plan in .omx/plans/latest.md"
+
+# 3. Final polish and verification
+$ralph "ensure dashboard is 100% complete"</code></pre>
+            </div>
+          </article>
+
+          <article class="card glass" style="margin-bottom: 2rem; padding: 2rem;">
+            <h3>The "Bug-Crusher" Loop</h3>
+            <p>Best for fixing complex bugs that require multiple attempts and testing cycles.</p>
+            <div class="workflow">
+              <div class="workflow-step"><span class="workflow-step__label">plan</span></div>
+              <div class="workflow-arrow">&rarr;</div>
+              <div class="workflow-step"><span class="workflow-step__label">ralph</span></div>
+              <div class="workflow-arrow">&rarr;</div>
+              <div class="workflow-step"><span class="workflow-step__label">ultraqa</span></div>
+            </div>
+            <div class="code-block-wrapper">
+              <div class="code-block-header"><span class="code-lang">BASH</span></div>
+              <pre><code># 1. Investigate and strategize
+$plan "fix the race condition in auth.js"
+
+# 2. Implement fix with persistence
+$ralph "apply the fix and verify"
+
+# 3. Exhaustive QA cycle
+$ultraqa "run all edge cases"</code></pre>
+            </div>
+          </article>
+        </section>
+
+        <!-- Usage Examples -->
+        <section id="usage-examples">
+          <h2><span class="anchor-link">#</span>Usage Examples</h2>
+          
+          <h3>Invoking Skills</h3>
+          <p>Skills can be invoked using the <code>$</code> prefix or via the <code>/skills</code> magic command.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">OMX</span></div>
+            <pre><code>$analyze "why is the build slow?"
+/skills:analyze "optimize the build"</code></pre>
+          </div>
+
+          <h3>Agent Role Prompts</h3>
+          <p>Load specialized agent personas using <code>/prompts:name</code>.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">OMX</span></div>
+            <pre><code>/prompts:architect "review this system design"
+/prompts:test-engineer "write unit tests for this module"</code></pre>
+          </div>
+        </section>
+
+      </div>
+
+      <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-default); text-align: center; color: var(--text-tertiary); font-size: 0.85rem;">
+        <p>&copy; 2026 Oh My Codex. Built with precision and parallel agents.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module" src="../js/ui/codeBlocks.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sidebar = document.getElementById('sidebar');
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+
+      mobileBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+
+      // Close sidebar on link click (mobile)
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 1024) {
+            sidebar.classList.remove('open');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agents Reference | Oh My Codex - 30+ specialized AI agent personas">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs/agents-reference.html">
+  <meta property="og:title" content="Agents Reference | Oh My Codex">
+  <meta property="og:description" content="Explore the catalog of 30+ specialized agents in oh-my-codex for every stage of the development lifecycle.">
+  <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
+
+  <title>Agents Reference | Oh My Codex</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/design-system.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/components.css">
+
+  <style>
+    /* =========================================
+       DOCS LAYOUT & THEME OVERRIDES
+       ========================================= */
+    :root {
+      --sidebar-width: 280px;
+      --header-height-mobile: 60px;
+      --content-max-width: 960px;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    /* Layout */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .docs-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-default);
+      overflow-y: auto;
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .docs-main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-width: 0;
+      padding: 2rem 4rem;
+    }
+
+    .docs-content {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+
+    /* Typography Overrides */
+    .docs-content h1 {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      padding-bottom: 1rem;
+    }
+
+    .docs-content h2 {
+      margin-top: 3.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-default);
+      position: relative;
+    }
+
+    .docs-content h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .docs-content p, .docs-content ul, .docs-content ol {
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+    }
+
+    /* Sidebar Components */
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .sidebar-brand__icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent-primary), #059669);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 1.5rem 2rem;
+    }
+
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.4rem 0.75rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
+
+    .sidebar-link:hover {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+      text-decoration: none;
+    }
+
+    .sidebar-link.active {
+      color: var(--accent-primary);
+      background: rgba(16, 163, 127, 0.05);
+      border-left-color: var(--accent-primary);
+      font-weight: 500;
+    }
+
+    /* Agent Lane Cards */
+    .lane-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .lane-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    }
+    .lane-card--build::before { background: #3b82f6; }
+    .lane-card--review::before { background: #8b5cf6; }
+    .lane-card--domain::before { background: #f59e0b; }
+    .lane-card--product::before { background: #22c55e; }
+
+    .lane-badge {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      padding: 4px 8px; border-radius: 4px; letter-spacing: 0.05em;
+      margin-bottom: 1rem; display: inline-block;
+    }
+    .lane-card--build .lane-badge { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+    .lane-card--review .lane-badge { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+    .lane-card--domain .lane-badge { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+    .lane-card--product .lane-badge { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+
+    /* Agent Table */
+    .agent-table-wrapper {
+      margin: 2rem 0;
+      border: 1px solid var(--border-default);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+    .agent-table {
+      width: 100%; border-collapse: collapse; font-size: 0.9rem;
+    }
+    .agent-table th {
+      background: var(--bg-tertiary);
+      text-align: left; padding: 1rem; font-weight: 600;
+      border-bottom: 1px solid var(--border-default);
+    }
+    .agent-table td {
+      padding: 1.25rem 1rem; border-bottom: 1px solid var(--border-default);
+      vertical-align: top;
+    }
+    .agent-table tr:last-child td { border-bottom: none; }
+    
+    .agent-name {
+      font-family: var(--font-mono); font-weight: 700; color: var(--accent-primary);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .agent-name::before { content: '/'; color: var(--text-tertiary); }
+
+    .agent-desc { color: var(--text-secondary); line-height: 1.5; }
+    .agent-use { font-size: 0.85rem; color: var(--text-tertiary); margin-top: 0.5rem; }
+
+    /* Anchor Links */
+    .anchor-link {
+      position: absolute;
+      left: -1.25rem;
+      opacity: 0;
+      color: var(--accent-primary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    h2:hover .anchor-link, h3:hover .anchor-link { opacity: 1; }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none; position: fixed; top: 1rem; right: 1rem; z-index: 200;
+      background: var(--bg-secondary); border: 1px solid var(--border-default);
+      padding: 0.5rem; border-radius: 0.5rem; cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .docs-sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+      .docs-sidebar.open { transform: translateX(0); }
+      .docs-main { margin-left: 0; padding: 4rem 1.5rem; }
+      .mobile-menu-btn { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <div class="docs-layout">
+    <!-- SIDEBAR -->
+    <aside class="docs-sidebar" id="sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-brand__icon">OMX</div>
+        <span class="sidebar-brand__text">Oh My Codex</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-title">Getting Started</div>
+          <a href="getting-started.html" class="sidebar-link">Installation</a>
+          <a href="getting-started.html#quick-start" class="sidebar-link">Quick Start</a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Agents Reference</div>
+          <a href="#build-analysis" class="sidebar-link active">Build & Analysis</a>
+          <a href="#review-lane" class="sidebar-link">Review Lane</a>
+          <a href="#domain-specialists" class="sidebar-link">Domain Specialists</a>
+          <a href="#product-strategy" class="sidebar-link">Product & Strategy</a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Other Docs</div>
+          <a href="skills-workflows.html" class="sidebar-link">Skills & Workflows</a>
+          <a href="integrations-guide.html" class="sidebar-link">Integrations</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <section id="agents-intro">
+          <h1>Agents Reference</h1>
+          <p class="text-body-lg">
+            Oh My Codex organizes 30+ specialized AI personas into functional lanes. Use these agents to perform targeted tasks with maximum expertise.
+          </p>
+          
+          <div class="card glass tilt-3d" style="margin-top: 2rem; border-left: 4px solid var(--accent-primary);">
+            <h3 style="margin-top:0">How to Invoke</h3>
+            <p>Load any agent persona using the <code>/prompts:name</code> command within the Codex CLI.</p>
+            <div class="code-block">
+              <div class="code-block__content">
+                <pre><code>/prompts:architect "analyze the current architecture"
+/prompts:executor "implement the login form"</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Build & Analysis -->
+        <section id="build-analysis">
+          <h2><span class="anchor-link">#</span>Build & Analysis</h2>
+          <p>The core execution lane for planning, designing, and implementing software.</p>
+          
+          <div class="lane-card lane-card--build">
+            <span class="lane-badge">Implementation Core</span>
+            <div class="agent-table-wrapper">
+              <table class="agent-table">
+                <thead>
+                  <tr><th>Agent</th><th>Role & When to Use</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="agent-name">architect</div></td>
+                    <td>
+                      <div class="agent-desc">Design system boundaries and draft high-level plans.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Starting a new feature or refactoring major components.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">planner</div></td>
+                    <td>
+                      <div class="agent-desc">Sequence complex tasks into actionable steps.</div>
+                      <div class="agent-use"><strong>Use when:</strong> You have a goal but need a concrete execution roadmap.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">executor</div></td>
+                    <td>
+                      <div class="agent-desc">Write code and implement features following established patterns.</div>
+                      <div class="agent-use"><strong>Use when:</strong> You are ready to write the actual implementation.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">debugger</div></td>
+                    <td>
+                      <div class="agent-desc">Root-cause analysis and investigation of complex errors.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Something is broken and you don't know why.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">verifier</div></td>
+                    <td>
+                      <div class="agent-desc">Prove behavioral correctness through validation and evidence.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Confirming that a change works as intended.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">explore</div></td>
+                    <td>
+                      <div class="agent-desc">Search the codebase and map file structures.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Entering an unfamiliar codebase or locating specific logic.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">analyzer</div></td>
+                    <td>
+                      <div class="agent-desc">Perform deep analysis of specific modules or bottlenecks.</div>
+                      <div class="agent-use"><strong>Use when:</strong> You need a detailed report on a specific part of the system.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Review Lane -->
+        <section id="review-lane">
+          <h2><span class="anchor-link">#</span>Review Lane</h2>
+          <p>Quality gates focused on ensuring high standards, security, and performance.</p>
+          
+          <div class="lane-card lane-card--review">
+            <span class="lane-badge">Quality Gates</span>
+            <div class="agent-table-wrapper">
+              <table class="agent-table">
+                <thead>
+                  <tr><th>Agent</th><th>Role & When to Use</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="agent-name">code-reviewer</div></td>
+                    <td>
+                      <div class="agent-desc">Audit code for readability, maintainability, and idioms.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Preparing a Pull Request or reviewing a teammates change.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">security-reviewer</div></td>
+                    <td>
+                      <div class="agent-desc">Scan for vulnerabilities, input validation, and auth gaps.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Shipping sensitive features or public APIs.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">performance-reviewer</div></td>
+                    <td>
+                      <div class="agent-desc">Identify bottlenecks, memory leaks, and optimizations.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Code is slow or resource-intensive.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">api-reviewer</div></td>
+                    <td>
+                      <div class="agent-desc">Ensure consistency and clarity of public interfaces.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Modifying public functions or REST/GraphQL schemas.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">style-reviewer</div></td>
+                    <td>
+                      <div class="agent-desc">Enforce formatting, naming conventions, and linting rules.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Ensuring codebase consistency.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">quality-reviewer</div></td>
+                    <td>
+                      <div class="agent-desc">Holistic check for robustness and edge-case handling.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Final check before moving to production.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Domain Specialists -->
+        <section id="domain-specialists">
+          <h2><span class="anchor-link">#</span>Domain Specialists</h2>
+          <p>Agents with deep expertise in specific technical domains.</p>
+          
+          <div class="lane-card lane-card--domain">
+            <span class="lane-badge">Deep Expertise</span>
+            <div class="agent-table-wrapper">
+              <table class="agent-table">
+                <thead>
+                  <tr><th>Agent</th><th>Role & When to Use</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="agent-name">test-engineer</div></td>
+                    <td>
+                      <div class="agent-desc">Write unit, integration, and End-to-End tests.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Adding test coverage to existing or new code.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">dependency-expert</div></td>
+                    <td>
+                      <div class="agent-desc">Manage lockfiles and resolve complex version conflicts.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Adding new packages or fixing dependency hell.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">git-master</div></td>
+                    <td>
+                      <div class="agent-desc">Atomic commits, complex rebasing, and history management.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Preparing a clean commit history.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">designer</div></td>
+                    <td>
+                      <div class="agent-desc">Implement UI components, polish CSS, and refine layouts.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Working on frontend visual tasks.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">researcher</div></td>
+                    <td>
+                      <div class="agent-desc">Investigate new libraries, patterns, or best practices.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Evaluating technical choices for a new feature.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">build-fixer</div></td>
+                    <td>
+                      <div class="agent-desc">Resolve CI/CD failures and environment issues.</div>
+                      <div class="agent-use"><strong>Use when:</strong> The build is red or deployment fails.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">writer</div></td>
+                    <td>
+                      <div class="agent-desc">Craft documentation, READMEs, and technical specs.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Explaining how to use a feature or system.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">qa-tester</div></td>
+                    <td>
+                      <div class="agent-desc">Manual verification and edge-case reproduction.</div>
+                      <div class="agent-use"><strong>Use when:</strong> You need a skeptical eye to find hidden bugs.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">devops</div></td>
+                    <td>
+                      <div class="agent-desc">Infrastructure, Docker, and deployment automation.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Configuring the runtime environment.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">data-scientist</div></td>
+                    <td>
+                      <div class="agent-desc">Data analysis and visualization within a REPL.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Analyzing logs or project metrics.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Product & Strategy -->
+        <section id="product-strategy">
+          <h2><span class="anchor-link">#</span>Product & Strategy</h2>
+          <p>Agents focused on the "why" and "for whom" of the software.</p>
+          
+          <div class="lane-card lane-card--product">
+            <span class="lane-badge">Strategy & Feedback</span>
+            <div class="agent-table-wrapper">
+              <table class="agent-table">
+                <thead>
+                  <tr><th>Agent</th><th>Role & When to Use</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="agent-name">product-manager</div></td>
+                    <td>
+                      <div class="agent-desc">Feature prioritization and requirement gathering.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Defining what needs to be built.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">ux-researcher</div></td>
+                    <td>
+                      <div class="agent-desc">Analyze user flows and perform accessibility audits.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Designing or reviewing user interactions.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">critic</div></td>
+                    <td>
+                      <div class="agent-desc">Identify risks and challenge assumptions (Devil's Advocate).</div>
+                      <div class="agent-use"><strong>Use when:</strong> Validating a high-risk plan or design.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">vision</div></td>
+                    <td>
+                      <div class="agent-desc">Analyze visual assets, screenshots, and UI mockups.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Working with multimodal UI feedback.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">product-analyst</div></td>
+                    <td>
+                      <div class="agent-desc">Impact analysis and success metrics definition.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Measuring the value of a feature.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">information-architect</div></td>
+                    <td>
+                      <div class="agent-desc">Hierarchy, navigation, and data modeling.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Designing complex content structures.</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><div class="agent-name">lead</div></td>
+                    <td>
+                      <div class="agent-desc">Orchestrate teams and ensure overall goal alignment.</div>
+                      <div class="agent-use"><strong>Use when:</strong> Managing multi-agent tmux teams.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-default); text-align: center; color: var(--text-tertiary); font-size: 0.85rem;">
+        <p>&copy; 2026 Oh My Codex. Every agent has a role, every turn has a purpose.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script type="module" src="../js/ui/codeBlocks.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sidebar = document.getElementById('sidebar');
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+
+      mobileBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+
+      // Close sidebar on link click (mobile)
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 1024) {
+            sidebar.classList.remove('open');
+          }
+        });
+      });
+
+      // Simple scroll spy for sidebar links
+      const links = document.querySelectorAll('.sidebar-link');
+      const sections = document.querySelectorAll('section[id]');
+      
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 120) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        links.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

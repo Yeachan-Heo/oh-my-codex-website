@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Integrations Guide for Oh My Codex - Setup Discord, Telegram, and OpenClaw notifications">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs/integrations-guide.html">
+  <meta property="og:title" content="Integrations Guide | Oh My Codex">
+  <meta property="og:description" content="Connect oh-my-codex to your favorite communication platforms for real-time orchestration alerts.">
+  <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
+
+  <title>Integrations Guide | Oh My Codex</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../css/design-system.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/components.css">
+
+  <style>
+    /* =========================================
+       DOCS LAYOUT & THEME OVERRIDES
+       ========================================= */
+    :root {
+      --sidebar-width: 280px;
+      --header-height-mobile: 60px;
+      --content-max-width: 960px;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    /* Layout */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .docs-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-default);
+      overflow-y: auto;
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .docs-main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-width: 0;
+      padding: 2rem 4rem;
+    }
+
+    .docs-content {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+
+    /* Typography Overrides */
+    .docs-content h1 {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      padding-bottom: 1rem;
+    }
+
+    .docs-content h2 {
+      margin-top: 3.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-default);
+      position: relative;
+    }
+
+    .docs-content h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .docs-content p, .docs-content ul, .docs-content ol {
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+    }
+
+    .docs-content ul, .docs-content ol {
+      padding-left: 1.5rem;
+    }
+
+    /* Sidebar Components */
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .sidebar-brand__icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent-primary), #059669);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 1.5rem 2rem;
+    }
+
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.4rem 0.75rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .sidebar-link:hover {
+      color: var(--text-primary);
+      background: var(--surface-hover);
+    }
+
+    .sidebar-link.active {
+      color: var(--accent-primary);
+      background: rgba(16, 163, 127, 0.05);
+      border-left: 2px solid var(--accent-primary);
+      font-weight: 500;
+    }
+
+    /* Anchor Links */
+    .anchor-link {
+      position: absolute;
+      left: -1.25rem;
+      opacity: 0;
+      color: var(--accent-primary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    h2:hover .anchor-link,
+    h3:hover .anchor-link {
+      opacity: 1;
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 200;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    .platform-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .platform-icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      border-radius: 0.75rem;
+      background: var(--bg-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-default);
+    }
+
+    @media (max-width: 1024px) {
+      .docs-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .docs-sidebar.open {
+        transform: translateX(0);
+      }
+      .docs-main {
+        margin-left: 0;
+        padding: 4rem 1.5rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+
+  <div class="docs-layout">
+    <!-- SIDEBAR -->
+    <aside class="docs-sidebar" id="sidebar">
+      <a href="../index.html" class="sidebar-brand">
+        <div class="sidebar-brand__icon">OMX</div>
+        <span class="sidebar-brand__text">Oh My Codex</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-title">Integrations</div>
+          <a href="#discord" class="sidebar-link">Discord Webhooks</a>
+          <a href="#telegram" class="sidebar-link">Telegram Bot</a>
+          <a href="#openclaw" class="sidebar-link">OpenClaw Gateway</a>
+          <a href="#routing" class="sidebar-link">Notification Routing</a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Other Docs</div>
+          <a href="getting-started.html" class="sidebar-link">Getting Started</a>
+          <a href="agents-reference.html" class="sidebar-link">Agents Reference</a>
+          <a href="skills-workflows.html" class="sidebar-link">Skills & Workflows</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="docs-main">
+      <div class="docs-content">
+        <section id="integrations">
+          <h1>Integrations Guide</h1>
+          <p class="text-body-lg">
+            Stay informed and in control. Oh My Codex supports deep integration with popular communication platforms to keep you updated on long-running orchestrations.
+          </p>
+        </section>
+
+        <!-- Discord -->
+        <section id="discord">
+          <h2><span class="anchor-link">#</span>Discord Integration</h2>
+          <p>Discord is the most popular way to receive real-time alerts from OMX. You can use simple webhooks for one-way alerts or the Bot API for interactive sessions.</p>
+
+          <div class="platform-card card glass pixel-border">
+            <div class="platform-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="#5865F2">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.069.069 0 0 0-.032.027C.533 9.048-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.23 10.23 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
+            </div>
+            <div style="flex: 1;">
+              <h3>Webhook Setup</h3>
+              <p>The fastest way to get notifications. Webhooks are one-way: OMX sends, you receive.</p>
+              <ol>
+                <li>Open your Discord Server Settings > Integrations > Webhooks.</li>
+                <li>Create a new Webhook and copy the <strong>Webhook URL</strong>.</li>
+                <li>Export the URL to your environment:</li>
+              </ol>
+              <div class="code-block">
+                <div class="code-block__header">
+                  <span class="code-block__lang">bash</span>
+                  <button class="code-block__copy" data-copy="export OMX_DISCORD_WEBHOOK_URL='https://discord.com/api/webhooks/...' ">Copy</button>
+                </div>
+                <div class="code-block__content">
+                  <pre><code>export OMX_DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/..."</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card glass tilt-3d pixel-border" style="padding: 2rem; margin-top: 1rem;">
+            <h3>Advanced: Bot API</h3>
+            <p>Required for two-way communication (replying to a notification to inject a command into OMX).</p>
+            <ul>
+              <li><strong>Bot Token:</strong> Create an application on the <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a>.</li>
+              <li><strong>Channel ID:</strong> Right-click a channel in Discord and select "Copy Channel ID" (requires Developer Mode).</li>
+            </ul>
+            <div class="code-block">
+              <div class="code-block__header">
+                <span class="code-block__lang">bash</span>
+                <button class="code-block__copy" data-copy="export OMX_DISCORD_NOTIFIER_BOT_TOKEN='your-token'
+export OMX_DISCORD_NOTIFIER_CHANNEL='your-channel-id'">Copy</button>
+              </div>
+              <div class="code-block__content">
+                <pre><code>export OMX_DISCORD_NOTIFIER_BOT_TOKEN="your-token"
+export OMX_DISCORD_NOTIFIER_CHANNEL="your-channel-id"</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Telegram -->
+        <section id="telegram">
+          <h2><span class="anchor-link">#</span>Telegram Bot</h2>
+          <p>Telegram offers excellent support for interactive bots and secure communication.</p>
+
+          <div class="platform-card card glass pixel-border">
+            <div class="platform-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="#0088cc">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.91-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+              </svg>
+            </div>
+            <div style="flex: 1;">
+              <h3>Configuration</h3>
+              <ol>
+                <li>Message <a href="https://t.me/botfather" target="_blank">@BotFather</a> on Telegram to create a new bot.</li>
+                <li>Copy the <strong>HTTP API Token</strong>.</li>
+                <li>To get your <strong>Chat ID</strong>, message your new bot and then visit <code>https://api.telegram.org/bot<token>/getUpdates</code>.</li>
+              </ol>
+              <div class="code-block">
+                <div class="code-block__header">
+                  <span class="code-block__lang">bash</span>
+                  <button class="code-block__copy" data-copy="export OMX_TELEGRAM_BOT_TOKEN='your-token'
+export OMX_TELEGRAM_CHAT_ID='your-chat-id'">Copy</button>
+                </div>
+                <div class="code-block__content">
+                  <pre><code>export OMX_TELEGRAM_BOT_TOKEN="your-token"
+export OMX_TELEGRAM_CHAT_ID="your-chat-id"</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- OpenClaw -->
+        <section id="openclaw">
+          <h2><span class="anchor-link">#</span>OpenClaw Gateway</h2>
+          <p>OpenClaw is a programmable gateway for deep agentic integration. It allows you to trigger automated follow-up actions based on OMX events.</p>
+
+          <div class="card glass pixel-border" style="padding: 2rem;">
+            <h3>Local HTTP Gateway</h3>
+            <p>OMX can POST JSON payloads to a local or remote HTTP endpoint. This is the foundation for custom orchestration loops.</p>
+            <div class="code-block">
+              <div class="code-block__header">
+                <span class="code-block__lang">json (config.json)</span>
+                <button class="code-block__copy" data-copy='{
+  "openclaw": {
+    "enabled": true,
+    "url": "http://localhost:18789/hooks/agent",
+    "headers": { "Authorization": "Bearer my-secret" }
+  }
+}'>Copy</button>
+              </div>
+              <div class="code-block__content">
+                <pre><code>{
+  "openclaw": {
+    "enabled": true,
+    "url": "http://localhost:18789/hooks/agent",
+    "headers": { "Authorization": "Bearer my-secret" }
+  }
+}</code></pre>
+              </div>
+            </div>
+            <p class="text-caption" style="margin-top: 1rem;">
+              When enabled, OMX will send full state snapshots (including tmux buffer snippets) to the gateway on every major lifecycle event.
+            </p>
+          </div>
+        </section>
+
+        <!-- Routing -->
+        <section id="routing">
+          <h2><span class="anchor-link">#</span>Notification Routing</h2>
+          <p>Control exactly what notifications you receive and how they are formatted.</p>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Verbosity Level</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>minimal</code></td>
+                  <td>Only Start and End events. Zero noise.</td>
+                </tr>
+                <tr>
+                  <td><code>session</code></td>
+                  <td>Start, Stop, Idle, and Input Required. Includes a small tmux tail. (Default)</td>
+                </tr>
+                <tr>
+                  <td><code>agent</code></td>
+                  <td>Every agent turn is logged with its summary.</td>
+                </tr>
+                <tr>
+                  <td><code>verbose</code></td>
+                  <td>Full tool-call stream and agent thoughts. Extreme detail.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card glass pixel-border" style="padding: 2rem; margin-top: 2rem;">
+            <h3>Custom Templates</h3>
+            <p>Customize the message content using <code>{{variable}}</code> syntax.</p>
+            <ul>
+              <li><code>{{sessionId}}</code> - Unique ID for the current session.</li>
+              <li><code>{{projectName}}</code> - Name of the project root directory.</li>
+              <li><code>{{question}}</code> - The text of a prompt if waiting for input.</li>
+              <li><code>{{tmuxTail}}</code> - The last 10 lines of the tmux buffer.</li>
+            </ul>
+          </div>
+        </section>
+
+        <div style="margin-top: 4rem; text-align: center; padding: 3rem; background: rgba(16, 163, 127, 0.05); border-radius: 1rem;">
+          <h3>Ready to configure?</h3>
+          <p>Run the interactive setup command to configure all integrations at once.</p>
+          <div class="code-block" style="max-width: 300px; margin: 1rem auto;">
+            <div class="code-block__content" style="text-align: center;">
+              <pre><code>omx setup</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { CodeBlocks } from '../js/ui/codeBlocks.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new CodeBlocks();
+
+      // Mobile Menu Logic
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const sidebar = document.getElementById('sidebar');
+
+      mobileBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+
+      // Smooth Scroll Active Link
+      const links = document.querySelectorAll('.sidebar-link');
+      window.addEventListener('scroll', () => {
+        let current = '';
+        document.querySelectorAll('section').forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 100) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        links.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').includes(current)) {
+            link.classList.add('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
