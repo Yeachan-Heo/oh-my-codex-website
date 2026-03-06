@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oh-my-codex v0.8.1 - Multi-agent orchestration for Codex CLI with omx ask (Claude/Gemini), deep-interview gating, dynamic team scaling, worktree orchestration, and 1472+ tests.">
+  <meta name="description" content="oh-my-codex v0.8.2 - Multi-agent orchestration for Codex CLI with Gemini team workers, smarter setup compatibility, safer model fallbacks, and 1933+ passing tests.">
   <meta name="keywords" content="OpenAI Codex, AI agents, multi-agent, orchestration, automation, CLI, developer tools, Codex CLI">
   <meta name="author" content="oh-my-codex">
 
@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex">
   <meta property="og:title" content="oh-my-codex - Your codex is not alone">
-  <meta property="og:description" content="v0.8.1 is live: omx ask (Claude/Gemini), deep-interview ambiguity gating, web-clone, OpenClaw integration, RALPLAN-DR, and notification engine overhaul.">
+  <meta property="og:description" content="v0.8.2 is live: Gemini team workers, canonical configure-notifications setup, Codex 0.107+ setup compatibility, and safer OpenClaw/model defaults.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
@@ -19,7 +19,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="oh-my-codex - Your codex is not alone">
-  <meta name="twitter:description" content="v0.8.1 is live: omx ask (Claude/Gemini), deep-interview ambiguity gating, web-clone, OpenClaw integration, RALPLAN-DR, and notification engine overhaul.">
+  <meta name="twitter:description" content="v0.8.2 is live: Gemini team workers, canonical configure-notifications setup, Codex 0.107+ setup compatibility, and safer OpenClaw/model defaults.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>oh-my-codex - Your codex is not alone</title>
@@ -953,7 +953,7 @@
         <div class="hero-stats">
           <span class="hero-stat-badge">
             <span class="hero-stat-badge__icon">🚀</span>
-            <span class="hero-stat-badge__value">v0.8.1</span>
+            <span class="hero-stat-badge__value">v0.8.2</span>
             <span class="hero-stat-badge__label">Latest Release</span>
           </span>
           <a href="https://github.com/Yeachan-Heo/oh-my-codex" class="hero-stat-badge hero-stat-badge--dynamic" target="_blank">
@@ -1008,8 +1008,8 @@
   <!-- Release Highlights Section -->
   <section class="section release-section" id="release" data-reveal>
     <div class="section__header">
-      <h2 class="section__title">What’s New in v0.8.1</h2>
-      <p class="section__subtitle">A major release with omx ask, deep-interview ambiguity gating, web-clone, OpenClaw notifications, RALPLAN-DR planning, dynamic team scaling, worktree orchestration, and 1472+ tests.</p>
+      <h2 class="section__title">What’s New in v0.8.2</h2>
+      <p class="section__subtitle">Gemini workers are here 🎉 plus cleaner notification setup, Codex 0.107+ setup compatibility, safer defaults, and <strong>1933+</strong> passing tests.</p>
     </div>
 
     <div class="features-grid">
@@ -1020,8 +1020,8 @@
             <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">omx ask + Deep Workflow Skills</h3>
-        <p class="feature-card__description">Use <code>omx ask</code> to route prompts to <code>ask-claude</code> or <code>ask-gemini</code>, then execute with deep-interview’s Socratic ambiguity gating and the new <code>web-clone</code> skill for end-to-end website replication flows.</p>
+        <h3 class="feature-card__title">Gemini Workers in Team Mode</h3>
+        <p class="feature-card__description">Run mixed <code>codex</code>, <code>claude</code>, and <code>gemini</code> worker teams in tmux with Gemini CLI support and model passthrough for parallel execution workflows. Hooray for Gemini workers!</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d">
@@ -1030,8 +1030,8 @@
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
           </svg>
         </div>
-        <h3 class="feature-card__title">OpenClaw + Notification Overhaul</h3>
-        <p class="feature-card__description">OpenClaw gateway integration unifies outbound delivery, while the notification engine overhaul streamlines Discord/Slack/Telegram/OpenClaw routing with clearer configuration and more reliable status signaling.</p>
+        <h3 class="feature-card__title">Smarter Setup + Canonical Notifications</h3>
+        <p class="feature-card__description"><code>configure-notifications</code> is now the canonical shipped setup skill, stale legacy notification skill dirs get cleaned on <code>--force</code>, and <code>omx setup</code> skips deprecated <code>[tui]</code> config on Codex CLI <code>&gt;= 0.107.0</code>.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d">
@@ -1040,8 +1040,8 @@
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">RALPLAN-DR + Scalable Team Execution</h3>
-        <p class="feature-card__description">RALPLAN-DR consensus planning, dynamic team scaling, and worktree orchestration deliver faster parallel execution, backed by a significantly expanded validation suite with <strong>1472+</strong> passing tests.</p>
+        <h3 class="feature-card__title">Safer Defaults + Patch Fixes</h3>
+        <p class="feature-card__description"><code>DEFAULT_FRONTIER_MODEL</code> now centralizes frontier fallback behavior, OpenClaw placeholder leakage is fixed, keyword ordering is hardened, and the release is backed by <strong>1933+</strong> passing tests.</p>
       </div>
     </div>
   </section>

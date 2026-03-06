@@ -9,7 +9,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
   <meta property="og:title" content="Documentation | Oh My Codex">
-  <meta property="og:description" content="Complete documentation for oh-my-codex v0.8.1 - 29 prompts, 35 skills, team orchestration in tmux.">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.8.2 - 31 prompts, 35 skills, 5 MCP servers, and tmux teams with Codex/Claude/Gemini workers.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>Documentation | Oh My Codex</title>
@@ -565,7 +565,7 @@
       <a href="index.html" class="sidebar-brand">
         <div class="sidebar-brand__icon">OMX</div>
         <span class="sidebar-brand__text">Oh My Codex</span>
-        <span class="sidebar-brand__version">v0.8.1</span>
+        <span class="sidebar-brand__version">v0.8.2</span>
       </a>
 
       <div class="sidebar-search">
@@ -675,20 +675,20 @@
 
           <div class="grid grid--2">
             <div class="card">
-              <h3 style="margin-top:0">30 Agent Prompts</h3>
+              <h3 style="margin-top:0">31 Agent Prompts</h3>
               <p>Specialized prompt catalog across 5 functional lanes, with role-specific agent files.</p>
             </div>
             <div class="card">
-              <h3 style="margin-top:0">39 Skills</h3>
+              <h3 style="margin-top:0">35 Skills</h3>
               <p>From Autopilot for full autonomy to Team mode for tmux coordination and Ralph for persistence.</p>
             </div>
             <div class="card">
-              <h3 style="margin-top:0">25+ MCP Tools</h3>
-              <p>Integrated toolchain with Language Servers, AST grep, Python REPL, and state management.</p>
+              <h3 style="margin-top:0">5 MCP Servers</h3>
+              <p>Integrated MCP stack for state, memory, code intelligence, team orchestration, and trace visibility.</p>
             </div>
             <div class="card">
               <h3 style="margin-top:0">tmux Teams</h3>
-              <p>Spawn parallel worker panes in tmux with mixed Codex/Claude CLI workers.</p>
+              <p>Spawn parallel worker panes in tmux with mixed Codex/Claude/Gemini CLI workers.</p>
             </div>
           </div>
         </section>
@@ -698,9 +698,24 @@
           <h2><span class="anchor-link">#</span>Release Notes</h2>
           <div class="callout info">
             <div class="callout-title">Quick Summary</div>
-            <p>These updates improve team workflows, notifications, security, and reliability. Open each version to see the details.</p>
+            <p>These updates improve team workflows, setup compatibility, notification ergonomics, and reliability. Open each version to see the details.</p>
           </div>
           <!-- One mode-card per version with collapsible details -->
+          <div class="mode-card">
+            <div class="mode-card__header">
+              <span class="mode-card__keyword">v0.8.2</span>
+              Gemini Workers + Setup Reliability
+            </div>
+            <details open>
+              <summary>View changes in v0.8.2</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Team:</strong> Added Gemini CLI worker support for mixed Codex/Claude/Gemini team runs.</li>
+                <li><strong>Setup:</strong> Canonicalized <code>configure-notifications</code> and cleaned stale legacy notification skills during <code>--force</code> installs.</li>
+                <li><strong>Compatibility:</strong> <code>omx setup</code> now skips deprecated <code>[tui]</code> config on Codex CLI <code>&gt;= 0.107.0</code>.</li>
+                <li><strong>Defaults/Fixes:</strong> Centralized frontier fallback via <code>DEFAULT_FRONTIER_MODEL</code> and fixed OpenClaw placeholder / keyword-ordering regressions.</li>
+              </ul>
+            </details>
+          </div>
           <div class="mode-card">
             <div class="mode-card__header">
               <span class="mode-card__keyword">v0.8.1</span>
