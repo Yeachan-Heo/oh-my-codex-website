@@ -327,56 +327,75 @@
         <!-- Skills Catalog -->
         <section id="skills-catalog">
           <h2><span class="anchor-link">#</span>Skills Catalog</h2>
-          <p>OMX provides over 40 built-in skills to handle everything from git management to parallel test execution.</p>
+          <p>OMX provides over 40 built-in skills categorized by their role in the development lifecycle.</p>
 
+          <h3>Execution Modes</h3>
           <div class="table-wrapper">
             <table>
-              <thead>
-                <tr>
-                  <th>Keyword</th>
-                  <th>Description</th>
-                  <th>Example</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
               <tbody>
-                <tr><td><code>analyze</code></td><td>Deep analysis and investigation</td><td><code>$analyze the codebase</code></td></tr>
-                <tr><td><code>ask-claude</code></td><td>Directly query Claude CLI</td><td><code>$ask-claude "review this"</code></td></tr>
-                <tr><td><code>ask-gemini</code></td><td>Directly query Gemini CLI</td><td><code>$ask-gemini "brainstorm"</code></td></tr>
                 <tr><td><code>autopilot</code></td><td>Full autonomous execution</td><td><code>$autopilot build auth</code></td></tr>
-                <tr><td><code>build-fix</code></td><td>Fix build/TypeScript errors</td><td><code>$build-fix</code></td></tr>
-                <tr><td><code>cancel</code></td><td>Stop active execution</td><td><code>$cancel</code></td></tr>
-                <tr><td><code>code-review</code></td><td>Comprehensive code review</td><td><code>$code-review</code></td></tr>
-                <tr><td><code>deepsearch</code></td><td>Thorough codebase search</td><td><code>$deepsearch "regex"</code></td></tr>
-                <tr><td><code>deepinit</code></td><td>Initialize AGENTS.md hierarchy</td><td><code>$deepinit</code></td></tr>
-                <tr><td><code>deep-interview</code></td><td>Socratic ambiguity gating</td><td><code>$deep-interview "fix bug"</code></td></tr>
-                <tr><td><code>doctor</code></td><td>Diagnose installation health</td><td><code>$doctor</code></td></tr>
-                <tr><td><code>ecomode</code></td><td>Token-efficient routing</td><td><code>$ecomode on</code></td></tr>
-                <tr><td><code>frontend-ui-ux</code></td><td>Designer-developer for UI/UX</td><td><code>$frontend-ui-ux "polish"</code></td></tr>
-                <tr><td><code>git-master</code></td><td>Atomic commits and rebasing</td><td><code>$git-master commit</code></td></tr>
-                <tr><td><code>hud</code></td><td>Configure the OMX HUD</td><td><code>$hud toggle</code></td></tr>
-                <tr><td><code>learner</code></td><td>Extract skills from context</td><td><code>$learner</code></td></tr>
-                <tr><td><code>note</code></td><td>Save to persistent notepad</td><td><code>$note "API change"</code></td></tr>
-                <tr><td><code>pipeline</code></td><td>Configurable sequence engine</td><td><code>$pipeline start</code></td></tr>
-                <tr><td><code>plan</code></td><td>Strategic planning workflow</td><td><code>$plan the feature</code></td></tr>
-                <tr><td><code>psm</code></td><td>Manage worktree sessions</td><td><code>$psm create fix-bug</code></td></tr>
-                <tr><td><code>ralph</code></td><td>Persistent persistence loop</td><td><code>$ralph implementation</code></td></tr>
-                <tr><td><code>ralplan</code></td><td>Consensus-based planning</td><td><code>$ralplan architecture</code></td></tr>
-                <tr><td><code>release</code></td><td>Automated release workflow</td><td><code>$release</code></td></tr>
-                <tr><td><code>research</code></td><td>Parallel research agents</td><td><code>$research "new tech"</code></td></tr>
-                <tr><td><code>security-review</code></td><td>Full security audit</td><td><code>$security-review</code></td></tr>
-                <tr><td><code>skill</code></td><td>Manage local skill catalog</td><td><code>$skill list</code></td></tr>
-                <tr><td><code>swarm</code></td><td>N coordinated workers</td><td><code>$swarm 3 "refactor"</code></td></tr>
-                <tr><td><code>tdd</code></td><td>Test-Driven Development</td><td><code>$tdd "add tests"</code></td></tr>
-                <tr><td><code>team</code></td><td>tmux-based team workers</td><td><code>$team 4 "build"</code></td></tr>
-                <tr><td><code>trace</code></td><td>Show flow trace timeline</td><td><code>$trace</code></td></tr>
-                <tr><td><code>ultrapilot</code></td><td>Parallel partitioned autopilot</td><td><code>$ultrapilot "fix all"</code></td></tr>
+                <tr><td><code>ralph</code></td><td>Persistence loop until completion</td><td><code>$ralph implementation</code></td></tr>
+                <tr><td><code>ultrawork</code></td><td>Max parallel execution</td><td><code>$ultrawork "batch"</code></td></tr>
+                <tr><td><code>visual-verdict</code></td><td>Structured visual QA loop</td><td><code>$visual-verdict "compare"</code></td></tr>
+                <tr><td><code>team</code></td><td>Coordinated multi-agent pipeline</td><td><code>$team 4 "build"</code></td></tr>
                 <tr><td><code>ultraqa</code></td><td>Test-Verify-Fix cycle</td><td><code>$ultraqa</code></td></tr>
-                <tr><td><code>ultrawork</code></td><td>High-throughput engine</td><td><code>$ultrawork "batch"</code></td></tr>
-                <tr><td><code>web-clone</code></td><td>Visual website cloning</td><td><code>$web-clone https://...</code></td></tr>
-                <tr><td><code>writer-memory</code></td><td>Agentic memory for writers</td><td><code>$writer-memory</code></td></tr>
+                <tr><td><code>swarm</code></td><td>N coordinated workers</td><td><code>$swarm 3 "refactor"</code></td></tr>
+                <tr><td><code>team-mix</code></td><td>Mixed-provider (Codex/Claude/Gemini) teams</td><td><code>$team-mix "parallel"</code></td></tr>
+                <tr><td><code>ecomode</code></td><td>Token-efficient model routing</td><td><code>$ecomode on</code></td></tr>
               </tbody>
             </table>
           </div>
+
+          <h3>Planning & Analysis</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td><code>plan</code></td><td>Strategic planning workflow</td><td><code>$plan the feature</code></td></tr>
+                <tr><td><code>ralplan</code></td><td>Consensus-based planning</td><td><code>$ralplan architecture</code></td></tr>
+                <tr><td><code>analyze</code></td><td>Deep analysis and investigation</td><td><code>$analyze the codebase</code></td></tr>
+                <tr><td><code>deepsearch</code></td><td>Thorough codebase search</td><td><code>$deepsearch "regex"</code></td></tr>
+                <tr><td><code>research</code></td><td>Parallel research agents</td><td><code>$research "new tech"</code></td></tr>
+                <tr><td><code>deep-interview</code></td><td>Socratic ambiguity gating</td><td><code>$deep-interview "fix bug"</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Development & Review</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td><code>build-fix</code></td><td>Fix build/TypeScript errors</td><td><code>$build-fix</code></td></tr>
+                <tr><td><code>code-review</code></td><td>Comprehensive code review</td><td><code>$code-review</code></td></tr>
+                <tr><td><code>security-review</code></td><td>Full security audit</td><td><code>$security-review</code></td></tr>
+                <tr><td><code>tdd</code></td><td>Test-Driven Development</td><td><code>$tdd "add tests"</code></td></tr>
+                <tr><td><code>frontend-ui-ux</code></td><td>Designer-developer for UI/UX</td><td><code>$frontend-ui-ux "polish"</code></td></tr>
+                <tr><td><code>git-master</code></td><td>Atomic commits and rebasing</td><td><code>$git-master commit</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Utilities & Configuration</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td><code>omx-setup</code></td><td>Initialize OMX environment</td><td><code>$omx-setup</code></td></tr>
+                <tr><td><code>configure-notifications</code></td><td>Setup Slack/Discord/Telegram</td><td><code>$configure-notifications</code></td></tr>
+                <tr><td><code>doctor</code></td><td>Diagnose installation health</td><td><code>$doctor</code></td></tr>
+                <tr><td><code>psm</code></td><td>Manage worktree sessions</td><td><code>$psm create fix-bug</code></td></tr>
+                <tr><td><code>skill</code></td><td>Manage local skill catalog</td><td><code>$skill list</code></td></tr>
+                <tr><td><code>worker</code></td><td>(internal) Team worker protocol / lifecycle</td><td><code>$worker</code></td></tr>
+                <tr><td><code>hud</code></td><td>Configure the OMX HUD</td><td><code>$hud toggle</code></td></tr>
+                <tr><td><code>note</code></td><td>Save to persistent notepad</td><td><code>$note "API change"</code></td></tr>
+                <tr><td><code>trace</code></td><td>Show flow trace timeline</td><td><code>$trace</code></td></tr>
+                <tr><td><code>cancel</code></td><td>Stop active execution</td><td><code>$cancel</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
           <div class="callout info">
             <div class="callout-title">Pro Tip</div>
             <p>You can list all available skills by running <code>omx skill list</code> in your terminal.</p>
@@ -389,22 +408,22 @@
           <p>OMX detects your intent using "Magic Keywords". These trigger specialized modes without requiring the <code>$</code> prefix.</p>
 
           <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
-            <div class="card glass tilt-3d pixel-border" style="padding: 1.5rem;">
+            <div class="card glass tilt-3d-polish pixel-border" style="padding: 1.5rem;">
               <h3 style="margin-top:0; color: var(--accent-primary);">ralph</h3>
               <p>Triggers the persistence loop. Codex will keep trying until the architect verifies the change. Automatically includes <code>ultrawork</code>.</p>
               <code>"ralph fix all the bugs"</code>
             </div>
-            <div class="card glass tilt-3d pixel-border" style="padding: 1.5rem;">
+            <div class="card glass tilt-3d-polish pixel-border" style="padding: 1.5rem;">
               <h3 style="margin-top:0; color: var(--accent-primary);">ralplan</h3>
               <p>Triggers iterative consensus planning. Planner, Architect, and Critic agents deliberate before execution.</p>
               <code>"ralplan this new feature"</code>
             </div>
-            <div class="card glass tilt-3d pixel-border" style="padding: 1.5rem;">
+            <div class="card glass tilt-3d-polish pixel-border" style="padding: 1.5rem;">
               <h3 style="margin-top:0; color: var(--accent-primary);">ulw / ultrawork</h3>
               <p>Triggers max parallelism. Splits tasks across multiple workers for maximum throughput.</p>
               <code>"ulw refactor the API"</code>
             </div>
-            <div class="card glass tilt-3d pixel-border" style="padding: 1.5rem;">
+            <div class="card glass tilt-3d-polish pixel-border" style="padding: 1.5rem;">
               <h3 style="margin-top:0; color: var(--accent-primary);">plan</h3>
               <p>Triggers the strategic planning interview to clarify requirements before starting.</p>
               <code>"plan the new endpoints"</code>

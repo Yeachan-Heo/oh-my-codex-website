@@ -427,6 +427,51 @@
   transform: translateZ(20px);
 }
 
+/* Refined 3D Polish - Multi-layered floating effect */
+.tilt-3d-polish {
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+}
+
+.tilt-3d-polish::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(var(--accent-color-rgb), 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  transform: translateZ(-10px);
+}
+
+.tilt-3d-polish:hover {
+  transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) translateY(-8px);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(var(--accent-color-rgb), 0.2);
+}
+
+.tilt-3d-polish:hover::before {
+  opacity: 1;
+}
+
+.tilt-3d-child {
+  transform: translateZ(40px);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tilt-3d-polish:hover .tilt-3d-child {
+  transform: translateZ(60px) scale(1.05);
+}
+
 /* ========================================
    Glow and Depth Effects
    ======================================== */

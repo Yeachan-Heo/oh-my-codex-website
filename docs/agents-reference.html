@@ -224,6 +224,21 @@
     .agent-desc { color: var(--text-secondary); line-height: 1.5; }
     .agent-use { font-size: 0.85rem; color: var(--text-tertiary); margin-top: 0.5rem; }
 
+    /* Model Badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+    }
+    .badge--opus { background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3); }
+    .badge--sonnet { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge--haiku { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
     /* Anchor Links */
     .anchor-link {
       position: absolute;
@@ -297,7 +312,7 @@
             Oh My Codex organizes 30+ specialized AI personas into functional lanes. Use these agents to perform targeted tasks with maximum expertise.
           </p>
           
-          <div class="card glass tilt-3d" style="margin-top: 2rem; border-left: 4px solid var(--accent-primary);">
+          <div class="card glass tilt-3d-polish" style="margin-top: 2rem; border-left: 4px solid var(--accent-primary);">
             <h3 style="margin-top:0">How to Invoke</h3>
             <p>Load any agent persona using the <code>/prompts:name</code> command within the Codex CLI.</p>
             <div class="code-block">
@@ -319,57 +334,71 @@
             <div class="agent-table-wrapper">
               <table class="agent-table">
                 <thead>
-                  <tr><th>Agent</th><th>Role & When to Use</th></tr>
+                  <tr><th>Agent</th><th>Model</th><th>Role & When to Use</th><th>Example</th></tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><div class="agent-name">architect</div></td>
+                    <td><span class="badge badge--opus">opus</span></td>
                     <td>
                       <div class="agent-desc">Design system boundaries and draft high-level plans.</div>
                       <div class="agent-use"><strong>Use when:</strong> Starting a new feature or refactoring major components.</div>
                     </td>
+                    <td><code>/prompts:architect "review service boundaries"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">planner</div></td>
+                    <td><span class="badge badge--opus">opus</span></td>
                     <td>
                       <div class="agent-desc">Sequence complex tasks into actionable steps.</div>
                       <div class="agent-use"><strong>Use when:</strong> You have a goal but need a concrete execution roadmap.</div>
                     </td>
+                    <td><code>/prompts:planner "plan migration"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">executor</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Write code and implement features following established patterns.</div>
                       <div class="agent-use"><strong>Use when:</strong> You are ready to write the actual implementation.</div>
                     </td>
+                    <td><code>/prompts:executor "add validation"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">debugger</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Root-cause analysis and investigation of complex errors.</div>
                       <div class="agent-use"><strong>Use when:</strong> Something is broken and you don't know why.</div>
                     </td>
+                    <td><code>/prompts:debugger "investigate flaky test"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">verifier</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Prove behavioral correctness through validation and evidence.</div>
                       <div class="agent-use"><strong>Use when:</strong> Confirming that a change works as intended.</div>
                     </td>
+                    <td><code>/prompts:verifier "verify release readiness"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">explore</div></td>
+                    <td><span class="badge badge--haiku">haiku</span></td>
                     <td>
                       <div class="agent-desc">Search the codebase and map file structures.</div>
                       <div class="agent-use"><strong>Use when:</strong> Entering an unfamiliar codebase or locating specific logic.</div>
                     </td>
+                    <td><code>/prompts:explore "map auth flow"</code></td>
                   </tr>
                   <tr>
-                    <td><div class="agent-name">analyzer</div></td>
+                    <td><div class="agent-name">analyst</div></td>
+                    <td><span class="badge badge--opus">opus</span></td>
                     <td>
-                      <div class="agent-desc">Perform deep analysis of specific modules or bottlenecks.</div>
-                      <div class="agent-use"><strong>Use when:</strong> You need a detailed report on a specific part of the system.</div>
+                      <div class="agent-desc">Clarify requirements, acceptance criteria, and hidden constraints.</div>
+                      <div class="agent-use"><strong>Use when:</strong> The task is ambiguous and you need sharper problem framing before execution.</div>
                     </td>
+                    <td><code>/prompts:analyst "clarify requirements for session handling"</code></td>
                   </tr>
                 </tbody>
               </table>
@@ -387,50 +416,62 @@
             <div class="agent-table-wrapper">
               <table class="agent-table">
                 <thead>
-                  <tr><th>Agent</th><th>Role & When to Use</th></tr>
+                  <tr><th>Agent</th><th>Model</th><th>Role & When to Use</th><th>Example</th></tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><div class="agent-name">code-reviewer</div></td>
+                    <td><span class="badge badge--opus">opus</span></td>
                     <td>
                       <div class="agent-desc">Audit code for readability, maintainability, and idioms.</div>
                       <div class="agent-use"><strong>Use when:</strong> Preparing a Pull Request or reviewing a teammates change.</div>
                     </td>
+                    <td><code>/prompts:code-reviewer "comprehensive review"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">security-reviewer</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Scan for vulnerabilities, input validation, and auth gaps.</div>
                       <div class="agent-use"><strong>Use when:</strong> Shipping sensitive features or public APIs.</div>
                     </td>
+                    <td><code>/prompts:security-reviewer "security audit"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">performance-reviewer</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Identify bottlenecks, memory leaks, and optimizations.</div>
                       <div class="agent-use"><strong>Use when:</strong> Code is slow or resource-intensive.</div>
                     </td>
+                    <td><code>/prompts:performance-reviewer "profile hotspots"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">api-reviewer</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Ensure consistency and clarity of public interfaces.</div>
                       <div class="agent-use"><strong>Use when:</strong> Modifying public functions or REST/GraphQL schemas.</div>
                     </td>
+                    <td><code>/prompts:api-reviewer "audit API changes"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">style-reviewer</div></td>
+                    <td><span class="badge badge--haiku">haiku</span></td>
                     <td>
                       <div class="agent-desc">Enforce formatting, naming conventions, and linting rules.</div>
                       <div class="agent-use"><strong>Use when:</strong> Ensuring codebase consistency.</div>
                     </td>
+                    <td><code>/prompts:style-reviewer "check style"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">quality-reviewer</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Holistic check for robustness and edge-case handling.</div>
                       <div class="agent-use"><strong>Use when:</strong> Final check before moving to production.</div>
                     </td>
+                    <td><code>/prompts:quality-reviewer "review PR"</code></td>
                   </tr>
                 </tbody>
               </table>
@@ -448,78 +489,98 @@
             <div class="agent-table-wrapper">
               <table class="agent-table">
                 <thead>
-                  <tr><th>Agent</th><th>Role & When to Use</th></tr>
+                  <tr><th>Agent</th><th>Model</th><th>Role & When to Use</th><th>Example</th></tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><div class="agent-name">test-engineer</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Write unit, integration, and End-to-End tests.</div>
                       <div class="agent-use"><strong>Use when:</strong> Adding test coverage to existing or new code.</div>
                     </td>
+                    <td><code>/prompts:test-engineer "write test plan"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">dependency-expert</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Manage lockfiles and resolve complex version conflicts.</div>
                       <div class="agent-use"><strong>Use when:</strong> Adding new packages or fixing dependency hell.</div>
                     </td>
+                    <td><code>/prompts:dependency-expert "compare SDK options"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">git-master</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Atomic commits, complex rebasing, and history management.</div>
                       <div class="agent-use"><strong>Use when:</strong> Preparing a clean commit history.</div>
                     </td>
+                    <td><code>/prompts:git-master "prepare clean commit plan"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">designer</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Implement UI components, polish CSS, and refine layouts.</div>
                       <div class="agent-use"><strong>Use when:</strong> Working on frontend visual tasks.</div>
                     </td>
+                    <td><code>/prompts:designer "improve onboarding UX"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">researcher</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Investigate new libraries, patterns, or best practices.</div>
                       <div class="agent-use"><strong>Use when:</strong> Evaluating technical choices for a new feature.</div>
                     </td>
+                    <td><code>/prompts:researcher "collect official API docs"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">build-fixer</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Resolve CI/CD failures and environment issues.</div>
                       <div class="agent-use"><strong>Use when:</strong> The build is red or deployment fails.</div>
                     </td>
+                    <td><code>/prompts:build-fixer "fix CI failures"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">writer</div></td>
+                    <td><span class="badge badge--haiku">haiku</span></td>
                     <td>
                       <div class="agent-desc">Craft documentation, READMEs, and technical specs.</div>
                       <div class="agent-use"><strong>Use when:</strong> Explaining how to use a feature or system.</div>
                     </td>
+                    <td><code>/prompts:writer "draft migration guide"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">qa-tester</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Manual verification and edge-case reproduction.</div>
                       <div class="agent-use"><strong>Use when:</strong> You need a skeptical eye to find hidden bugs.</div>
                     </td>
+                    <td><code>/prompts:qa-tester "run manual QA pass"</code></td>
                   </tr>
                   <tr>
-                    <td><div class="agent-name">devops</div></td>
+                    <td><div class="agent-name">code-simplifier</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
-                      <div class="agent-desc">Infrastructure, Docker, and deployment automation.</div>
-                      <div class="agent-use"><strong>Use when:</strong> Configuring the runtime environment.</div>
+                      <div class="agent-desc">Simplify recently modified code for clarity and consistency without changing behavior.</div>
+                      <div class="agent-use"><strong>Use when:</strong> A working diff needs cleanup before review or merge.</div>
                     </td>
+                    <td><code>/prompts:code-simplifier "simplify this diff"</code></td>
                   </tr>
                   <tr>
-                    <td><div class="agent-name">data-scientist</div></td>
+                    <td><div class="agent-name">quality-strategist</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
-                      <div class="agent-desc">Data analysis and visualization within a REPL.</div>
-                      <div class="agent-use"><strong>Use when:</strong> Analyzing logs or project metrics.</div>
+                      <div class="agent-desc">Assess release readiness, verification depth, and quality risks.</div>
+                      <div class="agent-use"><strong>Use when:</strong> You need a go/no-go view before shipping a larger change.</div>
                     </td>
+                    <td><code>/prompts:quality-strategist "assess release risk"</code></td>
                   </tr>
                 </tbody>
               </table>
@@ -537,58 +598,64 @@
             <div class="agent-table-wrapper">
               <table class="agent-table">
                 <thead>
-                  <tr><th>Agent</th><th>Role & When to Use</th></tr>
+                  <tr><th>Agent</th><th>Model</th><th>Role & When to Use</th><th>Example</th></tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><div class="agent-name">product-manager</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Feature prioritization and requirement gathering.</div>
                       <div class="agent-use"><strong>Use when:</strong> Defining what needs to be built.</div>
                     </td>
+                    <td><code>/prompts:product-manager "define user outcomes"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">ux-researcher</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Analyze user flows and perform accessibility audits.</div>
                       <div class="agent-use"><strong>Use when:</strong> Designing or reviewing user interactions.</div>
                     </td>
+                    <td><code>/prompts:ux-researcher "run heuristic audit"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">critic</div></td>
+                    <td><span class="badge badge--opus">opus</span></td>
                     <td>
                       <div class="agent-desc">Identify risks and challenge assumptions (Devil's Advocate).</div>
                       <div class="agent-use"><strong>Use when:</strong> Validating a high-risk plan or design.</div>
                     </td>
+                    <td><code>/prompts:critic "challenge this plan"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">vision</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Analyze visual assets, screenshots, and UI mockups.</div>
                       <div class="agent-use"><strong>Use when:</strong> Working with multimodal UI feedback.</div>
                     </td>
+                    <td><code>/prompts:vision "review this screenshot"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">product-analyst</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Impact analysis and success metrics definition.</div>
                       <div class="agent-use"><strong>Use when:</strong> Measuring the value of a feature.</div>
                     </td>
+                    <td><code>/prompts:product-analyst "analyze onboarding funnel"</code></td>
                   </tr>
                   <tr>
                     <td><div class="agent-name">information-architect</div></td>
+                    <td><span class="badge badge--sonnet">sonnet</span></td>
                     <td>
                       <div class="agent-desc">Hierarchy, navigation, and data modeling.</div>
                       <div class="agent-use"><strong>Use when:</strong> Designing complex content structures.</div>
                     </td>
+                    <td><code>/prompts:information-architect "improve docs IA"</code></td>
                   </tr>
-                  <tr>
-                    <td><div class="agent-name">lead</div></td>
-                    <td>
-                      <div class="agent-desc">Orchestrate teams and ensure overall goal alignment.</div>
-                      <div class="agent-use"><strong>Use when:</strong> Managing multi-agent tmux teams.</div>
-                    </td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>

@@ -95,11 +95,55 @@
       margin-top: 1.5rem;
       margin-bottom: 0.75rem;
     }
+.docs-content p, .docs-content ul, .docs-content ol {
+  margin-bottom: 1.25rem;
+  color: var(--text-secondary);
+}
 
-    .docs-content p, .docs-content ul, .docs-content ol {
-      margin-bottom: 1.25rem;
-      color: var(--text-secondary);
-    }
+/* 3D Polish */
+.tilt-3d-polish {
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+}
+
+.tilt-3d-polish::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(16, 163, 127, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  transform: translateZ(-10px);
+}
+
+.tilt-3d-polish:hover {
+  transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) translateY(-8px);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(16, 163, 127, 0.2);
+}
+
+.tilt-3d-polish:hover::before {
+  opacity: 1;
+}
+
+.tilt-3d-child {
+  transform: translateZ(40px);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tilt-3d-polish:hover .tilt-3d-child {
+  transform: translateZ(60px) scale(1.05);
+}
 
     .docs-content ul, .docs-content ol {
       padding-left: 1.5rem;
@@ -586,6 +630,7 @@
           <a href="#feat-ralplan-dr" class="sidebar-link" data-section="feat-ralplan-dr">RALPLAN-DR</a>
           <a href="#feat-openclaw" class="sidebar-link" data-section="feat-openclaw">OpenClaw</a>
           <a href="#feat-worktree-orchestration" class="sidebar-link" data-section="feat-worktree-orchestration">Worktree Orchestration</a>
+          <a href="#feat-gemini-teams" class="sidebar-link" data-section="feat-gemini-teams">Gemini Teams</a>
           <a href="#installation" class="sidebar-link" data-section="installation">Installation</a>
           <a href="#quick-start" class="sidebar-link" data-section="quick-start">Quick Start</a>
         </div>
@@ -701,8 +746,8 @@
             <p>These updates improve team workflows, setup compatibility, notification ergonomics, and reliability. Open each version to see the details.</p>
           </div>
           <!-- One mode-card per version with collapsible details -->
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.8.2</span>
               Gemini Workers + Setup Reliability
             </div>
@@ -716,8 +761,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.8.1</span>
               Team CLI Interop API
             </div>
@@ -729,8 +774,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.8.0</span>
               Model Ask and Socratic Interview
             </div>
@@ -743,8 +788,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.7.6</span>
               Hotfix
             </div>
@@ -755,8 +800,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.7.5</span>
               Ralph Cleanup and Worker Routing
             </div>
@@ -770,8 +815,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.7.3</span>
               Pipeline Orchestrator
             </div>
@@ -784,8 +829,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.7.2</span>
               Team Shutdown Force Flag (Hotfix)
             </div>
@@ -797,8 +842,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.7.0</span>
               Major Release (153 files changed)
             </div>
@@ -820,8 +865,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.6.x</span>
               Mixed Team Workers and Reliability
             </div>
@@ -836,8 +881,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.5.x</span>
               Worktree and Ralph CLI
             </div>
@@ -855,8 +900,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.5.0</span>
               Catalog Consolidation
             </div>
@@ -870,8 +915,8 @@
               </ul>
             </details>
           </div>
-          <div class="mode-card">
-            <div class="mode-card__header">
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.4.x</span>
               Hook Extensibility and Auto-nudge
             </div>
@@ -926,6 +971,16 @@
               <li>Native team worktree orchestration enables isolated parallel streams for multi-worker execution.</li>
               <li>Use launch flag <code>-w, --worktree[=&lt;name&gt;]</code> to run in a git worktree.</li>
               <li>Cross-worktree team state resolution keeps dispatch, claims, and lifecycle updates consistent across lanes.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card tilt-3d-polish">
+            <h3 id="feat-gemini-teams" class="tilt-3d-child"><span class="anchor-link">#</span>Gemini-Powered Teams</h3>
+            <ul style="list-style-type: disc;">
+              <li>Full support for <strong>Gemini CLI</strong> workers in OMX Team mode.</li>
+              <li>Leverage Gemini's massive context window and reasoning capabilities for complex architectural planning and codebase-wide refactors.</li>
+              <li>Mixed-provider teams (Codex + Claude + Gemini) enable the ultimate "best-of-breed" orchestration.</li>
+              <li>Configure with <code>OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini</code>.</li>
             </ul>
           </article>
         </section>
@@ -987,7 +1042,7 @@ omx team shutdown &lt;team-name&gt;</code></pre>
             <li>
               <div class="qs-content">
                 <h4>tmux Teams</h4>
-                <p><code>"team 5:executor refactor backend"</code> &mdash; Spawns a team of 5 agents coordinated by a lead.</p>
+                <p><code>"team 5:executor refactor backend"</code> &mdash; Spawns a team of 5 agents coordinated from the leader pane.</p>
               </div>
             </li>
             <li>
@@ -1026,8 +1081,8 @@ omx team shutdown &lt;team-name&gt;</code></pre>
 
           <div class="grid grid--2">
             <!-- Build/Analysis -->
-            <div class="lane-card lane-card--build">
-              <span class="lane-card__badge">Build & Analysis</span>
+            <div class="lane-card lane-card--build tilt-3d-polish">
+              <span class="lane-card__badge tilt-3d-child">Build & Analysis</span>
               <h4 class="lane-card__title">Implementation Core</h4>
               <div class="lane-card__agents">
                 <span class="agent-tag">explore <small>Search</small></span>
@@ -1040,8 +1095,8 @@ omx team shutdown &lt;team-name&gt;</code></pre>
             </div>
 
             <!-- Review -->
-            <div class="lane-card lane-card--review">
-              <span class="lane-card__badge">Review Lane</span>
+            <div class="lane-card lane-card--review tilt-3d-polish">
+              <span class="lane-card__badge tilt-3d-child">Review Lane</span>
               <h4 class="lane-card__title">Quality Gates</h4>
               <div class="lane-card__agents">
                 <span class="agent-tag">code-reviewer</span>
@@ -1053,8 +1108,8 @@ omx team shutdown &lt;team-name&gt;</code></pre>
             </div>
 
             <!-- Domain Specialists -->
-            <div class="lane-card lane-card--domain">
-              <span class="lane-card__badge">Domain Specialists</span>
+            <div class="lane-card lane-card--domain tilt-3d-polish">
+              <span class="lane-card__badge tilt-3d-child">Domain Specialists</span>
               <h4 class="lane-card__title">Deep Expertise</h4>
               <div class="lane-card__agents">
                 <span class="agent-tag">dependency-expert</span>
@@ -1066,8 +1121,8 @@ omx team shutdown &lt;team-name&gt;</code></pre>
             </div>
 
             <!-- Product & Coordination -->
-            <div class="lane-card lane-card--product">
-              <span class="lane-card__badge">Product & Coordination</span>
+            <div class="lane-card lane-card--product tilt-3d-polish">
+              <span class="lane-card__badge tilt-3d-child">Product & Coordination</span>
               <h4 class="lane-card__title">Strategy & Feedback</h4>
               <div class="lane-card__agents">
                 <span class="agent-tag">product-manager</span>
@@ -1158,8 +1213,8 @@ omx team shutdown &lt;team-name&gt;</code></pre>
           <h2><span class="anchor-link">#</span>Execution Modes</h2>
           
           <div id="autopilot">
-            <div class="mode-card">
-              <div class="mode-card__header">
+            <article class="mode-card tilt-3d-polish">
+              <div class="mode-card__header tilt-3d-child">
                 <div class="mode-card__icon">🤖</div>
                 <div>
                   <h3 class="mode-card__title">Autopilot</h3>
@@ -1177,8 +1232,8 @@ omx team shutdown &lt;team-name&gt;</code></pre>
           </div>
 
           <div id="ralph">
-            <div class="mode-card">
-              <div class="mode-card__header">
+            <article class="mode-card tilt-3d-polish">
+              <div class="mode-card__header tilt-3d-child">
                 <div class="mode-card__icon">🔄</div>
                 <div>
                   <h3 class="mode-card__title">Ralph</h3>
@@ -1195,8 +1250,8 @@ omx team shutdown &lt;team-name&gt;</code></pre>
           </div>
 
           <div id="ultrawork">
-            <div class="mode-card">
-              <div class="mode-card__header">
+            <article class="mode-card tilt-3d-polish">
+              <div class="mode-card__header tilt-3d-child">
                 <div class="mode-card__icon">⚡</div>
                 <div>
                   <h3 class="mode-card__title">Ultrawork</h3>
@@ -1405,11 +1460,11 @@ omx ask gemini --prompt "check this regex for errors"</code></pre>
                 </tr>
               </thead>
               <tbody>
-                <tr><td><code>omx team start &lt;N&gt; &lt;task&gt;</code></td><td>Start N workers on a task</td></tr>
+                <tr><td><code>omx team 3:executor "task"</code></td><td>Start team workers on a task</td></tr>
                 <tr><td><code>omx team status &lt;team-name&gt;</code></td><td>Check team status</td></tr>
                 <tr><td><code>omx team resume &lt;team-name&gt;</code></td><td>Resume team</td></tr>
                 <tr><td><code>omx team shutdown &lt;team-name&gt; [--force]</code></td><td>Shutdown team</td></tr>
-                <tr><td>Env vars</td><td><code>OMX_TEAM_WORKER_CLI</code> (auto|codex|claude), <code>OMX_TEAM_WORKER_CLI_MAP</code> (per-worker mix like codex,codex,claude,claude)</td></tr>
+                <tr><td>Env vars</td><td><code>OMX_TEAM_WORKER_CLI</code> (auto|codex|claude|gemini), <code>OMX_TEAM_WORKER_CLI_MAP</code> (per-worker mix like codex,claude,gemini)</td></tr>
               </tbody>
             </table>
           </div>

@@ -286,7 +286,7 @@
             Welcome to Oh My Codex. This guide will help you install the orchestration layer and run your first multi-agent workflow.
           </p>
 
-          <div class="card glass tilt-3d" style="margin-top: 2rem; border-left: 4px solid var(--accent-primary);">
+          <div class="card glass tilt-3d-polish" style="margin-top: 2rem; border-left: 4px solid var(--accent-primary);">
             <p style="margin: 0; font-weight: 500;">
               <strong>Prerequisite:</strong> You must have <a href="https://github.com/openai/codex-cli" target="_blank">OpenAI Codex CLI</a> installed and configured with your API keys.
             </p>
@@ -370,15 +370,15 @@
 
           <h3>Core Concepts</h3>
           <div class="feature-grid">
-            <div class="card glass tilt-3d pixel-border">
+            <div class="card glass tilt-3d-polish pixel-border">
               <h4 style="color: var(--accent-primary);">Magic Keywords</h4>
               <p>Words like <code>autopilot</code>, <code>ralph</code>, and <code>ulw</code> trigger specialized execution modes automatically.</p>
             </div>
-            <div class="card glass tilt-3d pixel-border">
+            <div class="card glass tilt-3d-polish pixel-border">
               <h4 style="color: var(--accent-primary);">Skill Commands</h4>
               <p>Commands starting with <code>$</code> (e.g., <code>$plan</code>, <code>$team</code>) invoke complex orchestrations.</p>
             </div>
-            <div class="card glass tilt-3d pixel-border">
+            <div class="card glass tilt-3d-polish pixel-border">
               <h4 style="color: var(--accent-primary);">Agent Prompts</h4>
               <p>Invoke specialized roles using <code>/prompts:name</code> (e.g., <code>/prompts:architect</code>).</p>
             </div>
@@ -403,7 +403,7 @@
               </div>
               <div style="margin-bottom: 1.5rem;">
                 <h4 style="margin-bottom: 0.5rem;">3. Parallel Execution</h4>
-                <p>Once approved, OMX spawns workers in tmux to build the features in parallel.</p>
+                <p>Once approved, OMX spawns workers in tmux to build the features in parallel. Supports mixed-provider teams (Codex, Claude, and Gemini).</p>
                 <code>$team 3:executor "follow the approved plan"</code>
               </div>
               <div>

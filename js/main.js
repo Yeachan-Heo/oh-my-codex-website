@@ -31,6 +31,7 @@
     setupMobileMenu();
     setupCopyButtons();
     setupSmoothScroll();
+    setupTiltEffect();
     hidePageLoader();
     fetchGitHubStats();
     fetchNpmDownloads();
@@ -240,6 +241,40 @@
         if (history.pushState) {
           history.pushState(null, null, targetId);
         }
+      });
+    });
+  }
+
+  /**
+   * 3D Tilt Effect
+   * Handles mouse tracking for tilt-3d-polish elements
+   */
+  function setupTiltEffect() {
+    const tiltElements = document.querySelectorAll('.tilt-3d-polish');
+
+    tiltElements.forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const percentX = (x / rect.width) * 100;
+        const percentY = (y / rect.height) * 100;
+
+        // Calculate rotation (max 5 degrees)
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
+
+        el.style.setProperty('--mouse-x', `${percentX}%`);
+        el.style.setProperty('--mouse-y', `${percentY}%`);
+        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
       });
     });
   }
