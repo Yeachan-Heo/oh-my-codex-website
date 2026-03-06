@@ -873,7 +873,7 @@
             <details>
               <summary>View changes in v0.6.x</summary>
               <ul style="list-style-type: disc;">
-                <li><strong>Routing:</strong> Added mixed team worker CLI routing via <code>OMX_TEAM_WORKER_CLI_MAP</code> (Codex and Claude together).</li>
+                <li><strong>Routing:</strong> Added mixed team worker CLI routing via <code>OMX_TEAM_WORKER_CLI_MAP</code> for per-worker provider selection.</li>
                 <li><strong>Fallback:</strong> Added leader-side all-workers-idle nudge fallback.</li>
                 <li><strong>Reliability:</strong> Added an adaptive trigger submit retry guard.</li>
                 <li><strong>Startup:</strong> Fixed team Claude worker startup issues.</li>
@@ -981,6 +981,30 @@
               <li>Leverage Gemini's massive context window and reasoning capabilities for complex architectural planning and codebase-wide refactors.</li>
               <li>Mixed-provider teams (Codex + Claude + Gemini) enable the ultimate "best-of-breed" orchestration.</li>
               <li>Configure with <code>OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini</code>.</li>
+            </ul>
+
+            <h4>Runtime Examples</h4>
+            <p>Run mixed teams with Gemini to leverage specialized reasoning strengths.</p>
+            <div class="code-block-wrapper">
+              <div class="code-block-header"><span class="code-lang">BASH</span></div>
+              <pre><code># 1. Start a mixed provider team
+export OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini
+omx team 3:executor "full-stack implementation"
+
+# 2. Force all workers to Gemini
+export OMX_TEAM_WORKER_CLI=gemini
+omx team 2:architect "large-scale architectural review"
+
+# 3. Pass explicit Gemini models
+export OMX_TEAM_WORKER_LAUNCH_ARGS="--model gemini-2.0-flash-exp"
+omx team 1:executor "experimental feature"</code></pre>
+            </div>
+
+            <p><strong>Gemini worker behavior notes:</strong></p>
+            <ul>
+              <li><strong>Prompt-interactive startup:</strong> Gemini workers are automatically seeded with an initial prompt using <code>--approval-mode yolo -i "..."</code> to ensure reliable tmux bring-up.</li>
+              <li><strong>Model Filtering:</strong> Non-Gemini default models (like Spark) are automatically filtered out when launching Gemini workers to prevent provider/model mismatches.</li>
+              <li><strong>Context Advantage:</strong> Use Gemini workers for tasks requiring deep codebase context or long-form architectural synthesis.</li>
             </ul>
           </article>
         </section>
@@ -1712,6 +1736,10 @@ mention = "@U12345"</code></pre>
 export OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini
 omx team 3:executor "parallel refactoring"
 
+# Force all workers to Gemini CLI
+export OMX_TEAM_WORKER_CLI=gemini
+omx team 2:executor "sync docs and report"
+
 # Force a specific model for workers
 export OMX_TEAM_WORKER_LAUNCH_ARGS="--model gpt-5.3-codex-spark"
 omx team 2:architect "design the system"
@@ -1819,12 +1847,12 @@ omx team 2:executor "task"</code></pre>
           <p>For large-scale engineering, OMX supports complex team configurations, mixed CLI workers, and git worktree isolation.</p>
 
           <h3>Mixed CLI Teams</h3>
-          <p>You can mix different AI providers (Codex, Claude, etc.) within a single team to leverage their unique strengths.</p>
+          <p>You can mix different AI providers (Codex, Claude, and Gemini) within a single team to leverage their unique strengths.</p>
           <div class="code-block-wrapper">
             <div class="code-block-header"><span class="code-lang">BASH</span></div>
-            <pre><code># Mix 3 Codex workers and 3 Claude workers
-export OMX_TEAM_WORKER_CLI_MAP=codex,codex,codex,claude,claude,claude
-omx team 6:executor "refactor the entire backend"</code></pre>
+            <pre><code># Mix Codex, Gemini, and Claude workers in one team
+export OMX_TEAM_WORKER_CLI_MAP=codex,gemini,claude
+omx team 3:executor "refactor the shared runtime docs"</code></pre>
           </div>
 
           <h3>Team CLI API</h3>
@@ -1837,8 +1865,8 @@ omx team api create-task --input '{"team_name":"my-team","subject":"Fix bug","de
 # Claim a task with versioned safety
 omx team api claim-task --input '{"team_name":"my-team","task_id":"1","worker":"worker-1"}' --json
 
-# Transition task status
-omx team api transition-task-status --input '{"team_name":"my-team","task_id":"1","from":"pending","to":"in_progress"}' --json</code></pre>
+# Transition terminal task status after claiming
+omx team api transition-task-status --input '{"team_name":"my-team","task_id":"1","from":"in_progress","to":"completed","claim_token":"<token>"}' --json</code></pre>
           </div>
 
           <h3>Worktree Isolation</h3>
