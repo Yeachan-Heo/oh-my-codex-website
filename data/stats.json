@@ -1,8 +1,8 @@
 {
-  "agents": 31,
-  "skills": 35,
+  "agents": 33,
+  "skills": 36,
   "mcpServers": 5,
-  "version": "0.8.2",
-  "promptFiles": 31,
-  "skillFiles": 35
+  "version": "0.9.0",
+  "promptFiles": 33,
+  "skillFiles": 36
 }
