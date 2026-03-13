@@ -160,6 +160,7 @@
     function openMobileMenu() {
       navLinks.classList.add('active');
       hamburger.classList.add('active');
+      hamburger.setAttribute('aria-expanded', 'true');
       if (overlay) overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
       AppState.mobileMenuOpen = true;
@@ -168,6 +169,7 @@
     function closeMobileMenu() {
       navLinks.classList.remove('active');
       hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
       if (overlay) overlay.classList.remove('active');
       document.body.style.overflow = '';
       AppState.mobileMenuOpen = false;
@@ -250,9 +252,15 @@
    * Handles mouse tracking for tilt-3d-polish elements
    */
   function setupTiltEffect() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerWidth < 969) {
+      return;
+    }
+
     const tiltElements = document.querySelectorAll('.tilt-3d-polish');
 
     tiltElements.forEach(el => {
+      let frameId = null;
+
       el.addEventListener('mousemove', e => {
         const rect = el.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -268,12 +276,22 @@
         const rotateX = ((y - centerY) / centerY) * -5;
         const rotateY = ((x - centerX) / centerX) * 5;
 
-        el.style.setProperty('--mouse-x', `${percentX}%`);
-        el.style.setProperty('--mouse-y', `${percentY}%`);
-        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+        if (frameId) {
+          cancelAnimationFrame(frameId);
+        }
+
+        frameId = requestAnimationFrame(() => {
+          el.style.setProperty('--mouse-x', `${percentX}%`);
+          el.style.setProperty('--mouse-y', `${percentY}%`);
+          el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+        });
       });
 
       el.addEventListener('mouseleave', () => {
+        if (frameId) {
+          cancelAnimationFrame(frameId);
+          frameId = null;
+        }
         el.style.transform = '';
       });
     });
@@ -429,7 +447,7 @@
 
   // Expose public API for debugging
   window.OMX = {
-    version: '0.4.0',
+    version: '0.9.0',
     state: AppState,
     refresh: init,
     fetchGitHubStats,

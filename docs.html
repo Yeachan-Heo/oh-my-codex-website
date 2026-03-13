@@ -17,7 +17,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
   <!-- Design System -->
   <link rel="stylesheet" href="css/design-system.css">
@@ -33,7 +33,10 @@
     }
 
     body {
-      background-color: var(--bg-primary);
+      background:
+        radial-gradient(circle at top left, rgba(16, 163, 127, 0.12), transparent 28%),
+        radial-gradient(circle at 82% 10%, rgba(59, 130, 246, 0.1), transparent 24%),
+        linear-gradient(180deg, #0f1220 0%, var(--bg-primary) 28%, #07080d 100%);
       color: var(--text-primary);
     }
 
@@ -49,12 +52,16 @@
       position: fixed;
       top: 0;
       left: 0;
-      background-color: var(--bg-secondary);
-      border-right: 1px solid var(--border-default);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%),
+        rgba(12, 15, 24, 0.88);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
       overflow-y: auto;
       z-index: 101;
       display: flex;
       flex-direction: column;
+      backdrop-filter: blur(18px);
+      box-shadow: 20px 0 40px rgba(0, 0, 0, 0.22);
     }
 
     .docs-main {
@@ -68,6 +75,126 @@
       max-width: var(--content-max-width);
       margin: 0 auto;
       padding-bottom: 4rem;
+    }
+
+    .docs-hero {
+      position: relative;
+      padding: 2rem;
+      margin: 1rem 0 2.5rem;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 28%),
+        radial-gradient(circle at left center, rgba(16, 163, 127, 0.18), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 22%),
+        rgba(12, 15, 24, 0.82);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .docs-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 25%, rgba(255, 255, 255, 0.08) 50%, transparent 75%);
+      transform: translateX(-100%);
+      animation: shimmer 7s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .docs-hero__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .docs-hero__lede {
+      font-size: 1.1rem;
+      max-width: 52ch;
+    }
+
+    .docs-hero__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .docs-hero__chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      background: rgba(19, 24, 34, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .docs-hero__chip strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .docs-command-panel {
+      padding: 1.1rem;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(8, 11, 18, 0.78);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.24);
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .docs-command-panel__kicker {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+    }
+
+    .docs-command-panel pre {
+      margin: 0;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #d7f7ee;
+    }
+
+    .docs-command-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .docs-command-panel li {
+      margin: 0;
+      padding: 0.8rem 0.9rem;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-secondary);
+    }
+
+    .docs-command-panel li strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-primary);
+    }
+
+    .docs-command-panel li {
+      line-height: 1.5;
     }
 
     /* Typography Overrides */
@@ -325,7 +452,7 @@
       padding: 0.4rem 0.75rem;
       color: var(--text-secondary);
       font-size: 0.9rem;
-      border-radius: 0.375rem;
+      border-radius: 0.6rem;
       text-decoration: none;
       transition: all 0.2s;
       border-left: 2px solid transparent;
@@ -333,15 +460,16 @@
 
     .sidebar-link:hover {
       color: var(--text-primary);
-      background: var(--surface-hover);
+      background: rgba(255, 255, 255, 0.04);
       text-decoration: none;
     }
 
     .sidebar-link.active {
       color: var(--accent-primary);
-      background: rgba(16, 163, 127, 0.05);
+      background: rgba(16, 163, 127, 0.08);
       border-left-color: var(--accent-primary);
       font-weight: 500;
+      box-shadow: inset 0 0 0 1px rgba(16, 163, 127, 0.12);
     }
 
     /* Collapsible */
@@ -450,14 +578,21 @@
 
     /* Mode Cards */
     .mode-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: 0.75rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%),
+        rgba(17, 20, 31, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
     }
-    .mode-card:hover { border-color: var(--accent-primary); }
+    .mode-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 24px 44px rgba(0, 0, 0, 0.28);
+    }
     .mode-card__header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
     .mode-card__icon {
       width: 48px; height: 48px; border-radius: 0.5rem;
@@ -482,13 +617,16 @@
 
     /* Lane Cards */
     .lane-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-default);
-      border-radius: 0.5rem;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%),
+        rgba(17, 20, 31, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
     }
     .lane-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -567,6 +705,18 @@
       .docs-sidebar.open { transform: translateX(0); }
       .docs-main { margin-left: 0; padding: 5rem 1.5rem 2rem; }
       .mobile-menu-btn { display: block; }
+      .docs-hero__inner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .docs-main {
+        padding: 5rem 1rem 2rem;
+      }
+
+      .docs-hero {
+        padding: 1.4rem;
+        border-radius: 22px;
+      }
     }
 
     /* Back to top */
@@ -625,7 +775,7 @@
           <div class="sidebar-title">Getting Started</div>
           <a href="#introduction" class="sidebar-link" data-section="introduction">Introduction</a>
           <a href="#release-notes" class="sidebar-link" data-section="release-notes">Release Notes</a>
-          <a href="#v08-feature-guides" class="sidebar-link" data-section="v08-feature-guides">v0.8 Feature Guides</a>
+          <a href="#v08-feature-guides" class="sidebar-link" data-section="v08-feature-guides">Spark Initiative Guides</a>
           <a href="#feat-dynamic-scaling" class="sidebar-link" data-section="feat-dynamic-scaling">Dynamic Scaling</a>
           <a href="#feat-ralplan-dr" class="sidebar-link" data-section="feat-ralplan-dr">RALPLAN-DR</a>
           <a href="#feat-openclaw" class="sidebar-link" data-section="feat-openclaw">OpenClaw</a>
@@ -715,25 +865,51 @@
         <section id="introduction" data-section>
           <h1>Oh My Codex Documentation</h1>
           <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem;">
-            Turn Codex CLI into an intelligent multi-agent orchestration system. You become the conductor, not the performer.
+            Turn Codex CLI into a coordinated operating layer with team orchestration, read-only exploration, sparkshell inspection, and resumable sessions.
           </p>
 
+          <div class="docs-hero tilt-3d-polish">
+            <div class="docs-hero__inner">
+              <div>
+                <p class="docs-hero__lede">v0.9.0 turns OMX into a tighter operator console: <code>omx explore</code> handles constrained discovery, <code>omx sparkshell</code> handles shell-native inspection, and <code>omx resume</code> restores prior interactive Codex sessions without rebuilding context from scratch.</p>
+                <div class="docs-hero__chips">
+                  <span class="docs-hero__chip"><strong>Read-only</strong> native harness</span>
+                  <span class="docs-hero__chip"><strong>Adaptive</strong> shell summaries</span>
+                  <span class="docs-hero__chip"><strong>Resumable</strong> sessions</span>
+                  <span class="docs-hero__chip"><strong>Cross-platform</strong> native hydration</span>
+                </div>
+              </div>
+
+              <aside class="docs-command-panel tilt-3d-polish">
+                <span class="docs-command-panel__kicker">Current command surface</span>
+                <pre><code>omx explore --prompt "git log --oneline -10"
+omx sparkshell git --version
+omx resume</code></pre>
+                <ul>
+                  <li><strong>Read-only exploration:</strong> Allowlisted repository discovery with explicit fallback behavior.</li>
+                  <li><strong>Operator inspection:</strong> Adaptive summaries and direct tmux-pane capture for debugging.</li>
+                  <li><strong>Recovery path:</strong> Resume earlier interactive sessions directly from the terminal.</li>
+                </ul>
+              </aside>
+            </div>
+          </div>
+
           <div class="grid grid--2">
-            <div class="card">
-              <h3 style="margin-top:0">31 Agent Prompts</h3>
-              <p>Specialized prompt catalog across 5 functional lanes, with role-specific agent files.</p>
+            <div class="card tilt-3d-polish">
+              <h3 style="margin-top:0" class="tilt-3d-child">33 Agent Prompts</h3>
+              <p>Specialized prompt catalog across build, review, domain, product, and coordination lanes.</p>
             </div>
-            <div class="card">
-              <h3 style="margin-top:0">35 Skills</h3>
-              <p>From Autopilot for full autonomy to Team mode for tmux coordination and Ralph for persistence.</p>
+            <div class="card tilt-3d-polish">
+              <h3 style="margin-top:0" class="tilt-3d-child">36 Skills</h3>
+              <p>Execution workflows spanning autopilot, review, orchestration, notifications, research, and recovery.</p>
             </div>
-            <div class="card">
-              <h3 style="margin-top:0">5 MCP Servers</h3>
-              <p>Integrated MCP stack for state, memory, code intelligence, team orchestration, and trace visibility.</p>
+            <div class="card tilt-3d-polish">
+              <h3 style="margin-top:0" class="tilt-3d-child">5 MCP Servers</h3>
+              <p>State, memory, code intelligence, team orchestration, and trace visibility wired into one operator surface.</p>
             </div>
-            <div class="card">
-              <h3 style="margin-top:0">tmux Teams</h3>
-              <p>Spawn parallel worker panes in tmux with mixed Codex/Claude/Gemini CLI workers.</p>
+            <div class="card tilt-3d-polish">
+              <h3 style="margin-top:0" class="tilt-3d-child">Spark Initiative</h3>
+              <p><code>omx explore</code>, <code>omx sparkshell</code>, and native release hydration bring faster shell-native inspection to v0.9.0.</p>
             </div>
           </div>
         </section>
@@ -743,21 +919,22 @@
           <h2><span class="anchor-link">#</span>Release Notes</h2>
           <div class="callout info">
             <div class="callout-title">Quick Summary</div>
-            <p>These updates improve team workflows, setup compatibility, notification ergonomics, and reliability. Open each version to see the details.</p>
+            <p>Recent releases sharpen the operator loop: native exploration, sparkshell-backed inspection, resumable tmux teams, and steadier setup/runtime behavior.</p>
           </div>
           <!-- One mode-card per version with collapsible details -->
           <div class="mode-card tilt-3d-polish">
             <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.9.0</span>
-              Gemini Workers + Setup Reliability
+              Spark Initiative
             </div>
             <details open>
               <summary>View changes in v0.9.0</summary>
               <ul style="list-style-type: disc;">
-                <li><strong>Team:</strong> Added Gemini CLI worker support for mixed Codex/Claude/Gemini team runs.</li>
-                <li><strong>Setup:</strong> Canonicalized <code>configure-notifications</code> and cleaned stale legacy notification skills during <code>--force</code> installs.</li>
-                <li><strong>Compatibility:</strong> <code>omx setup</code> now skips deprecated <code>[tui]</code> config on Codex CLI <code>&gt;= 0.107.0</code>.</li>
-                <li><strong>Defaults/Fixes:</strong> Centralized frontier fallback via <code>DEFAULT_FRONTIER_MODEL</code> and fixed OpenClaw placeholder / keyword-ordering regressions.</li>
+                <li><strong>CLI:</strong> Added <code>omx explore</code> as the default read-only exploration entrypoint with a constrained native harness and repository-safe allowlists.</li>
+                <li><strong>Inspection:</strong> Added <code>omx sparkshell</code> for shell-native command execution, adaptive summaries, and tmux pane capture.</li>
+                <li><strong>Recovery:</strong> Added <code>omx resume</code> as the direct terminal command for restoring an earlier interactive Codex session.</li>
+                <li><strong>Releases:</strong> Tagged releases now ship native archives for <code>omx-explore-harness</code> and <code>omx-sparkshell</code> with manifest-based hydration.</li>
+                <li><strong>Verification:</strong> Release lanes now cover <code>npm run build:full</code>, <code>npm run test:explore</code>, <code>npm run test:sparkshell</code>, and packed-install smoke checks.</li>
               </ul>
             </details>
           </div>
@@ -934,8 +1111,8 @@
         </section>
 
         <section id="v08-feature-guides" data-section>
-          <h2><span class="anchor-link">#</span>v0.8 Feature Guides</h2>
-          <p>v0.7 introduced team scaling, consensus planning upgrades, OpenClaw integration, and better worktree operations. Use these quick references when setting up production workflows.</p>
+          <h2><span class="anchor-link">#</span>Feature Guides</h2>
+          <p>These quick references cover the major operational surfaces added across v0.7 through v0.9, from scaling and consensus planning to native exploration and notification integrations.</p>
 
           <article class="mode-card">
             <h3 id="feat-dynamic-scaling"><span class="anchor-link">#</span>Dynamic Team Worker Scaling</h3>
@@ -1394,6 +1571,7 @@ omx team shutdown &lt;team-name&gt;</code></pre>
             <li>Launch: <code>omx</code> (launches Codex CLI with HUD in tmux)</li>
             <li>Setup: <code>omx setup</code></li>
             <li>Doctor: <code>omx doctor</code></li>
+            <li>Resume a previous session: <code>omx resume</code></li>
           </ul>
           <div class="code-block-wrapper">
             <div class="code-block-header"><span class="code-lang">BASH</span></div>
@@ -1401,6 +1579,7 @@ omx team shutdown &lt;team-name&gt;</code></pre>
 omx
 omx setup
 omx doctor
+omx resume
 omx --xhigh --madmax</code></pre>
           </div>
           <div class="callout info">
@@ -1420,12 +1599,17 @@ omx --xhigh --madmax</code></pre>
               <tbody>
                 <tr><td><code>omx</code></td><td>Launch Codex CLI (HUD auto-attaches in tmux)</td></tr>
                 <tr><td><code>omx setup</code></td><td>Install skills, prompts, MCP servers, and AGENTS.md. Supports <code>--scope user|project</code>.</td></tr>
+                <tr><td><code>omx agents-init .</code></td><td>Bootstrap lightweight <code>AGENTS.md</code> files for a repository or subtree.</td></tr>
                 <tr><td><code>omx doctor</code></td><td>Check installation health. Use <code>--team</code> for worker diagnostics.</td></tr>
                 <tr><td><code>omx ask &lt;provider&gt;</code></td><td>Directly query advisor (claude|gemini). Supports <code>--agent-prompt &lt;name&gt;</code>.</td></tr>
+                <tr><td><code>omx resume</code></td><td>Resume a previous interactive Codex session from the terminal.</td></tr>
+                <tr><td><code>omx explore</code></td><td>Default read-only exploration surface for shell-native repository inspection. May route through sparkshell when appropriate.</td></tr>
+                <tr><td><code>omx sparkshell</code></td><td>Explicit shell-native inspection command with adaptive summaries and tmux pane capture support.</td></tr>
                 <tr><td><code>omx team</code></td><td>Spawn/status/resume/shutdown parallel worker panes in tmux.</td></tr>
                 <tr><td><code>omx ralph</code></td><td>Launch Codex with ralph persistence mode active.</td></tr>
                 <tr><td><code>omx status</code></td><td>Show active modes and execution state.</td></tr>
                 <tr><td><code>omx cancel</code></td><td>Cancel active execution modes (autopilot, team, etc.).</td></tr>
+                <tr><td><code>omx hud</code></td><td>Inspect runtime HUD state with watch/json/preset-oriented operator views.</td></tr>
                 <tr><td><code>omx reasoning [mode]</code></td><td>Show or set model reasoning effort (low|medium|high|xhigh).</td></tr>
                 <tr><td><code>omx version</code></td><td>Show version information.</td></tr>
                 <tr><td><code>omx help</code></td><td>Show the help message.</td></tr>
@@ -1457,6 +1641,30 @@ omx --xhigh --madmax</code></pre>
             </table>
           </div>
 
+          <h3 id="cli-explore-examples">Explore, Sparkshell, and Resume</h3>
+          <p><code>omx explore</code> is intentionally read-only and shell-only. It is suited to quick repository discovery, while <code>omx resume</code> and <code>omx sparkshell</code> cover operator recovery and direct shell-native inspection.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Read-only repository exploration
+omx explore --prompt "which files define team routing"
+omx explore --prompt-file prompts/explore-task.md
+
+# Resume interactive work
+omx resume
+
+# Direct sparkshell inspection
+omx sparkshell git --version
+omx sparkshell --tmux-pane %12 --tail-lines 400</code></pre>
+          </div>
+          <div class="callout warning">
+            <div class="callout-title">Explore constraints</div>
+            <p><code>omx explore</code> does not promise full Codex tool parity. It stays read-only, shell-only, and blocks pipes, redirection, shell chaining, and path escapes outside the target repository.</p>
+          </div>
+          <ul>
+            <li><code>omx explore</code> currently allowlists <code>rg</code>, <code>grep</code>, <code>ls</code>, <code>find</code>, <code>wc</code>, <code>cat</code>, <code>head</code>, <code>tail</code>, <code>pwd</code>, and <code>printf</code>.</li>
+            <li><code>omx sparkshell</code> uses env-based model routing such as <code>OMX_SPARKSHELL_MODEL</code> and supports explicit tmux-pane summarization when requested.</li>
+          </ul>
+
           <h3 id="cli-ask-examples">Advisor (Ask) Examples</h3>
           <p>The <code>omx ask</code> command allows you to query specialized advisors directly from your terminal.</p>
           <div class="code-block-wrapper">
@@ -1485,6 +1693,7 @@ omx ask gemini --prompt "check this regex for errors"</code></pre>
               </thead>
               <tbody>
                 <tr><td><code>omx team 3:executor "task"</code></td><td>Start team workers on a task</td></tr>
+                <tr><td><code>omx team 2:explore "short scoped analysis task"</code></td><td>Launch a small read-only exploration team for fast repository analysis.</td></tr>
                 <tr><td><code>omx team status &lt;team-name&gt;</code></td><td>Check team status</td></tr>
                 <tr><td><code>omx team resume &lt;team-name&gt;</code></td><td>Resume team</td></tr>
                 <tr><td><code>omx team shutdown &lt;team-name&gt; [--force]</code></td><td>Shutdown team</td></tr>
@@ -1493,8 +1702,8 @@ omx ask gemini --prompt "check this regex for errors"</code></pre>
             </table>
           </div>
 
-          <h3 id="cli-other">Hooks & Extensions</h3>
-          <p>OMX provides a powerful hook system for extending functionality and integrating with external tools.</p>
+          <h3 id="cli-other">Hooks, Extensions, and Native Build Helpers</h3>
+          <p>OMX also exposes hook scaffolding, HUD inspection, and native build or verification helpers for the Spark Initiative surfaces.</p>
           <div class="table-wrapper">
             <table>
               <thead>
@@ -1507,7 +1716,12 @@ omx ask gemini --prompt "check this regex for errors"</code></pre>
                 <tr><td><code>omx hooks init</code></td><td>Scaffold a new hook plugin in <code>.omx/hooks/</code>.</td></tr>
                 <tr><td><code>omx hooks status</code></td><td>Show status of installed hook plugins.</td></tr>
                 <tr><td><code>omx hooks validate</code></td><td>Validate hook plugin implementation.</td></tr>
+                <tr><td><code>omx hud --watch</code></td><td>Watch runtime state and HUD output live.</td></tr>
+                <tr><td><code>omx hud --json</code></td><td>Emit HUD status as machine-readable JSON.</td></tr>
                 <tr><td><code>omx tmux-hook init</code></td><td>Initialize tmux prompt injection workaround.</td></tr>
+                <tr><td><code>npm run build:full</code></td><td>One-shot TypeScript plus packaged native build for explore harness and sparkshell.</td></tr>
+                <tr><td><code>npm run test:explore</code></td><td>Verify the native exploration harness and integration path.</td></tr>
+                <tr><td><code>npm run test:sparkshell</code></td><td>Verify sparkshell behavior, summaries, and native bridge wiring.</td></tr>
               </tbody>
             </table>
           </div>

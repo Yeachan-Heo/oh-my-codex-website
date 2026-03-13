@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <!-- Critical CSS - Inline for faster FCP -->
   <style>
@@ -46,7 +46,7 @@
       --text-secondary: #a1a1aa;
       --text-tertiary: #71717a;
       --border-color: #27272a;
-      --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-family-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
     }
 
@@ -61,6 +61,7 @@
       line-height: 1.6;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     /* Hero critical styles */
@@ -165,10 +166,20 @@
       right: 0;
       z-index: 100;
       padding: 1rem 2rem;
-      background: rgba(10, 10, 10, 0.8);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
-      transition: transform 0.3s ease;
+      background: linear-gradient(180deg, rgba(10, 10, 15, 0.9), rgba(10, 10, 15, 0.72));
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(10, 10, 15, 0.82);
+      border-bottom-color: rgba(16, 163, 127, 0.18);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav.hidden {
+      transform: translateY(-100%);
     }
 
     .nav__inner {
@@ -199,11 +210,11 @@
       justify-content: center;
     }
 
-    .nav__links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
+      .nav__links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
 
     .nav__link {
       color: var(--text-secondary);
@@ -215,6 +226,10 @@
 
     .nav__link:hover {
       color: var(--text-primary);
+    }
+
+    .nav__link--docs {
+      color: var(--accent-color-light);
     }
 
     /* Mobile hamburger button */
@@ -313,9 +328,12 @@
     /* Hero section */
     .hero {
       padding-top: 100px; /* Account for fixed nav */
-      background: radial-gradient(ellipse at 50% 0%, rgba(16, 163, 127, 0.15) 0%, transparent 50%),
-                  radial-gradient(ellipse at 80% 50%, rgba(16, 163, 127, 0.08) 0%, transparent 40%),
-                  var(--bg-primary);
+      background:
+        radial-gradient(ellipse at 18% 18%, rgba(59, 130, 246, 0.12) 0%, transparent 35%),
+        radial-gradient(ellipse at 50% 0%, rgba(16, 163, 127, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(16, 163, 127, 0.08) 0%, transparent 40%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 24%),
+        var(--bg-primary);
     }
 
     .hero__text {
@@ -348,7 +366,7 @@
       font-size: 1.125rem;
       color: var(--text-secondary);
       margin-bottom: 2rem;
-      max-width: 500px;
+      max-width: 560px;
     }
 
     @media (max-width: 968px) {
@@ -361,6 +379,7 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
+      margin-bottom: 2rem;
     }
 
     @media (max-width: 968px) {
@@ -387,22 +406,24 @@
     .hero-stat-badge {
       display: inline-flex;
       align-items: center;
-      padding: 0.4rem 0.9rem;
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-color);
+      padding: 0.45rem 0.95rem;
+      background: rgba(19, 24, 34, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 9999px;
       font-size: 0.875rem;
       font-weight: 500;
       color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
       white-space: nowrap;
+      backdrop-filter: blur(12px);
     }
 
     .hero-stat-badge:hover {
       color: var(--text-primary);
       border-color: var(--accent-color);
       box-shadow: 0 0 10px -2px rgba(16, 163, 127, 0.4), 0 0 20px -5px rgba(16, 163, 127, 0.4);
+      transform: translateY(-2px);
     }
 
     .hero-stat-badge__icon {
@@ -420,6 +441,131 @@
       color: var(--text-secondary);
     }
 
+    .hero-command-deck {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.85fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .hero-terminal {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 24%),
+        rgba(12, 15, 24, 0.82);
+      box-shadow:
+        0 24px 50px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      animation: depthPulse 8s ease-in-out infinite;
+    }
+
+    .hero-terminal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.08) 50%, transparent 80%);
+      transform: translateX(-100%);
+      animation: shimmer 6s ease-in-out infinite;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .hero-terminal__bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .hero-terminal__dots {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .hero-terminal__dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .hero-terminal__dots span:nth-child(1) { background: #fb7185; }
+    .hero-terminal__dots span:nth-child(2) { background: #fbbf24; }
+    .hero-terminal__dots span:nth-child(3) { background: #34d399; }
+
+    .hero-terminal__label {
+      font-family: var(--font-family-mono);
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-terminal__body {
+      padding: 1.1rem 1rem 1.25rem;
+      font-family: var(--font-family-mono);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-terminal__body pre {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      font-size: 0.92rem;
+      line-height: 1.75;
+      color: #d7f7ee;
+      overflow: auto;
+    }
+
+    .hero-command-list {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .hero-command-card {
+      padding: 1rem 1.05rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 15, 22, 0.8);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.24);
+    }
+
+    .hero-command-card__title {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-family: var(--font-family-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-color-light);
+    }
+
+    .hero-command-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .hero-command-card code {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      color: #e5fff8;
+      background: rgba(16, 163, 127, 0.12);
+    }
+
+    @media (max-width: 968px) {
+      .hero-command-deck {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* Hero illustration */
     .hero__visual {
       display: flex;
@@ -427,6 +573,7 @@
       justify-content: center;
       opacity: 0;
       animation: fadeInScale 1s ease 0.5s forwards;
+      perspective: 1600px;
     }
 
     @keyframes fadeInScale {
@@ -444,12 +591,41 @@
       width: 100%;
       max-width: 1000px;
       position: relative;
+      transform-style: preserve-3d;
     }
 
     .hero__illustration img {
       width: 100%;
       height: auto;
       object-fit: contain;
+      filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.34));
+    }
+
+    .hero__illustration::before,
+    .hero__illustration::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(18px);
+      animation: orbitFloat 10s ease-in-out infinite;
+    }
+
+    .hero__illustration::before {
+      width: 140px;
+      height: 140px;
+      top: 5%;
+      right: 18%;
+      background: rgba(16, 163, 127, 0.22);
+    }
+
+    .hero__illustration::after {
+      width: 110px;
+      height: 110px;
+      bottom: 14%;
+      left: 12%;
+      background: rgba(59, 130, 246, 0.18);
+      animation-delay: -3s;
     }
 
     /* Section styles */
@@ -457,11 +633,15 @@
       padding: 6rem 1rem;
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
     }
 
     .section__header {
       text-align: center;
       margin-bottom: 4rem;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .section__title {
@@ -487,16 +667,21 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
+      align-items: stretch;
     }
 
     .feature-card {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 24%),
+        rgba(17, 20, 31, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
       padding: 2rem;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       position: relative;
       overflow: hidden;
+      min-height: 100%;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
     }
 
     .feature-card::before {
@@ -512,8 +697,8 @@
     }
 
     .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 26px 56px rgba(0, 0, 0, 0.34);
       border-color: var(--accent-color);
     }
 
@@ -524,13 +709,14 @@
     .feature-card__icon {
       width: 48px;
       height: 48px;
-      background: linear-gradient(135deg, var(--accent-color-dark), var(--accent-color));
-      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.95), rgba(16, 163, 127, 1));
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       margin-bottom: 1.25rem;
+      box-shadow: 0 16px 28px rgba(16, 163, 127, 0.24);
     }
 
     .feature-card__title {
@@ -659,20 +845,23 @@
     }
 
     .tier-card {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 24%),
+        rgba(17, 20, 31, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
       padding: 2rem;
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
     }
 
     .tier-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 28px 58px rgba(0, 0, 0, 0.34);
     }
 
     .tier-card--build:hover { border-color: rgba(59, 130, 246, 0.5); }
@@ -837,6 +1026,18 @@
       font-size: 0.875rem;
     }
 
+    .release-section::before,
+    .features-section::before,
+    .agents-section::before,
+    .skills-section::before {
+      content: '';
+      position: absolute;
+      inset: 1.5rem 1rem auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(16, 163, 127, 0.28), transparent);
+      pointer-events: none;
+    }
+
     /* Footer */
     .footer {
       background: var(--bg-secondary);
@@ -891,13 +1092,79 @@
       color: var(--text-tertiary);
       font-size: 0.875rem;
     }
+
+    .release-character img {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(16, 19, 28, 0.82);
+      animation: float 7s ease-in-out infinite;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-command-deck {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 968px) {
+      .hero {
+        min-height: auto;
+        padding-bottom: 4rem;
+      }
+
+      .hero__text,
+      .hero__visual {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .hero-command-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        padding: 0.85rem 1rem;
+      }
+
+      .section {
+        padding: 4.5rem 1rem;
+      }
+
+      .hero-command-list {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-terminal__body pre {
+        font-size: 0.84rem;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero-stats {
+        gap: 0.6rem;
+      }
+
+      .hero-stat-badge {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .hero__cta {
+        flex-direction: column;
+      }
+
+      .hero__cta .btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Navigation -->
   <nav class="nav glass" id="nav">
     <div class="nav__inner">
-      <a href="#" class="nav__logo" aria-label="oh-my-codex home">
+      <a href="#hero" class="nav__logo" aria-label="oh-my-codex home">
         <div class="nav__logo-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="4 17 10 11 4 5"></polyline>
@@ -910,6 +1177,7 @@
       <div class="nav__links" id="navLinks">
         <a href="#release" class="nav__link">What's New</a>
         <a href="#features" class="nav__link">Features</a>
+        <a href="docs.html" class="nav__link nav__link--docs">Docs</a>
         <a href="#installation" class="nav__link">Installation</a>
         <a href="#agents" class="nav__link">Agents</a>
         <a href="#skills" class="nav__link">Skills</a>
@@ -969,7 +1237,7 @@
           <span class="hero-stat-badge">
             <span class="hero-stat-badge__icon">⚡</span>
             <span class="hero-stat-badge__value">33</span>
-            <span class="hero-stat-badge__label">Agents</span>
+            <span class="hero-stat-badge__label">Prompts</span>
           </span>
           <span class="hero-stat-badge">
             <span class="hero-stat-badge__icon">🎯</span>
@@ -991,9 +1259,48 @@
           <a href="#installation" class="btn btn--primary btn--lg" aria-label="Get started with oh-my-codex">
             Get Started
           </a>
+          <a href="docs.html" class="btn btn--secondary btn--lg" aria-label="Read oh-my-codex documentation">
+            Read Docs
+          </a>
           <a href="https://github.com/Yeachan-Heo/oh-my-codex" class="btn btn--secondary btn--lg" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub">
             View on GitHub
           </a>
+        </div>
+
+        <div class="hero-command-deck" data-reveal="fade-up">
+          <div class="hero-terminal glass tilt-3d-polish">
+            <div class="hero-terminal__bar">
+              <div class="hero-terminal__dots" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <span class="hero-terminal__label">Spark Initiative Surface</span>
+            </div>
+            <div class="hero-terminal__body">
+              <pre><code>$ omx explore --prompt "which files define team routing?"
+$ omx sparkshell --tmux-pane %12 --tail-lines 400
+$ omx resume</code></pre>
+            </div>
+          </div>
+
+          <div class="hero-command-list">
+            <article class="hero-command-card glass-subtle tilt-3d-polish">
+              <span class="hero-command-card__title">Read-only discovery</span>
+              <code>omx explore</code>
+              <p>Native harness for fast, allowlisted repository inspection.</p>
+            </article>
+            <article class="hero-command-card glass-subtle tilt-3d-polish">
+              <span class="hero-command-card__title">Shell-native inspection</span>
+              <code>omx sparkshell</code>
+              <p>Adaptive summaries and explicit tmux pane capture for operators.</p>
+            </article>
+            <article class="hero-command-card glass-subtle tilt-3d-polish">
+              <span class="hero-command-card__title">Session recovery</span>
+              <code>omx resume</code>
+              <p>Jump back into a previous interactive Codex session without losing flow.</p>
+            </article>
+          </div>
         </div>
       </div>
 
@@ -1071,7 +1378,7 @@
           </svg>
         </div>
         <h3 class="feature-card__title">Role Prompts</h3>
-        <p class="feature-card__description">30 specialized agent prompts via /prompts:name for targeted expertise across every development domain.</p>
+        <p class="feature-card__description">33 specialized prompts via <code>/prompts:name</code> for targeted expertise across implementation, review, domain, and coordination lanes.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1081,7 +1388,7 @@
           </svg>
         </div>
         <h3 class="feature-card__title">Workflow Skills</h3>
-        <p class="feature-card__description">40+ repeatable execution modes via $name syntax for autopilot, team orchestration, planning, and QA cycles.</p>
+        <p class="feature-card__description">36 workflow skills and command surfaces via <code>$name</code> syntax for autopilot, team orchestration, planning, recovery, and QA cycles.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1178,7 +1485,7 @@
   <section class="section agents-section" id="agents" data-reveal>
     <div class="section__header">
       <h2 class="section__title">Agent Tiers</h2>
-      <p class="section__subtitle">30 specialized agents organized by domain and expertise</p>
+      <p class="section__subtitle">33 specialized prompts organized by domain, review depth, and orchestration responsibility</p>
     </div>
 
     <div class="tiers-grid">

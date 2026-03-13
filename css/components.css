@@ -7,18 +7,27 @@
    Cards
    ======================================== */
 .card {
-  background-color: var(--bg-secondary);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%),
+    var(--bg-panel, var(--bg-secondary));
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
   padding: var(--space-6);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    border-color var(--transition-base),
+    background-color var(--transition-base);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-inset, inset 0 1px 0 rgba(255, 255, 255, 0.04));
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-panel, 0 24px 80px rgba(0, 0, 0, 0.4));
+  border-color: var(--border-hover, var(--accent-color));
 }
 
 .card::after {
@@ -33,6 +42,21 @@
 
 .card:hover::after {
   border-color: var(--accent-color);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: auto -20% -55% 40%;
+  height: 180px;
+  background: radial-gradient(circle, rgba(var(--accent-color-rgb), 0.18), transparent 68%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 .card--feature {
@@ -158,9 +182,18 @@
   font-weight: var(--font-semibold);
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-lg);
-  transition: all var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
   cursor: pointer;
   white-space: nowrap;
+  border: 1px solid transparent;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
 }
 
 .btn:disabled {
@@ -169,15 +202,15 @@
 }
 
 .btn--primary {
-  background-color: var(--accent-color);
+  background:
+    linear-gradient(135deg, var(--accent-primary-hover), var(--accent-primary));
   color: white;
-  border: none;
+  box-shadow: 0 14px 32px rgba(var(--accent-color-rgb), 0.25);
 }
 
 .btn--primary:hover:not(:disabled) {
-  background-color: var(--accent-color-light);
-  box-shadow: 0 4px 12px rgba(var(--accent-color-rgb), 0.4);
-  transform: translateY(-1px);
+  box-shadow: 0 20px 38px rgba(var(--accent-color-rgb), 0.34);
+  transform: translateY(-2px);
 }
 
 .btn--primary:active:not(:disabled) {
@@ -186,14 +219,16 @@
 }
 
 .btn--secondary {
-  background-color: var(--bg-tertiary);
+  background: rgba(255, 255, 255, 0.02);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
+  backdrop-filter: blur(14px);
 }
 
 .btn--secondary:hover:not(:disabled) {
-  background-color: var(--bg-elevated);
+  background-color: var(--surface-hover);
   border-color: var(--border-color-light);
+  transform: translateY(-2px);
 }
 
 .btn--ghost {

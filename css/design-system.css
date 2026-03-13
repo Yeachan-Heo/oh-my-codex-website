@@ -9,29 +9,35 @@
    ============================================ */
 
 :root {
+  color-scheme: dark;
+
   /* Background Colors */
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #111118;
-  --bg-tertiary: #1a1a24;
-  --bg-elevated: #22222e;
+  --bg-primary: #07110f;
+  --bg-secondary: #0d1817;
+  --bg-tertiary: #12211f;
+  --bg-elevated: #18302d;
+  --bg-canvas-top: #122624;
+  --bg-canvas-bottom: #06100f;
+  --bg-panel: rgba(12, 22, 20, 0.78);
+  --bg-panel-strong: rgba(16, 29, 27, 0.92);
 
   /* Surface Colors */
-  --surface-default: #151520;
-  --surface-hover: #1e1e2d;
-  --surface-active: #252536;
-  --surface-pressed: #2a2a3d;
+  --surface-default: rgba(17, 30, 28, 0.82);
+  --surface-hover: rgba(24, 43, 39, 0.92);
+  --surface-active: rgba(29, 54, 48, 0.96);
+  --surface-pressed: rgba(33, 61, 55, 0.98);
 
   /* Border Colors */
-  --border-default: #2a2a3d;
-  --border-hover: #3a3a52;
+  --border-default: rgba(90, 127, 119, 0.24);
+  --border-hover: rgba(118, 167, 155, 0.34);
   --border-active: #10a37f;
-  --border-subtle: #1e1e2d;
+  --border-subtle: rgba(58, 86, 81, 0.22);
 
   /* Text Colors */
-  --text-primary: #f2f2f5;
-  --text-secondary: #a0a0b0;
-  --text-tertiary: #6e6e80;
-  --text-muted: #4a4a5c;
+  --text-primary: #f5fffd;
+  --text-secondary: #b0c7c1;
+  --text-tertiary: #7c9992;
+  --text-muted: #55706a;
   --text-inverse: #0a0a0f;
 
   /* Accent Colors */
@@ -50,6 +56,27 @@
   --accent-telegram-dark: #006699;
   --accent-telegram-rgb: 0, 136, 204;
 
+  /* Compatibility aliases for page-level CSS */
+  --accent-color: var(--accent-primary);
+  --accent-color-light: var(--accent-primary-hover);
+  --accent-color-dark: var(--accent-primary-pressed);
+  --accent-color-rgb: 16, 163, 127;
+  --border-color: var(--border-default);
+  --border-color-light: var(--border-hover);
+  --font-family-sans: var(--font-sans);
+  --font-family-mono: var(--font-mono);
+  --transition-fast: var(--duration-fast);
+  --transition-base: var(--duration-normal);
+  --transition-slow: var(--duration-slow);
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+
   /* Skeleton Colors */
   --skeleton-base: #1a1a2e;
   --skeleton-highlight: #252542;
@@ -63,6 +90,10 @@
   /* Glow Effects */
   --glow-accent: rgba(16, 163, 127, 0.4);
   --glow-accent-lg: rgba(16, 163, 127, 0.6);
+  --glow-blue: rgba(59, 130, 246, 0.22);
+  --glow-cyan: rgba(56, 189, 248, 0.18);
+  --hero-grid: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 
   /* Code Block Colors */
   --code-bg: #0d1117;
@@ -72,7 +103,9 @@
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
-  --font-display: 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-family-sans: var(--font-sans);
+  --font-family-mono: var(--font-mono);
 
   /* Type Scale */
   --text-display: 3rem;
@@ -108,6 +141,8 @@
   --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 20px rgba(16, 163, 127, 0.15);
   --shadow-glow-lg: 0 0 40px rgba(16, 163, 127, 0.2);
+  --shadow-panel: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
   /* Border Radius */
   --radius-none: 0;
@@ -159,10 +194,42 @@ body {
   font-size: var(--text-body);
   line-height: 1.6;
   color: var(--text-primary);
-  background: var(--bg-primary);
+  background:
+    radial-gradient(circle at top left, rgba(16, 163, 127, 0.14), transparent 30%),
+    radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.12), transparent 24%),
+    linear-gradient(180deg, var(--bg-canvas-top) 0%, var(--bg-primary) 32%, var(--bg-canvas-bottom) 100%);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   perspective: 1200px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: auto;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(90px);
+  opacity: 0.7;
+}
+
+body::before {
+  top: -120px;
+  left: -100px;
+  width: 320px;
+  height: 320px;
+  background: rgba(16, 163, 127, 0.12);
+}
+
+body::after {
+  right: -120px;
+  bottom: 8vh;
+  width: 360px;
+  height: 360px;
+  background: rgba(59, 130, 246, 0.1);
 }
 
 /* Selection */
@@ -1102,6 +1169,39 @@ a:hover {
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
+}
+
+.tilt-3d-polish {
+  position: relative;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.45s var(--ease-out-quint),
+    box-shadow 0.45s ease,
+    border-color 0.3s ease;
+}
+
+.tilt-3d-polish::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.16), transparent 26%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.tilt-3d-polish:hover::after {
+  opacity: 1;
+}
+
+.tilt-3d-child {
+  transform: translateZ(32px);
+  transition: transform 0.45s var(--ease-out-quint);
+}
+
+.tilt-3d-polish:hover .tilt-3d-child {
+  transform: translateZ(56px);
 }
 
 .glass-strong {

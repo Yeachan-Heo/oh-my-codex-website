@@ -133,6 +133,32 @@
   }
 }
 
+/* Slow orbit for ambient background accents */
+@keyframes orbitFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(24px, -18px, 0) scale(1.04);
+  }
+  66% {
+    transform: translate3d(-18px, 16px, 0) scale(0.98);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* Subtle depth pulse for glass panels */
+@keyframes depthPulse {
+  0%, 100% {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
+  }
+  50% {
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.44);
+  }
+}
+
 /* Spin */
 @keyframes spin {
   from {
