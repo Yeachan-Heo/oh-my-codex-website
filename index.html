@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oh-my-codex v0.9.0 - Multi-agent orchestration for Codex CLI with Spark Initiative: native exploration harness, shell-native inspection, and cross-platform native releases.">
+  <meta name="description" content="oh-my-codex v0.10.0 - Multi-agent orchestration for Codex CLI: autonomous research, omx exec wrapper, team worktrees, intent-first deep interviews, and incremental merge tracking.">
   <meta name="keywords" content="OpenAI Codex, AI agents, multi-agent, orchestration, automation, CLI, developer tools, Codex CLI">
   <meta name="author" content="oh-my-codex">
 
@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex">
   <meta property="og:title" content="oh-my-codex - Your codex is not alone">
-  <meta property="og:description" content="v0.9.0 Spark Initiative is live: native exploration harness, shell-native inspection with sparkshell, cross-platform native releases, and stronger runtime hardening.">
+  <meta property="og:description" content="v0.10.0 is live: autonomous research, omx exec wrapper, team worktrees by default, intent-first deep interviews, and incremental merge tracking.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
@@ -19,7 +19,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="oh-my-codex - Your codex is not alone">
-  <meta name="twitter:description" content="v0.9.0 Spark Initiative is live: native exploration harness, shell-native inspection with sparkshell, cross-platform native releases, and stronger runtime hardening.">
+  <meta name="twitter:description" content="v0.10.0 is live: autonomous research, omx exec wrapper, team worktrees by default, intent-first deep interviews, and incremental merge tracking.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>oh-my-codex - Your codex is not alone</title>
@@ -1176,6 +1176,7 @@
 
       <div class="nav__links" id="navLinks">
         <a href="#release" class="nav__link">What's New</a>
+        <a href="#team-deep-dive" class="nav__link">Team</a>
         <a href="#features" class="nav__link">Features</a>
         <a href="docs.html" class="nav__link nav__link--docs">Docs</a>
         <a href="#installation" class="nav__link">Installation</a>
@@ -1221,8 +1222,8 @@
         <div class="hero-stats">
           <span class="hero-stat-badge glow-accent">
             <span class="hero-stat-badge__icon">🚀</span>
-            <span class="hero-stat-badge__value">v0.9.0</span>
-            <span class="hero-stat-badge__label">Spark Initiative</span>
+            <span class="hero-stat-badge__value">v0.10.0</span>
+            <span class="hero-stat-badge__label">Latest Release</span>
           </span>
           <a href="https://github.com/Yeachan-Heo/oh-my-codex" class="hero-stat-badge hero-stat-badge--dynamic" target="_blank">
             <span class="hero-stat-badge__icon">&#9733;</span>
@@ -1275,30 +1276,30 @@
                 <span></span>
                 <span></span>
               </div>
-              <span class="hero-terminal__label">Spark Initiative Surface</span>
+              <span class="hero-terminal__label">v0.10.0 Command Surface</span>
             </div>
             <div class="hero-terminal__body">
-              <pre><code>$ omx explore --prompt "which files define team routing?"
-$ omx sparkshell --tmux-pane %12 --tail-lines 400
-$ omx resume</code></pre>
+              <pre><code>$ omx autoresearch "how does the auth middleware work?"
+$ omx exec npm test -- --coverage
+$ omx team 3 "refactor auth module with full test coverage"</code></pre>
             </div>
           </div>
 
           <div class="hero-command-list">
             <article class="hero-command-card glass-subtle tilt-3d-polish">
-              <span class="hero-command-card__title">Read-only discovery</span>
-              <code>omx explore</code>
-              <p>Native harness for fast, allowlisted repository inspection.</p>
+              <span class="hero-command-card__title">Autonomous Research</span>
+              <code>omx autoresearch</code>
+              <p>Iteratively explores topics, synthesizes findings, and produces structured reports.</p>
             </article>
             <article class="hero-command-card glass-subtle tilt-3d-polish">
-              <span class="hero-command-card__title">Shell-native inspection</span>
-              <code>omx sparkshell</code>
-              <p>Adaptive summaries and explicit tmux pane capture for operators.</p>
+              <span class="hero-command-card__title">Orchestration Wrapper</span>
+              <code>omx exec</code>
+              <p>Run any command through the OMX orchestration layer with hooks, state, and logging.</p>
             </article>
             <article class="hero-command-card glass-subtle tilt-3d-polish">
-              <span class="hero-command-card__title">Session recovery</span>
-              <code>omx resume</code>
-              <p>Jump back into a previous interactive Codex session without losing flow.</p>
+              <span class="hero-command-card__title">Team Worktrees</span>
+              <code>omx team</code>
+              <p>Team workers get isolated git worktrees automatically for conflict-free parallel work.</p>
             </article>
           </div>
         </div>
@@ -1315,24 +1316,20 @@ $ omx resume</code></pre>
   <!-- Release Highlights Section -->
   <section class="section release-section" id="release" data-reveal>
     <div class="section__header">
-      <h2 class="section__title">v0.9.0 Spark Initiative</h2>
-      <p class="section__subtitle">Released: <strong>March 12, 2026</strong> &mdash; Native exploration harness, shell-native inspection, cross-platform native releases, and stronger runtime hardening.</p>
-    </div>
-
-    <div class="release-character" style="text-align: center; margin: 2rem 0 3rem;">
-      <img src="omx-character-spark.jpg" alt="OMX Spark Initiative Character" style="max-width: 400px; width: 100%; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+      <h2 class="section__title">v0.10.0</h2>
+      <p class="section__subtitle">Released: <strong>March 15, 2026</strong> &mdash; 54 commits, 26 PRs, 105 files changed. Autonomous research, orchestration wrapper, team worktrees, intent-first interviews, and incremental merge tracking.</p>
     </div>
 
     <div class="features-grid">
       <div class="feature-card pixel-border glass tilt-3d-polish">
         <div class="feature-card__icon tilt-3d-child">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 6v6l4 2"></path>
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </div>
-        <h3 class="feature-card__title">Native Exploration Harness</h3>
-        <p class="feature-card__description"><code>omx explore</code> is now the default read-only exploration entrypoint, backed by a Rust harness with explicit allowlists and source-fallback for fast repository discovery.</p>
+        <h3 class="feature-card__title">Autonomous Research</h3>
+        <p class="feature-card__description"><code>omx autoresearch</code> launches an autonomous research loop that iteratively explores a topic, refines questions, and synthesizes findings across multiple iterations.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1342,20 +1339,121 @@ $ omx resume</code></pre>
             <line x1="12" y1="19" x2="20" y2="19"></line>
           </svg>
         </div>
-        <h3 class="feature-card__title">Shell-Native Inspection</h3>
-        <p class="feature-card__description"><code>omx sparkshell</code> provides fast shell-native inspection with adaptive summaries, tmux pane capture, and explicit operator controls for streamlined debugging.</p>
+        <h3 class="feature-card__title">OMX Exec Wrapper</h3>
+        <p class="feature-card__description"><code>omx exec</code> runs any command through the OMX orchestration layer, applying hooks, state tracking, and structured logging automatically.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
         <div class="feature-card__icon tilt-3d-child">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Cross-Platform Native Releases</h3>
-        <p class="feature-card__description">Tagged releases now publish native archives for <code>omx-explore-harness</code> and <code>omx-sparkshell</code> with manifest-based hydration and packed-install smoke verification.</p>
+        <h3 class="feature-card__title">Team Worktrees by Default</h3>
+        <p class="feature-card__description">Team workers now get isolated git worktrees automatically, enabling conflict-free parallel development without manual branch management.</p>
+      </div>
+
+      <div class="feature-card pixel-border glass tilt-3d-polish">
+        <div class="feature-card__icon tilt-3d-child">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 16v-4"></path>
+            <path d="M12 8h.01"></path>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Deep-Interview Intent-First</h3>
+        <p class="feature-card__description">Intent classification now happens upfront before the Socratic loop, so deep interviews route to the right workflow faster with less back-and-forth.</p>
+      </div>
+
+      <div class="feature-card pixel-border glass tilt-3d-polish">
+        <div class="feature-card__icon tilt-3d-child">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Incremental Merge Tracking</h3>
+        <p class="feature-card__description">Smarter conflict detection tracks worktree changes incrementally, catching merge issues earlier and reducing manual resolution overhead.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Deep Dive Section -->
+  <section class="section release-section" id="team-deep-dive" data-reveal>
+    <div class="section__header">
+      <h2 class="section__title">$team &mdash; Worktree-First Parallel Execution</h2>
+      <p class="section__subtitle">The core OMX skill. Since v0.10.0, every team worker runs in an isolated git worktree by default &mdash; no flags needed, no merge conflicts, automatic integration.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card pixel-border glass tilt-3d-polish">
+        <div class="feature-card__icon tilt-3d-child">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 3v12"></path>
+            <circle cx="18" cy="6" r="3"></circle>
+            <circle cx="6" cy="18" r="3"></circle>
+            <path d="M18 9a9 9 0 0 1-9 9"></path>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Automatic Worktree Isolation</h3>
+        <p class="feature-card__description">Every worker gets a dedicated git worktree at <code>.omx/team/&lt;name&gt;/worktrees/worker-N</code>. No <code>--worktree</code> flag needed &mdash; it's the default. Workers write to isolated detached branches; the leader workspace stays clean.</p>
+      </div>
+
+      <div class="feature-card pixel-border glass tilt-3d-polish">
+        <div class="feature-card__icon tilt-3d-child">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Incremental Merge Tracking</h3>
+        <p class="feature-card__description">The leader continuously integrates worker commits via merge, cherry-pick, or cross-worker rebase strategies. Conflicts are detected early and reported in <code>integration-report.md</code>. Auto-commit ensures no work is lost.</p>
+      </div>
+
+      <div class="feature-card pixel-border glass tilt-3d-polish">
+        <div class="feature-card__icon tilt-3d-child">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Mixed-Provider Teams</h3>
+        <p class="feature-card__description">Run Codex, Claude, and Gemini workers side-by-side with <code>OMX_TEAM_WORKER_CLI_MAP</code>. Each worker gets its own worktree regardless of provider. Full staged pipeline: plan &rarr; exec &rarr; verify &rarr; fix.</p>
+      </div>
+    </div>
+
+    <div style="max-width: 720px; margin: 3rem auto 0;">
+      <div class="hero-terminal glass tilt-3d-polish">
+        <div class="hero-terminal__bar">
+          <div class="hero-terminal__dots" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span class="hero-terminal__label">$team &mdash; Worktree Lifecycle</span>
+        </div>
+        <div class="hero-terminal__body">
+          <pre><code><span style="color: var(--text-tertiary);"># Workers get worktrees automatically &mdash; no flags needed</span>
+$ omx team 3:executor "refactor auth module"
+Team started: refactor-auth-module
+workers: 3 (worktrees: automatic, detached)
+
+$ omx team status refactor-auth-module
+worker-1: worktree=.omx/team/.../worker-1  status=in_progress
+worker-2: worktree=.omx/team/.../worker-2  status=completed
+worker-3: worktree=.omx/team/.../worker-3  status=completed
+tasks: completed=2 in_progress=1
+integration: merged=2 conflicts=0
+
+<span style="color: var(--text-tertiary);"># Mixed providers with worktrees</span>
+$ OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini \
+  omx team 3:executor "full-stack implementation"</code></pre>
+        </div>
       </div>
     </div>
   </section>
@@ -1399,7 +1497,7 @@ $ omx resume</code></pre>
           </svg>
         </div>
         <h3 class="feature-card__title">Team Orchestration</h3>
-        <p class="feature-card__description">Parallel workers in tmux sessions via omx team for coordinated multi-agent task execution.</p>
+        <p class="feature-card__description">Isolated parallel execution with automatic git worktrees. Workers get dedicated worktrees by default &mdash; zero merge conflicts, automatic commit integration, and incremental merge tracking.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">

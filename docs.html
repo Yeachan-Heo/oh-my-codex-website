@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Oh My Codex Documentation - Multi-agent orchestration layer for OpenAI Codex CLI">
+  <meta name="description" content="Oh My Codex v0.10.0 Documentation - Autonomous research, orchestration wrapper, team worktrees, and multi-agent coordination for Codex CLI">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
   <meta property="og:title" content="Documentation | Oh My Codex">
-  <meta property="og:description" content="Complete documentation for oh-my-codex v0.9.0 - 33 prompts, 36 skills, 5 MCP servers, and tmux teams with Codex/Claude/Gemini workers.">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.10.0 - Autonomous research, orchestration wrapper, team worktrees, deep-interview intent-first, and incremental merge tracking.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>Documentation | Oh My Codex</title>
@@ -759,7 +759,7 @@
       <a href="index.html" class="sidebar-brand">
         <div class="sidebar-brand__icon">OMX</div>
         <span class="sidebar-brand__text">Oh My Codex</span>
-        <span class="sidebar-brand__version">v0.9.0</span>
+        <span class="sidebar-brand__version">v0.10.0</span>
       </a>
 
       <div class="sidebar-search">
@@ -775,7 +775,7 @@
           <div class="sidebar-title">Getting Started</div>
           <a href="#introduction" class="sidebar-link" data-section="introduction">Introduction</a>
           <a href="#release-notes" class="sidebar-link" data-section="release-notes">Release Notes</a>
-          <a href="#v08-feature-guides" class="sidebar-link" data-section="v08-feature-guides">Spark Initiative Guides</a>
+          <a href="#v08-feature-guides" class="sidebar-link" data-section="v08-feature-guides">v0.10.0 Feature Guides</a>
           <a href="#feat-dynamic-scaling" class="sidebar-link" data-section="feat-dynamic-scaling">Dynamic Scaling</a>
           <a href="#feat-ralplan-dr" class="sidebar-link" data-section="feat-ralplan-dr">RALPLAN-DR</a>
           <a href="#feat-openclaw" class="sidebar-link" data-section="feat-openclaw">OpenClaw</a>
@@ -865,30 +865,30 @@
         <section id="introduction" data-section>
           <h1>Oh My Codex Documentation</h1>
           <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem;">
-            Turn Codex CLI into a coordinated operating layer with team orchestration, read-only exploration, sparkshell inspection, and resumable sessions.
+            Turn Codex CLI into a coordinated operating layer with autonomous research, orchestration wrappers, team worktrees, and intent-first deep interviews.
           </p>
 
           <div class="docs-hero tilt-3d-polish">
             <div class="docs-hero__inner">
               <div>
-                <p class="docs-hero__lede">v0.9.0 turns OMX into a tighter operator console: <code>omx explore</code> handles constrained discovery, <code>omx sparkshell</code> handles shell-native inspection, and <code>omx resume</code> restores prior interactive Codex sessions without rebuilding context from scratch.</p>
+                <p class="docs-hero__lede">v0.10.0 adds autonomous research with <code>omx autoresearch</code>, an orchestration wrapper via <code>omx exec</code>, default team worktrees for isolated parallel work, intent-first deep interviews, and incremental worktree merge tracking.</p>
                 <div class="docs-hero__chips">
-                  <span class="docs-hero__chip"><strong>Read-only</strong> native harness</span>
-                  <span class="docs-hero__chip"><strong>Adaptive</strong> shell summaries</span>
-                  <span class="docs-hero__chip"><strong>Resumable</strong> sessions</span>
-                  <span class="docs-hero__chip"><strong>Cross-platform</strong> native hydration</span>
+                  <span class="docs-hero__chip"><strong>Autonomous</strong> research</span>
+                  <span class="docs-hero__chip"><strong>Orchestration</strong> wrapper</span>
+                  <span class="docs-hero__chip"><strong>Team</strong> worktrees</span>
+                  <span class="docs-hero__chip"><strong>Intent-first</strong> interviews</span>
                 </div>
               </div>
 
               <aside class="docs-command-panel tilt-3d-polish">
                 <span class="docs-command-panel__kicker">Current command surface</span>
-                <pre><code>omx explore --prompt "git log --oneline -10"
-omx sparkshell git --version
-omx resume</code></pre>
+                <pre><code>omx autoresearch "topic to investigate"
+omx exec "command through orchestration"
+omx team 3:executor "parallel task"</code></pre>
                 <ul>
-                  <li><strong>Read-only exploration:</strong> Allowlisted repository discovery with explicit fallback behavior.</li>
-                  <li><strong>Operator inspection:</strong> Adaptive summaries and direct tmux-pane capture for debugging.</li>
-                  <li><strong>Recovery path:</strong> Resume earlier interactive sessions directly from the terminal.</li>
+                  <li><strong>Autonomous research:</strong> Iterative topic exploration that self-terminates when complete.</li>
+                  <li><strong>Orchestration wrapper:</strong> Run commands through the OMX orchestration layer with full context.</li>
+                  <li><strong>Team worktrees:</strong> Workers get isolated git worktrees automatically for conflict-free parallel work.</li>
                 </ul>
               </aside>
             </div>
@@ -908,8 +908,8 @@ omx resume</code></pre>
               <p>State, memory, code intelligence, team orchestration, and trace visibility wired into one operator surface.</p>
             </div>
             <div class="card tilt-3d-polish">
-              <h3 style="margin-top:0" class="tilt-3d-child">Spark Initiative</h3>
-              <p><code>omx explore</code>, <code>omx sparkshell</code>, and native release hydration bring faster shell-native inspection to v0.9.0.</p>
+              <h3 style="margin-top:0" class="tilt-3d-child">v0.10.0 Highlights</h3>
+              <p><code>omx autoresearch</code>, <code>omx exec</code>, default team worktrees, intent-first deep interviews, and incremental merge tracking.</p>
             </div>
           </div>
         </section>
@@ -919,15 +919,32 @@ omx resume</code></pre>
           <h2><span class="anchor-link">#</span>Release Notes</h2>
           <div class="callout info">
             <div class="callout-title">Quick Summary</div>
-            <p>Recent releases sharpen the operator loop: native exploration, sparkshell-backed inspection, resumable tmux teams, and steadier setup/runtime behavior.</p>
+            <p>Recent releases sharpen the operator loop: autonomous research, orchestration wrappers, default team worktrees, intent-first deep interviews, and incremental merge tracking.</p>
           </div>
           <!-- One mode-card per version with collapsible details -->
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.10.0</span>
+              Autonomous Research &amp; Team Worktrees
+            </div>
+            <details open>
+              <summary>View changes in v0.10.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Autoresearch:</strong> New <code>omx autoresearch</code> mode iteratively explores topics and self-terminates when the research goal is satisfied.</li>
+                <li><strong>Exec wrapper:</strong> <code>omx exec</code> runs commands through the OMX orchestration layer with full agent context and coordination.</li>
+                <li><strong>Team worktrees:</strong> Team workers now get isolated git worktrees by default, enabling conflict-free parallel execution.</li>
+                <li><strong>Deep-interview intent-first:</strong> Intent classification happens upfront before the Socratic interview loop, improving question targeting.</li>
+                <li><strong>Incremental merge tracking:</strong> Smarter conflict detection across worktrees with incremental diff-based merge awareness.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">54 commits, 26 PRs, 105 files changed, +7581/&minus;388 lines. Released March 15, 2026.</p>
+            </details>
+          </div>
           <div class="mode-card tilt-3d-polish">
             <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.9.0</span>
               Spark Initiative
             </div>
-            <details open>
+            <details>
               <summary>View changes in v0.9.0</summary>
               <ul style="list-style-type: disc;">
                 <li><strong>CLI:</strong> Added <code>omx explore</code> as the default read-only exploration entrypoint with a constrained native harness and repository-safe allowlists.</li>
@@ -1143,11 +1160,51 @@ omx resume</code></pre>
           </article>
 
           <article class="mode-card">
-            <h3 id="feat-worktree-orchestration"><span class="anchor-link">#</span>Worktree Orchestration</h3>
-            <ul style="list-style-type: disc;">
-              <li>Native team worktree orchestration enables isolated parallel streams for multi-worker execution.</li>
-              <li>Use launch flag <code>-w, --worktree[=&lt;name&gt;]</code> to run in a git worktree.</li>
-              <li>Cross-worktree team state resolution keeps dispatch, claims, and lifecycle updates consistent across lanes.</li>
+            <h3 id="feat-worktree-orchestration"><span class="anchor-link">#</span>Worktree Orchestration (Default in v0.10.0)</h3>
+            <div class="callout info">
+              <div class="callout-title">Game-changer in v0.10.0</div>
+              <p>Team workers now run in isolated git worktrees <strong>by default</strong>. The <code>--worktree</code> flag is deprecated and treated as a no-op &mdash; worktrees are always on.</p>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol style="list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+              <li><strong>Clean leader workspace required</strong> &mdash; leader must have a committed/stashed workspace before <code>omx team</code> starts.</li>
+              <li><strong>Automatic worktree provisioning</strong> &mdash; each worker gets a detached worktree at <code>.omx/team/&lt;name&gt;/worktrees/worker-N</code>.</li>
+              <li><strong>Workers commit to their worktree</strong> &mdash; isolated branches mean zero write conflicts between workers.</li>
+              <li><strong>Leader merges incrementally</strong> &mdash; the runtime continuously integrates worker commits back into the leader branch.</li>
+              <li><strong>Shutdown cleanup</strong> &mdash; provisioned worktrees are rolled back and branches deleted on team shutdown.</li>
+            </ol>
+
+            <h4>Incremental Merge Strategies</h4>
+            <p>The integration engine selects the best strategy per worker automatically:</p>
+            <ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+              <li><strong>Merge (<code>--no-ff -X theirs</code>)</strong> &mdash; when the worker is cleanly ahead of the leader. Fast and conflict-free.</li>
+              <li><strong>Cherry-pick</strong> &mdash; when histories have diverged. Picks individual worker commits into the leader branch.</li>
+              <li><strong>Cross-worker rebase</strong> &mdash; for sequential dependencies between workers. Rebases one worker's branch onto another's integrated state.</li>
+            </ul>
+            <p>Conflicts are detected early and logged to <code>.omx/state/team/&lt;team&gt;/integration-report.md</code> with per-file detail.</p>
+
+            <h4>Worker Commit Protocol</h4>
+            <p>Workers must commit before reporting completion: <code>git add -A &amp;&amp; git commit -m "task: &lt;subject&gt;"</code>. The runtime auto-commits as a fallback if a worker forgets, but explicit commits are preferred for cleaner history.</p>
+
+            <div class="code-block-wrapper">
+              <div class="code-block-header"><span class="code-lang">BASH</span></div>
+              <pre><code># Worktrees are automatic &mdash; no flags needed
+omx team 3:executor "implement feature X"
+
+# Check worker worktree status
+omx team status &lt;team-name&gt;
+# Output includes: worktree_path, worktree_branch, worktree_detached per worker
+
+# Mixed providers &mdash; all get worktrees
+OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini omx team 3:executor "full-stack work"</code></pre>
+            </div>
+
+            <h4>Cross-Worktree State Resolution</h4>
+            <ul style="list-style-type: disc; padding-left: 1.5rem;">
+              <li>Team state root is resolved from the leader cwd (<code>&lt;leader-cwd&gt;/.omx/state</code>) and shared across all worktrees via <code>OMX_TEAM_STATE_ROOT</code>.</li>
+              <li>Dispatch, task claims, mailbox delivery, and lifecycle updates remain consistent across all worker worktrees.</li>
+              <li>Worker identity files track <code>worktree_path</code>, <code>worktree_branch</code>, <code>worktree_detached</code>, and <code>worktree_created</code> for full observability.</li>
             </ul>
           </article>
 
@@ -1468,6 +1525,10 @@ omx team shutdown &lt;team-name&gt;</code></pre>
             </div>
           </div>
           <h3 id="team-compositions"><span class="anchor-link">#</span>Team Compositions</h3>
+          <div class="callout info" style="margin-bottom: 1.5rem;">
+            <div class="callout-title">v0.10.0</div>
+            <p>All team compositions below run in <strong>isolated git worktrees by default</strong>. Each worker gets its own worktree automatically &mdash; zero merge conflicts, incremental integration, and clean shutdown rollback.</p>
+          </div>
           <div class="workflow">
             <strong>Feature Dev:</strong>
             <span class="workflow__step">analyst</span> <span class="workflow__arrow">&rarr;</span>
@@ -1703,7 +1764,7 @@ omx ask gemini --prompt "check this regex for errors"</code></pre>
           </div>
 
           <h3 id="cli-other">Hooks, Extensions, and Native Build Helpers</h3>
-          <p>OMX also exposes hook scaffolding, HUD inspection, and native build or verification helpers for the Spark Initiative surfaces.</p>
+          <p>OMX also exposes hook scaffolding, HUD inspection, and native build or verification helpers for autoresearch, exec, and team worktree surfaces.</p>
           <div class="table-wrapper">
             <table>
               <thead>
