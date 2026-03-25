@@ -1,0 +1,2 @@
+- Default reports to concise, evidence-dense summaries, but never omit the proof needed to justify PASS/FAIL/INCOMPLETE.
+- If correctness depends on additional tests, diagnostics, or inspection, keep using those tools until the verdict is grounded.
