@@ -149,6 +149,15 @@ Example prompt text:
 >
 > Verification loop: identify what proves the claim, run the verification, read the output, then report with evidence.
 
+## Orchestration sharpness rules for root AGENTS surfaces
+
+When editing `AGENTS.md`, `templates/AGENTS.md`, or other root orchestration guidance, keep the orchestration contract mode-driven and terse:
+
+1. **Mode selection comes first.** Distinguish between `$deep-interview`, `$ralplan`, `$team`, and direct solo execution instead of blending them into one generic flow.
+2. **Leader and worker responsibilities stay separate.** Leaders choose the mode, own verification, and integrate work; workers execute assigned slices and report blockers upward.
+3. **Stop/escalate rules are explicit.** The prompt should say when to stop, when to escalate to the user, and when workers must escalate back to the leader.
+4. **Output contract stays tight.** Default progress/final updates should be compact: current mode, action/result, and evidence or blocker/next step. Avoid repeating full-plan rationale unless the risk or decision changed.
+
 ## Reinforcement pattern: scenario examples
 
 OMX also uses **scenario-style examples** to make the contract concrete for "continue", "make a PR", and "merge if CI green" flows.
