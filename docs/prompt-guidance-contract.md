@@ -55,17 +55,17 @@ Primary implementation surfaces for this seam:
 This contract is about **how OMX prompts should behave**.
 It is not the same thing as OMX's routing metadata.
 
-- **Behavioral contract:** compact output defaults, automatic follow-through, localized task updates, persistent tool use, and evidence-backed completion.
+- **Behavioral contract:** quality-first intent-deepening defaults, automatic follow-through, localized task updates, persistent tool use, and evidence-backed completion.
 - **Adjacent but separate routing layer:** role/tier/posture metadata such as `frontier-orchestrator`, `deep-worker`, and `fast-lane` in `src/agents/native-config.ts` and `docs/shared/agent-tiers.md`.
 
 If you are changing prompt prose, use this document first.
 If you are changing routing metadata or native config overlays, use the routing docs/tests first.
 
-## The 4 core GPT-5.4 patterns OMX currently enforces
+## The 4 core GPT-5.4 patterns OMX should now enforce
 
-### 1. Compact, information-dense output by default
+### 1. Quality-first, intent-deepening output by default
 
-Contributors should preserve the default posture of concise outputs that still include the evidence needed to act safely.
+Contributors should preserve the default posture of quality-first outputs that dig deeper into intent, think one more step before asking, and still include the evidence needed to act safely.
 
 Representative locations:
 
@@ -80,9 +80,9 @@ Representative locations:
 
 Example prompt text:
 
-> - Default to compact, information-dense responses; expand only when risk, ambiguity, or the user explicitly calls for detail.
+> - Default to quality-first, intent-deepening responses; think one more step before replying or asking for clarification, and use as much detail as needed for a strong result without empty verbosity.
 >
-> - Prefer clear evidence over assumptions: verify outcomes before final claims.
+> - More effort does not mean reflexive web/tool escalation; use tools when they materially improve the result.
 
 ### 2. Automatic follow-through on clear, low-risk, reversible next steps
 
@@ -206,7 +206,7 @@ The main role catalog is the installable specialized-agent set used by `/prompts
 
 Before opening a PR that changes prompt text, confirm all of the following:
 
-1. **Preserve the four core behaviors.** Your change should keep or strengthen compact output, low-risk follow-through, scoped overrides, and grounded tool use/verification.
+1. **Preserve the four core behaviors.** Your change should keep or strengthen quality-first intent-deepening output, low-risk follow-through, scoped overrides, and grounded tool use/verification.
 2. **Keep role-specific wording role-specific.** The phrasing can differ by role, but the behavior should stay semantically aligned.
 3. **Update scenario examples when behavior changes.** If you change how prompts handle `continue`, `make a PR`, or `merge if CI green`, update the prompt examples and the related tests.
 4. **Keep the mini-only seam exact and centralized.** If you touch mini adaptation, gate it on the final resolved model with exact `gpt-5.4-mini` equality, keep the shared inner helper as the source of truth, and keep `worker-bootstrap.ts` wrapper-only.

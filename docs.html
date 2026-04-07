@@ -3,14 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Oh My Codex v0.10.0 Documentation - Autonomous research, orchestration wrapper, team worktrees, and multi-agent coordination for Codex CLI">
+  <meta name="description" content="Oh My Codex v0.12.1 Documentation - Native Codex hook ownership, first-party Bash guidance, team runtime hardening, and quality-first workflow defaults for Codex CLI">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
   <meta property="og:title" content="Documentation | Oh My Codex">
-  <meta property="og:description" content="Complete documentation for oh-my-codex v0.10.0 - Autonomous research, orchestration wrapper, team worktrees, deep-interview intent-first, and incremental merge tracking.">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.12.1 - Native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, and quality-first workflow defaults.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Documentation | Oh My Codex">
+  <meta name="twitter:description" content="v0.12.1 is live: native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, and quality-first workflow defaults.">
+  <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>Documentation | Oh My Codex</title>
 
@@ -759,7 +765,7 @@
       <a href="index.html" class="sidebar-brand">
         <div class="sidebar-brand__icon">OMX</div>
         <span class="sidebar-brand__text">Oh My Codex</span>
-        <span class="sidebar-brand__version">v0.10.0</span>
+        <span class="sidebar-brand__version">v0.12.1</span>
       </a>
 
       <div class="sidebar-search">
@@ -775,7 +781,7 @@
           <div class="sidebar-title">Getting Started</div>
           <a href="#introduction" class="sidebar-link" data-section="introduction">Introduction</a>
           <a href="#release-notes" class="sidebar-link" data-section="release-notes">Release Notes</a>
-          <a href="#v08-feature-guides" class="sidebar-link" data-section="v08-feature-guides">v0.10.0 Feature Guides</a>
+          <a href="#v08-feature-guides" class="sidebar-link" data-section="v08-feature-guides">v0.12.x Feature Guides</a>
           <a href="#feat-dynamic-scaling" class="sidebar-link" data-section="feat-dynamic-scaling">Dynamic Scaling</a>
           <a href="#feat-ralplan-dr" class="sidebar-link" data-section="feat-ralplan-dr">RALPLAN-DR</a>
           <a href="#feat-openclaw" class="sidebar-link" data-section="feat-openclaw">OpenClaw</a>
@@ -871,24 +877,24 @@
           <div class="docs-hero tilt-3d-polish">
             <div class="docs-hero__inner">
               <div>
-                <p class="docs-hero__lede">v0.10.0 adds autonomous research with <code>omx autoresearch</code>, an orchestration wrapper via <code>omx exec</code>, default team worktrees for isolated parallel work, intent-first deep interviews, and incremental worktree merge tracking.</p>
+                <p class="docs-hero__lede">v0.12.1 ships native Codex hook ownership for non-team sessions, first-party Bash <code>PreToolUse</code>/<code>PostToolUse</code> guidance, team runtime hardening, and quality-first prompt defaults. The canonical workflow is now deep-interview → ralplan → team/ralph.</p>
                 <div class="docs-hero__chips">
-                  <span class="docs-hero__chip"><strong>Autonomous</strong> research</span>
-                  <span class="docs-hero__chip"><strong>Orchestration</strong> wrapper</span>
-                  <span class="docs-hero__chip"><strong>Team</strong> worktrees</span>
-                  <span class="docs-hero__chip"><strong>Intent-first</strong> interviews</span>
+                  <span class="docs-hero__chip"><strong>Native</strong> Codex hooks</span>
+                  <span class="docs-hero__chip"><strong>Bash</strong> guidance</span>
+                  <span class="docs-hero__chip"><strong>Team</strong> hardening</span>
+                  <span class="docs-hero__chip"><strong>Quality-first</strong> defaults</span>
                 </div>
               </div>
 
               <aside class="docs-command-panel tilt-3d-polish">
                 <span class="docs-command-panel__kicker">Current command surface</span>
-                <pre><code>omx autoresearch "topic to investigate"
-omx exec "command through orchestration"
-omx team 3:executor "parallel task"</code></pre>
+                <pre><code>omx setup          # refreshes native hook wiring
+omx team 3:executor "parallel task"
+omx deep-interview "feature idea"</code></pre>
                 <ul>
-                  <li><strong>Autonomous research:</strong> Iterative topic exploration that self-terminates when complete.</li>
-                  <li><strong>Orchestration wrapper:</strong> Run commands through the OMX orchestration layer with full context.</li>
-                  <li><strong>Team worktrees:</strong> Workers get isolated git worktrees automatically for conflict-free parallel work.</li>
+                  <li><strong>Native hooks:</strong> PreToolUse/PostToolUse fire through the Codex runtime contract without shims.</li>
+                  <li><strong>Team hardening:</strong> Leader mailbox, nudge delivery, and pane-status are reliable across live flows.</li>
+                  <li><strong>Canonical pipeline:</strong> deep-interview → ralplan → team/ralph for quality-first execution.</li>
                 </ul>
               </aside>
             </div>
@@ -908,8 +914,8 @@ omx team 3:executor "parallel task"</code></pre>
               <p>State, memory, code intelligence, team orchestration, and trace visibility wired into one operator surface.</p>
             </div>
             <div class="card tilt-3d-polish">
-              <h3 style="margin-top:0" class="tilt-3d-child">v0.10.0 Highlights</h3>
-              <p><code>omx autoresearch</code>, <code>omx exec</code>, default team worktrees, intent-first deep interviews, and incremental merge tracking.</p>
+              <h3 style="margin-top:0" class="tilt-3d-child">v0.12.1 Highlights</h3>
+              <p>Native Codex hook ownership, first-party Bash guidance, team runtime hardening, Windows/tmux reliability, and quality-first workflow defaults.</p>
             </div>
           </div>
         </section>
@@ -922,6 +928,73 @@ omx team 3:executor "parallel task"</code></pre>
             <p>Recent releases sharpen the operator loop: autonomous research, orchestration wrappers, default team worktrees, intent-first deep interviews, and incremental merge tracking.</p>
           </div>
           <!-- One mode-card per version with collapsible details -->
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.12.1</span>
+              Team Status &amp; Worker PID Patch
+            </div>
+            <details open>
+              <summary>View changes in v0.12.1</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Team status JSON:</strong> Leader mailbox pruning no longer replays duplicate delivered-message bridge calls, keeping <code>omx team status --json</code> parseable.</li>
+                <li><strong>Worker PID metadata:</strong> Interactive team workers now record the PID from the resolved pane id and persist it into config/identity state.</li>
+                <li><strong>Release alignment:</strong> Metadata synchronized across Node, Cargo, changelog, and release collateral.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Released April 7, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.12.0</span>
+              Native Hooks, Bash Guidance &amp; Runtime Hardening
+            </div>
+            <details>
+              <summary>View changes in v0.12.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Native Codex hooks:</strong> Hook ownership now lives in the repo/runtime contract for non-team OMX sessions via <code>.codex/hooks.json</code>.</li>
+                <li><strong>Bash guidance:</strong> First-party <code>PreToolUse</code>/<code>PostToolUse</code> guidance shipped and documented for destructive-command warnings and error guidance.</li>
+                <li><strong>Team runtime:</strong> Delivery, mailbox handling, pane-status visibility, and next-action steering are more robust.</li>
+                <li><strong>Windows/tmux:</strong> Launch reliability and command resolution improved; detached launches and PowerShell resolution hardened.</li>
+                <li><strong>Quality-first defaults:</strong> Prompt and AGENTS defaults emphasize quality-first, evidence-backed execution.</li>
+                <li><strong>Docs reorganization:</strong> Translated README/docs collateral expanded and reorganized under <code>docs/readme/</code> (15 languages).</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">185 changed files, 65 non-merge commits, 26 merge commits. Released April 6, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.11.13</span>
+              Team Delivery Integrity &amp; Windows Stability
+            </div>
+            <details>
+              <summary>View changes in v0.11.13</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Mailbox delivery:</strong> Team leader mailbox delivery stays reliable across runtime/CLI seams.</li>
+                <li><strong>Leader nudges:</strong> Busy Codex leader panes can now receive queued nudges instead of silent deferral.</li>
+                <li><strong>Windows/worktree:</strong> HUD targeting and leader activity polling stay reliable in detached/worktree launches.</li>
+                <li><strong>Deep-interview locks:</strong> Fallback nudges honor active deep-interview input locks.</li>
+                <li><strong>Cleanup:</strong> Uninstall warns about legacy skills; shutdown cleanup reaps detached worker descendants more safely.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Released April 4, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.11.12</span>
+              Autonomous Research &amp; Worktree Merge Tracking
+            </div>
+            <details>
+              <summary>View changes in v0.11.12</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Autoresearch:</strong> New <code>omx autoresearch</code> mode iteratively explores topics and self-terminates when the research goal is satisfied.</li>
+                <li><strong>Exec wrapper:</strong> <code>omx exec</code> runs commands through the OMX orchestration layer with full agent context.</li>
+                <li><strong>Team worktrees:</strong> Team workers now get isolated git worktrees by default, enabling conflict-free parallel execution.</li>
+                <li><strong>Deep-interview intent-first:</strong> Intent classification happens upfront before the Socratic interview loop.</li>
+                <li><strong>Incremental merge tracking:</strong> Smarter conflict detection across worktrees with incremental diff-based merge awareness.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">54 commits, 26 PRs, 105 files changed. Released March 15, 2026.</p>
+            </details>
+          </div>
           <div class="mode-card tilt-3d-polish">
             <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.10.0</span>

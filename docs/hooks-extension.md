@@ -2,6 +2,13 @@
 
 OMX supports an additive hooks extension point for user plugins under `.omx/hooks/*.mjs`.
 
+Native Codex hook ownership is documented separately in
+[Codex native hook mapping](./codex-native-hooks.md). In short:
+
+- `.codex/hooks.json` = native Codex hook registrations installed by `omx setup`
+- `.omx/hooks/*.mjs` = OMX plugin hooks dispatched by runtime/native events
+- `omx tmux-hook` / notify-hook / derived watcher = tmux/runtime fallback surfaces
+
 > Compatibility guarantee: `omx tmux-hook` remains fully supported and unchanged.
 > The new `omx hooks` command group is additive and does **not** replace tmux-hook workflows.
 
@@ -36,14 +43,24 @@ export OMX_HOOK_PLUGIN_TIMEOUT_MS=1500
 
 ## Native event pipeline (v1)
 
-Native events are emitted from existing lifecycle/notify paths:
+Native/derived plugin events come from two places:
+
+1. Existing lifecycle/notify paths
+2. Native Codex hook entrypoint dispatch (`dist/scripts/codex-native-hook.js`)
+
+Current event vocabulary exposed to OMX plugins:
 
 - `session-start`
+- `keyword-detector`
+- `pre-tool-use`
+- `post-tool-use`
+- `stop`
 - `session-end`
 - `turn-complete`
 - `session-idle`
 
-Pass one keeps this existing event vocabulary; it does **not** introduce an event-taxonomy redesign.
+OMX keeps this existing event vocabulary rather than exposing raw Codex hook names directly.
+That lets native Codex hooks and fallback/derived paths feed one shared plugin/runtime surface.
 
 For clawhip-oriented operational routing, see [Clawhip Event Contract](./clawhip-event-contract.md).
 

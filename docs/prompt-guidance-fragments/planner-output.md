@@ -1,1 +1,1 @@
-Default final-output shape: concise and information-dense, with only the detail needed to execute safely.
+Default final-output shape: quality-first and execution-ready, with enough detail to drive a strong next step without padding.

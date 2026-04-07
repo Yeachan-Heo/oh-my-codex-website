@@ -41,13 +41,23 @@ writeFileSync(indexPath, indexHtml);
 console.log(`Updated ${indexPath}`);
 
 // Also update any other files that might have version references
-const filesToCheck = ['docs.html'];
+const filesToCheck = ['docs.html', 'js/config.js', 'data/stats.json'];
+// Bare version regex for JSON/JS files that store version without the "v" prefix
+const bareVersionRegex = new RegExp(currentVersion.replace(/\./g, '\\.'), 'g');
 for (const file of filesToCheck) {
   const filePath = join(ROOT, file);
   try {
     let content = readFileSync(filePath, 'utf8');
+    let updated = false;
     if (content.includes(`v${currentVersion}`)) {
       content = content.replace(versionRegex, `v${version}`);
+      updated = true;
+    }
+    if (content.includes(`"${currentVersion}"`) || content.includes(`'${currentVersion}'`)) {
+      content = content.replace(bareVersionRegex, version);
+      updated = true;
+    }
+    if (updated) {
       writeFileSync(filePath, content);
       console.log(`Updated ${filePath}`);
     }

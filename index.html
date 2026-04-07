@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oh-my-codex v0.11.12 - Multi-agent orchestration for Codex CLI: autonomous research, omx exec wrapper, team worktrees, intent-first deep interviews, and incremental merge tracking.">
+  <meta name="description" content="oh-my-codex v0.12.1 - Multi-agent orchestration for Codex CLI: native Codex hook ownership, first-party Bash guidance, team runtime hardening, and quality-first workflow defaults.">
   <meta name="keywords" content="OpenAI Codex, AI agents, multi-agent, orchestration, automation, CLI, developer tools, Codex CLI">
   <meta name="author" content="oh-my-codex">
 
@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex">
   <meta property="og:title" content="oh-my-codex - Your codex is not alone">
-  <meta property="og:description" content="v0.11.12 is live: autonomous research, omx exec wrapper, team worktrees by default, intent-first deep interviews, and incremental merge tracking.">
+  <meta property="og:description" content="v0.12.1 is live: native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, and quality-first workflow defaults.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
@@ -19,7 +19,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="oh-my-codex - Your codex is not alone">
-  <meta name="twitter:description" content="v0.11.12 is live: autonomous research, omx exec wrapper, team worktrees by default, intent-first deep interviews, and incremental merge tracking.">
+  <meta name="twitter:description" content="v0.12.1 is live: native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, and quality-first workflow defaults.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>oh-my-codex - Your codex is not alone</title>
@@ -1222,7 +1222,7 @@
         <div class="hero-stats">
           <span class="hero-stat-badge glow-accent">
             <span class="hero-stat-badge__icon">🚀</span>
-            <span class="hero-stat-badge__value">v0.11.12</span>
+            <span class="hero-stat-badge__value">v0.12.1</span>
             <span class="hero-stat-badge__label">Latest Release</span>
           </span>
           <a href="https://github.com/Yeachan-Heo/oh-my-codex" class="hero-stat-badge hero-stat-badge--dynamic" target="_blank">
@@ -1276,7 +1276,7 @@
                 <span></span>
                 <span></span>
               </div>
-              <span class="hero-terminal__label">v0.11.12 Command Surface</span>
+              <span class="hero-terminal__label">v0.12.1 Command Surface</span>
             </div>
             <div class="hero-terminal__body">
               <pre><code>$ omx autoresearch "how does the auth middleware work?"
@@ -1316,20 +1316,21 @@ $ omx team 3 "refactor auth module with full test coverage"</code></pre>
   <!-- Release Highlights Section -->
   <section class="section release-section" id="release" data-reveal>
     <div class="section__header">
-      <h2 class="section__title">v0.11.12</h2>
-      <p class="section__subtitle">Released: <strong>March 15, 2026</strong> &mdash; 54 commits, 26 PRs, 105 files changed. Autonomous research, orchestration wrapper, team worktrees, intent-first interviews, and incremental merge tracking.</p>
+      <h2 class="section__title">v0.12.1</h2>
+      <p class="section__subtitle">Released: <strong>April 7, 2026</strong> &mdash; native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, Windows/tmux reliability improvements, and quality-first workflow defaults.</p>
     </div>
 
     <div class="features-grid">
       <div class="feature-card pixel-border glass tilt-3d-polish">
         <div class="feature-card__icon tilt-3d-child">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Autonomous Research</h3>
-        <p class="feature-card__description"><code>omx autoresearch</code> launches an autonomous research loop that iteratively explores a topic, refines questions, and synthesizes findings across multiple iterations.</p>
+        <h3 class="feature-card__title">Native Codex Hook Ownership</h3>
+        <p class="feature-card__description">Non-team OMX sessions now wire hooks natively through the Codex runtime contract, removing the need for external shims and ensuring hooks fire reliably on every tool call.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1339,8 +1340,8 @@ $ omx team 3 "refactor auth module with full test coverage"</code></pre>
             <line x1="12" y1="19" x2="20" y2="19"></line>
           </svg>
         </div>
-        <h3 class="feature-card__title">OMX Exec Wrapper</h3>
-        <p class="feature-card__description"><code>omx exec</code> runs any command through the OMX orchestration layer, applying hooks, state tracking, and structured logging automatically.</p>
+        <h3 class="feature-card__title">First-Party Bash Guidance</h3>
+        <p class="feature-card__description">Shipped <code>PreToolUse</code> and <code>PostToolUse</code> Bash hooks with first-party documentation. Destructive commands trigger warnings; errors surface structured guidance automatically.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1352,31 +1353,31 @@ $ omx team 3 "refactor auth module with full test coverage"</code></pre>
             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Team Worktrees by Default</h3>
-        <p class="feature-card__description">Team workers now get isolated git worktrees automatically, enabling conflict-free parallel development without manual branch management.</p>
+        <h3 class="feature-card__title">Team Runtime Hardening</h3>
+        <p class="feature-card__description">Leader mailbox delivery, pane-status visibility, nudge handling, session continuity, and persist-error paths are all more robust across live operator flows.</p>
+      </div>
+
+      <div class="feature-card pixel-border glass tilt-3d-polish">
+        <div class="feature-card__icon tilt-3d-child">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Windows/tmux Reliability</h3>
+        <p class="feature-card__description">Detached tmux launches, PowerShell command resolution, and tmux child binding are all improved. Worktree supervision stays stable across Windows and remote sessions.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
         <div class="feature-card__icon tilt-3d-child">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 16v-4"></path>
-            <path d="M12 8h.01"></path>
+            <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
         </div>
-        <h3 class="feature-card__title">Deep-Interview Intent-First</h3>
-        <p class="feature-card__description">Intent classification now happens upfront before the Socratic loop, so deep interviews route to the right workflow faster with less back-and-forth.</p>
-      </div>
-
-      <div class="feature-card pixel-border glass tilt-3d-polish">
-        <div class="feature-card__icon tilt-3d-child">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="16 18 22 12 16 6"></polyline>
-            <polyline points="8 6 2 12 8 18"></polyline>
-          </svg>
-        </div>
-        <h3 class="feature-card__title">Incremental Merge Tracking</h3>
-        <p class="feature-card__description">Smarter conflict detection tracks worktree changes incrementally, catching merge issues earlier and reducing manual resolution overhead.</p>
+        <h3 class="feature-card__title">Quality-First Defaults</h3>
+        <p class="feature-card__description">Prompt and AGENTS defaults now emphasize quality-first, evidence-backed execution. The canonical workflow — deep-interview → ralplan → team/ralph — is documented and enforced.</p>
       </div>
     </div>
   </section>
@@ -1385,7 +1386,7 @@ $ omx team 3 "refactor auth module with full test coverage"</code></pre>
   <section class="section release-section" id="team-deep-dive" data-reveal>
     <div class="section__header">
       <h2 class="section__title">$team &mdash; Worktree-First Parallel Execution</h2>
-      <p class="section__subtitle">The core OMX skill. Since v0.11.12, every team worker runs in an isolated git worktree by default &mdash; no flags needed, no merge conflicts, automatic integration.</p>
+      <p class="section__subtitle">The core OMX skill. Since v0.12.1, every team worker runs in an isolated git worktree by default &mdash; no flags needed, no merge conflicts, automatic integration.</p>
     </div>
 
     <div class="features-grid">

@@ -1,3 +1,4 @@
-- Default reports to concise, evidence-dense summaries, but never omit the proof needed to justify PASS/FAIL/INCOMPLETE.
+- Default reports to quality-first, evidence-dense summaries; think one more step before declaring PASS/FAIL/INCOMPLETE, but never omit the proof needed to justify the verdict.
 - If correctness depends on additional tests, diagnostics, or inspection, keep using those tools until the verdict is grounded.
+- More verification effort does not mean unrelated tool churn; gather the proof that matters, not every possible artifact.
 - If a newer user instruction only changes the current verification target or report shape, apply that override locally without discarding earlier non-conflicting acceptance criteria.
