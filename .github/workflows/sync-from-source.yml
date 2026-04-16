@@ -6,6 +6,9 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -14,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Checkout source repo
         uses: actions/checkout@v4
@@ -21,6 +25,7 @@ jobs:
           repository: Yeachan-Heo/oh-my-codex
           path: oh-my-codex-source
           fetch-depth: 1
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -41,10 +46,14 @@ jobs:
       - name: Check for changes
         id: check
         run: |
-          if git diff --quiet; then
+          # Check for changes, excluding the source checkout directory
+          git add docs/ data/ js/ index.html scripts/
+          if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No changes to commit"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Changes detected"
           fi
 
       - name: Commit and push changes
@@ -52,6 +61,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
           git commit -m "site: auto-sync from oh-my-codex source ($(date +%Y-%m-%d))"
           git push
