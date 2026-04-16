@@ -193,7 +193,7 @@ OMX_TEAM_AUTO_INTERRUPT_RETRY=0  # опционально: отключить а
   - `model_reasoning_effort = "high"`
   - `developer_instructions = "..."`
   - `[features] multi_agent = true, child_agents_md = true`
-  - Записи MCP-серверов (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`)
+  - Записи MCP-серверов (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki`)
   - `[tui] status_line`
 - `AGENTS.md` для выбранной области
 - Директории `.omx/` и конфигурация HUD

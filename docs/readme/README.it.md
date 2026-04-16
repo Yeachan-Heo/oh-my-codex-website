@@ -193,7 +193,7 @@ Note:
   - `model_reasoning_effort = "high"`
   - `developer_instructions = "..."`
   - `[features] multi_agent = true, child_agents_md = true`
-  - Voci server MCP (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`)
+  - Voci server MCP (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki`)
   - `[tui] status_line`
 - `AGENTS.md` specifico dello scope
 - Directory di esecuzione `.omx/` e configurazione HUD

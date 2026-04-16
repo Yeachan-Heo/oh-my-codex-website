@@ -193,7 +193,7 @@ Notas:
   - `model_reasoning_effort = "high"`
   - `developer_instructions = "..."`
   - `[features] multi_agent = true, child_agents_md = true`
-  - Entradas de servidores MCP (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`)
+  - Entradas de servidores MCP (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki`)
   - `[tui] status_line`
 - `AGENTS.md` específico del alcance
 - Directorios `.omx/` de ejecución y configuración de HUD

@@ -193,7 +193,7 @@ Hinweise:
   - `model_reasoning_effort = "high"`
   - `developer_instructions = "..."`
   - `[features] multi_agent = true, child_agents_md = true`
-  - MCP-Server-Einträge (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`)
+  - MCP-Server-Einträge (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki`)
   - `[tui] status_line`
 - Bereichsspezifische `AGENTS.md`
 - `.omx/`-Laufzeitverzeichnisse und HUD-Konfiguration

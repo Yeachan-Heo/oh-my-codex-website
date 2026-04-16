@@ -21,9 +21,12 @@ Ralph runtime state is stored at `.omx/state/{scope}/ralph-state.json` and MUST 
 - Optional stop/audit fields:
   - `stop_reason`
 
-Ralph remains a standalone mode. Other workflows may start Ralph later as an
-explicit follow-up, but there is no built-in `omx team ralph ...` linked launch
-path anymore.
+Ralph still owns its own mode state and there is no built-in
+`omx team ralph ...` linked launch path anymore. Under the multi-state
+transition compatibility contract, `team + ralph` is an approved peer overlap,
+so Ralph may coexist with team when the canonical allowlist permits it. Other
+overlaps remain deny-by-default until they are explicitly approved. See
+`docs/contracts/multi-state-transition-contract.md`.
 
 Legacy phase aliases may be normalized for compatibility, but persisted values MUST end in the frozen enum below.
 
@@ -82,8 +85,11 @@ starting
 ## Canonical PRD/progress sources
 
 - Canonical PRD: `.omx/plans/prd-{slug}.md`
+- Startup validation source during the legacy-compatibility window: `.omx/prd.json`
 - Canonical progress ledger: `.omx/state/{scope}/ralph-progress.json`
 - Legacy compatibility migration:
   - `.omx/prd.json` migrates one-way to canonical PRD markdown when no canonical PRD exists.
   - `.omx/progress.txt` migrates one-way to canonical `ralph-progress.json` when no canonical ledger exists.
   - Legacy files remain read-only compatibility artifacts for one release cycle.
+- Canonical PRD markdown is storage/documentation-canonical today; Ralph `--prd` startup still validates machine-readable story approval state from `.omx/prd.json` until a structured replacement exists.
+- Prompt-side `$ralph` workflow activation is not equivalent to `omx ralph --prd ...`; it may seed Ralph mode state and routing context, but the PRD startup gate remains an explicit CLI-path contract.

@@ -194,7 +194,7 @@ OMX_TEAM_AUTO_INTERRUPT_RETRY=0  # 선택: 적응형 queue->resend 폴백 비활
   - `model_reasoning_effort = "high"`
   - `developer_instructions = "..."`
   - `[features] multi_agent = true, child_agents_md = true`
-  - MCP 서버 항목 (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`)
+  - MCP 서버 항목 (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki`)
   - `[tui] status_line`
 - 범위별 `AGENTS.md`
 - `.omx/` 런타임 디렉토리 및 HUD 설정

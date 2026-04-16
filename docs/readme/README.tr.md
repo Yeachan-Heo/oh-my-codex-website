@@ -193,7 +193,7 @@ Notlar:
   - `model_reasoning_effort = "high"`
   - `developer_instructions = "..."`
   - `[features] multi_agent = true, child_agents_md = true`
-  - MCP sunucu girişleri (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`)
+  - MCP sunucu girişleri (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki`)
   - `[tui] status_line`
 - Kapsama özel `AGENTS.md`
 - `.omx/` çalışma zamanı dizinleri ve HUD yapılandırması
