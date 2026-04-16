@@ -33,6 +33,8 @@ jobs:
           cp -r oh-my-codex-source/docs/* docs/
 
       - name: Sync version
+        env:
+          OMX_SOURCE_PACKAGE_JSON: ${{ github.workspace }}/oh-my-codex-source/package.json
         run: |
           node scripts/sync-version.mjs
 

@@ -1,21 +1,52 @@
 #!/usr/bin/env node
 /**
  * Auto-sync website version from package.json
- * Reads ../oh-my-codex/package.json and updates index.html version references
+ * Reads from oh-my-codex source repo and updates version references
  */
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
-// Read version from source repo
-const sourcePkgPath = join(ROOT, '..', 'oh-my-codex', 'package.json');
-const pkg = JSON.parse(readFileSync(sourcePkgPath, 'utf8'));
-const version = pkg.version;
+// Try multiple possible locations for the source repo
+const possibleSourcePaths = [
+  // GitHub Actions path (checked out as oh-my-codex-source)
+  join(ROOT, 'oh-my-codex-source', 'package.json'),
+  // Local development path (sibling directory)
+  join(ROOT, '..', 'oh-my-codex', 'package.json'),
+  // Alternative sibling path with different name
+  join(ROOT, '..', 'oh-my-codex-main', 'package.json'),
+  // Environment variable override
+  process.env.OMX_SOURCE_PACKAGE_JSON,
+].filter(Boolean);
 
+let sourcePkgPath = null;
+let pkg = null;
+
+for (const path of possibleSourcePaths) {
+  if (existsSync(path)) {
+    sourcePkgPath = path;
+    try {
+      pkg = JSON.parse(readFileSync(path, 'utf8'));
+      console.log(`Found source package.json at: ${path}`);
+      break;
+    } catch (e) {
+      console.warn(`Failed to parse ${path}: ${e.message}`);
+    }
+  }
+}
+
+if (!pkg) {
+  console.error('ERROR: Could not find oh-my-codex package.json in any known location:');
+  possibleSourcePaths.forEach(p => console.error(`  - ${p}`));
+  console.error('\nTo specify a custom path, set OMX_SOURCE_PACKAGE_JSON environment variable.');
+  process.exit(1);
+}
+
+const version = pkg.version;
 console.log(`Source repo version: v${version}`);
 
 // Update index.html
