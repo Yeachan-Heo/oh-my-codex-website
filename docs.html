@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Oh My Codex v0.13.1 Documentation - Native Codex hook ownership, first-party Bash guidance, team runtime hardening, and quality-first workflow defaults for Codex CLI">
+  <meta name="description" content="Oh My Codex v0.13.2 Documentation - Security hardening, persistent Stop-hook correctness, Ralph activation safety, explore reentry guards, and worker runtime identity preservation for Codex CLI">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
   <meta property="og:title" content="Documentation | Oh My Codex">
-  <meta property="og:description" content="Complete documentation for oh-my-codex v0.13.1 - Native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, and quality-first workflow defaults.">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.13.2 - Security hardening, persistent Stop-hook correctness, Ralph activation safety, explore reentry guards, and worker runtime identity preservation.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Documentation | Oh My Codex">
-  <meta name="twitter:description" content="v0.13.1 is live: native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, and quality-first workflow defaults.">
+  <meta name="twitter:description" content="v0.13.2 is live: security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, and worker runtime identity preservation.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>Documentation | Oh My Codex</title>
@@ -765,7 +765,7 @@
       <a href="index.html" class="sidebar-brand">
         <div class="sidebar-brand__icon">OMX</div>
         <span class="sidebar-brand__text">Oh My Codex</span>
-        <span class="sidebar-brand__version">v0.13.1</span>
+        <span class="sidebar-brand__version">v0.13.2</span>
       </a>
 
       <div class="sidebar-search">
@@ -877,11 +877,11 @@
           <div class="docs-hero tilt-3d-polish">
             <div class="docs-hero__inner">
               <div>
-                <p class="docs-hero__lede">v0.13.1 ships native Codex hook ownership for non-team sessions, first-party Bash <code>PreToolUse</code>/<code>PostToolUse</code> guidance, team runtime hardening, and quality-first prompt defaults. The canonical workflow is now deep-interview → ralplan → team/ralph.</p>
+                <p class="docs-hero__lede">v0.13.2 tightens security on the identifier, HUD, and notification surfaces, keeps native Stop auto-nudge persistent while blocking Stop for live OMX workflows, gates conversational Ralph activation, guards <code>omx explore</code> against shell-startup re-entry, and preserves worker runtime role identity through startup and scaling.</p>
                 <div class="docs-hero__chips">
-                  <span class="docs-hero__chip"><strong>Native</strong> Codex hooks</span>
-                  <span class="docs-hero__chip"><strong>Bash</strong> guidance</span>
-                  <span class="docs-hero__chip"><strong>Team</strong> hardening</span>
+                  <span class="docs-hero__chip"><strong>Security</strong> hardening</span>
+                  <span class="docs-hero__chip"><strong>Stop-hook</strong> persistence</span>
+                  <span class="docs-hero__chip"><strong>Ralph</strong> safety</span>
                   <span class="docs-hero__chip"><strong>Quality-first</strong> defaults</span>
                 </div>
               </div>
@@ -914,8 +914,8 @@ omx deep-interview "feature idea"</code></pre>
               <p>State, memory, code intelligence, team orchestration, and trace visibility wired into one operator surface.</p>
             </div>
             <div class="card tilt-3d-polish">
-              <h3 style="margin-top:0" class="tilt-3d-child">v0.13.1 Highlights</h3>
-              <p>Native Codex hook ownership, first-party Bash guidance, team runtime hardening, Windows/tmux reliability, and quality-first workflow defaults.</p>
+              <h3 style="margin-top:0" class="tilt-3d-child">v0.13.2 Highlights</h3>
+              <p>Security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, and worker runtime identity preservation.</p>
             </div>
           </div>
         </section>
@@ -930,10 +930,29 @@ omx deep-interview "feature idea"</code></pre>
           <!-- One mode-card per version with collapsible details -->
           <div class="mode-card tilt-3d-polish">
             <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.13.2</span>
+              Security, Stop-Hook &amp; Ralph Safety Patch
+            </div>
+            <details open>
+              <summary>View changes in v0.13.2</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Security hardening:</strong> Identifier path traversal closed, HUD git helpers reject shell/regex metacharacters, reply acknowledgements redact multi-part secrets, and <code>npm audit fix</code> patches transitive CVEs.</li>
+                <li><strong>Persistent Stop-hook correctness:</strong> Native Stop auto-nudge runs without being gated by the OMX runtime, while active OMX workflows still block Stop until they truly finish.</li>
+                <li><strong>Ralph activation &amp; recovery:</strong> Conversational Ralph mentions no longer seed workflow state, Ralph stays visibly active across continuation recovery, and steer-lock retries are capped.</li>
+                <li><strong>Explore reentry guards:</strong> <code>omx explore</code> fails closed on shell-startup re-entry and allowlist wrappers no longer self-resolve.</li>
+                <li><strong>Worker runtime identity:</strong> Worker runtime role identity is preserved through startup and scaling via one reviewable verification path.</li>
+                <li><strong>Hooks &amp; state:</strong> Forked notify-hook routing, watcher PID liveness checks, tmux extended-keys stale-lock recovery, MCP duplicate-sibling cleanup, <code>.omx</code>-based project-root discovery, and AGENTS.md preservation during auto-update.</li>
+                <li><strong>Skill UX:</strong> Analyze skill revived as a read-only investigation surface, OMX-installed skills are marked in <code>/skills</code> without renaming, Shift+Enter tmux triage docs added.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Released April 18, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.13.1</span>
               Team Status &amp; Worker PID Patch
             </div>
-            <details open>
+            <details>
               <summary>View changes in v0.13.1</summary>
               <ul style="list-style-type: disc;">
                 <li><strong>Team status JSON:</strong> Leader mailbox pruning no longer replays duplicate delivered-message bridge calls, keeping <code>omx team status --json</code> parseable.</li>

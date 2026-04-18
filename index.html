@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="oh-my-codex v0.13.1 - Multi-agent orchestration for Codex CLI: native Codex hook ownership, first-party Bash guidance, team runtime hardening, and quality-first workflow defaults.">
+  <meta name="description" content="oh-my-codex v0.13.2 - Multi-agent orchestration for Codex CLI: security hardening, persistent Stop-hook correctness, Ralph activation safety, explore reentry guards, and worker runtime identity preservation.">
   <meta name="keywords" content="OpenAI Codex, AI agents, multi-agent, orchestration, automation, CLI, developer tools, Codex CLI">
   <meta name="author" content="oh-my-codex">
 
@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex">
   <meta property="og:title" content="oh-my-codex - Your codex is not alone">
-  <meta property="og:description" content="v0.13.1 is live: native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, and quality-first workflow defaults.">
+  <meta property="og:description" content="v0.13.2 is live: security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, and worker runtime identity preservation.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="640">
@@ -19,7 +19,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="oh-my-codex - Your codex is not alone">
-  <meta name="twitter:description" content="v0.13.1 is live: native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, and quality-first workflow defaults.">
+  <meta name="twitter:description" content="v0.13.2 is live: security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, and worker runtime identity preservation.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>oh-my-codex - Your codex is not alone</title>
@@ -1222,7 +1222,7 @@
         <div class="hero-stats">
           <span class="hero-stat-badge glow-accent">
             <span class="hero-stat-badge__icon">🚀</span>
-            <span class="hero-stat-badge__value">v0.13.1</span>
+            <span class="hero-stat-badge__value">v0.13.2</span>
             <span class="hero-stat-badge__label">Latest Release</span>
           </span>
           <a href="https://github.com/Yeachan-Heo/oh-my-codex" class="hero-stat-badge hero-stat-badge--dynamic" target="_blank">
@@ -1276,30 +1276,34 @@
                 <span></span>
                 <span></span>
               </div>
-              <span class="hero-terminal__label">v0.13.1 Command Surface</span>
+              <span class="hero-terminal__label">Recommended Workflow</span>
             </div>
             <div class="hero-terminal__body">
-              <pre><code>$ omx autoresearch "how does the auth middleware work?"
-$ omx exec npm test -- --coverage
-$ omx team 3 "refactor auth module with full test coverage"</code></pre>
+              <pre><code># 1. Launch interactive Codex session
+$ omx --madmax --high
+
+# 2. Use keywords inside Codex for workflows
+$deep-interview "clarify the auth change"
+$ralplan "approve the implementation plan"
+$ralph "carry the plan to completion"</code></pre>
             </div>
           </div>
 
           <div class="hero-command-list">
             <article class="hero-command-card glass-subtle tilt-3d-polish">
-              <span class="hero-command-card__title">Autonomous Research</span>
-              <code>omx autoresearch</code>
-              <p>Iteratively explores topics, synthesizes findings, and produces structured reports.</p>
+              <span class="hero-command-card__title">Launch</span>
+              <code>omx --madmax --high</code>
+              <p>Start the interactive Codex session with recommended settings for trusted environments.</p>
             </article>
             <article class="hero-command-card glass-subtle tilt-3d-polish">
-              <span class="hero-command-card__title">Orchestration Wrapper</span>
-              <code>omx exec</code>
-              <p>Run any command through the OMX orchestration layer with hooks, state, and logging.</p>
+              <span class="hero-command-card__title">Clarify</span>
+              <code>$deep-interview</code>
+              <p>Use inside Codex when intent or boundaries are still unclear. Socratic clarification before planning.</p>
             </article>
             <article class="hero-command-card glass-subtle tilt-3d-polish">
-              <span class="hero-command-card__title">Team Worktrees</span>
-              <code>omx team</code>
-              <p>Team workers get isolated git worktrees automatically for conflict-free parallel work.</p>
+              <span class="hero-command-card__title">Execute</span>
+              <code>$ralph</code> or <code>$team</code>
+              <p>Choose <code>$ralph</code> for persistent completion loops, or <code>$team</code> for coordinated parallel execution.</p>
             </article>
           </div>
         </div>
@@ -1316,32 +1320,58 @@ $ omx team 3 "refactor auth module with full test coverage"</code></pre>
   <!-- Release Highlights Section -->
   <section class="section release-section" id="release" data-reveal>
     <div class="section__header">
-      <h2 class="section__title">v0.13.1</h2>
-      <p class="section__subtitle">Released: <strong>April 7, 2026</strong> &mdash; native Codex hook ownership, first-party Bash PreToolUse/PostToolUse guidance, team runtime hardening, Windows/tmux reliability improvements, and quality-first workflow defaults.</p>
+      <h2 class="section__title">v0.13.2</h2>
+      <p class="section__subtitle">Released: <strong>April 18, 2026</strong> &mdash; security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, worker runtime identity preservation, and skill UX refinements.</p>
     </div>
 
     <div class="features-grid">
       <div class="feature-card pixel-border glass tilt-3d-polish">
         <div class="feature-card__icon tilt-3d-child">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-            <path d="M2 17l10 5 10-5"></path>
-            <path d="M2 12l10 5 10-5"></path>
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Native Codex Hook Ownership</h3>
-        <p class="feature-card__description">Non-team OMX sessions now wire hooks natively through the Codex runtime contract, removing the need for external shims and ensuring hooks fire reliably on every tool call.</p>
+        <h3 class="feature-card__title">Security Hardening</h3>
+        <p class="feature-card__description">Identifier path traversal closed, HUD git helpers reject shell/regex metacharacters, reply acknowledgements redact multi-part secrets, and <code>npm audit fix</code> patches transitive CVEs.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
         <div class="feature-card__icon tilt-3d-child">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4 17 10 11 4 5"></polyline>
-            <line x1="12" y1="19" x2="20" y2="19"></line>
+            <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+            <path d="M3 12h3M18 12h3M12 3v3M12 18v3"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">First-Party Bash Guidance</h3>
-        <p class="feature-card__description">Shipped <code>PreToolUse</code> and <code>PostToolUse</code> Bash hooks with first-party documentation. Destructive commands trigger warnings; errors surface structured guidance automatically.</p>
+        <h3 class="feature-card__title">Persistent Stop-Hook Correctness</h3>
+        <p class="feature-card__description">Native Stop auto-nudge runs without being gated by the OMX runtime, while active OMX workflows still block Stop until they truly finish — no more premature or stuck Stop cycles.</p>
+      </div>
+
+      <div class="feature-card pixel-border glass tilt-3d-polish">
+        <div class="feature-card__icon tilt-3d-child">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 6v6l4 2"></path>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Ralph Activation &amp; Recovery Safety</h3>
+        <p class="feature-card__description">Conversational Ralph mentions no longer seed workflow state, Ralph stays visibly active across continuation recovery, and steer-lock retries are capped against unbounded stale-lock loops.</p>
+      </div>
+
+      <div class="feature-card pixel-border glass tilt-3d-polish">
+        <div class="feature-card__icon tilt-3d-child">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4"></path>
+            <path d="M12 18v4"></path>
+            <path d="M4.93 4.93l2.83 2.83"></path>
+            <path d="M16.24 16.24l2.83 2.83"></path>
+            <path d="M2 12h4"></path>
+            <path d="M18 12h4"></path>
+            <path d="M4.93 19.07l2.83-2.83"></path>
+            <path d="M16.24 7.76l2.83-2.83"></path>
+          </svg>
+        </div>
+        <h3 class="feature-card__title">Explore Reentry Guards</h3>
+        <p class="feature-card__description">omx <code>explore</code> fails closed on shell-startup re-entry and allowlist wrappers no longer self-resolve, eliminating two recursion classes that could stall Codex startup.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1353,31 +1383,8 @@ $ omx team 3 "refactor auth module with full test coverage"</code></pre>
             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Team Runtime Hardening</h3>
-        <p class="feature-card__description">Leader mailbox delivery, pane-status visibility, nudge handling, session continuity, and persist-error paths are all more robust across live operator flows.</p>
-      </div>
-
-      <div class="feature-card pixel-border glass tilt-3d-polish">
-        <div class="feature-card__icon tilt-3d-child">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-          </svg>
-        </div>
-        <h3 class="feature-card__title">Windows/tmux Reliability</h3>
-        <p class="feature-card__description">Detached tmux launches, PowerShell command resolution, and tmux child binding are all improved. Worktree supervision stays stable across Windows and remote sessions.</p>
-      </div>
-
-      <div class="feature-card pixel-border glass tilt-3d-polish">
-        <div class="feature-card__icon tilt-3d-child">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-        </div>
-        <h3 class="feature-card__title">Quality-First Defaults</h3>
-        <p class="feature-card__description">Prompt and AGENTS defaults now emphasize quality-first, evidence-backed execution. The canonical workflow — deep-interview → ralplan → team/ralph — is documented and enforced.</p>
+        <h3 class="feature-card__title">Worker Runtime Identity</h3>
+        <p class="feature-card__description">Worker runtime role identity is preserved through startup and scaling via a single reviewable verification path — leader/worker boundaries no longer drift under load.</p>
       </div>
     </div>
   </section>
@@ -1439,20 +1446,17 @@ $ omx team 3 "refactor auth module with full test coverage"</code></pre>
           <span class="hero-terminal__label">$team &mdash; Worktree Lifecycle</span>
         </div>
         <div class="hero-terminal__body">
-          <pre><code><span style="color: var(--text-tertiary);"># Workers get worktrees automatically &mdash; no flags needed</span>
-$ omx team 3:executor "refactor auth module"
+          <pre><code><span style="color: var(--text-tertiary);"># Use $team inside Codex (recommended)</span>
+$team 3:executor "refactor auth module"
 Team started: refactor-auth-module
 workers: 3 (worktrees: automatic, detached)
 
-$ omx team status refactor-auth-module
-worker-1: worktree=.omx/team/.../worker-1  status=in_progress
-worker-2: worktree=.omx/team/.../worker-2  status=completed
-worker-3: worktree=.omx/team/.../worker-3  status=completed
-tasks: completed=2 in_progress=1
-integration: merged=2 conflicts=0
+<span style="color: var(--text-tertiary);"># Advanced: CLI operator surface</span>
+omx team 3:executor "refactor auth module"
+omx team status refactor-auth-module
 
 <span style="color: var(--text-tertiary);"># Mixed providers with worktrees</span>
-$ OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini \
+OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini \
   omx team 3:executor "full-stack implementation"</code></pre>
         </div>
       </div>
@@ -1553,10 +1557,10 @@ $ OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini \
               <span class="code-block__dot code-block__dot--yellow"></span>
               <span class="code-block__dot code-block__dot--green"></span>
             </div>
-            <button class="code-block__copy" data-copy="npm install -g oh-my-codex">Copy</button>
+            <button class="code-block__copy" data-copy="npm install -g @openai/codex oh-my-codex">Copy</button>
           </div>
           <div class="code-block__content">
-            <code>npm install -g oh-my-codex</code>
+            <code>npm install -g @openai/codex oh-my-codex</code>
           </div>
         </div>
       </div>
@@ -1574,6 +1578,23 @@ $ OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini \
           </div>
           <div class="code-block__content">
             <code>omx setup && omx doctor</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="install-step">
+        <div class="install-step__label">Step 3: Launch and work</div>
+        <div class="code-block glass">
+          <div class="code-block__header">
+            <div class="code-block__dots">
+              <span class="code-block__dot code-block__dot--red"></span>
+              <span class="code-block__dot code-block__dot--yellow"></span>
+              <span class="code-block__dot code-block__dot--green"></span>
+            </div>
+            <button class="code-block__copy" data-copy="omx --madmax --high">Copy</button>
+          </div>
+          <div class="code-block__content">
+            <code>omx --madmax --high</code>
           </div>
         </div>
       </div>

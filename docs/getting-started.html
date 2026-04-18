@@ -35,18 +35,20 @@ omx setup
 omx doctor</code></pre>
 
       <h2>Recommended Launch</h2>
-      <pre><code>omx --xhigh --madmax   # trusted environments
+      <pre><code>omx --madmax --high    # recommended for trusted environments
 omx                    # standard launch</code></pre>
+      <p>The <code>--madmax --high</code> flags enable higher reasoning effort and full tool access for better results.</p>
 
       <h2>First Run Walkthrough</h2>
       <ol>
         <li>Create or enter a project directory.</li>
         <li>Run <code>omx setup</code> to install prompts, skills, AGENTS.md, and configuration.</li>
-        <li>Start Codex CLI with <code>omx</code>.</li>
-        <li>Use <code>$deep-interview "clarify the auth change"</code> when intent or boundaries are still unclear.</li>
-        <li>Use <code>$ralplan "approve the auth plan and review tradeoffs"</code> to lock the implementation plan.</li>
-        <li>Choose <code>$ralph "carry the approved plan to completion"</code> or <code>$team 3:executor "execute the approved plan in parallel"</code> based on execution style.</li>
+        <li>Launch interactive Codex session: <code>omx --madmax --high</code></li>
+        <li><strong>Inside Codex</strong>, use <code>$deep-interview "clarify the auth change"</code> when intent or boundaries are still unclear.</li>
+        <li><strong>Inside Codex</strong>, use <code>$ralplan "approve the auth plan and review tradeoffs"</code> to lock the implementation plan.</li>
+        <li><strong>Inside Codex</strong>, choose <code>$ralph "carry the approved plan to completion"</code> or <code>$team 3:executor "execute the approved plan in parallel"</code> based on execution style.</li>
       </ol>
+      <p class="muted"><strong>Note:</strong> The <code>$</code> prefix indicates these are keyword triggers used <em>inside</em> the interactive Codex session, not standalone CLI commands.</p>
 
       <h2>Prompt Instruction Source</h2>
       <p>OMX layers project instructions by default (extends Codex behavior, does not replace/bypass Codex core system policies):</p>
