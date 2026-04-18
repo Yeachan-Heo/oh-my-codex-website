@@ -14,6 +14,8 @@ This page is the canonical answer to:
 For project scope, `.gitignore` keeps generated `.codex/hooks.json` out of source control.
 `omx uninstall` removes only the OMX-managed wrapper entries from `.codex/hooks.json`; if user hooks remain, the file stays in place.
 
+`omx doctor` can confirm that these files exist and are shaped correctly. It does not prove that the same shell/profile can complete an authenticated Codex request; use `codex login status` plus a real `omx exec --skip-git-repo-check -C . "Reply with exactly OMX-EXEC-OK"` smoke test for that boundary.
+
 ## Ownership split
 
 - **Native Codex hooks**: `.codex/hooks.json`
@@ -85,3 +87,4 @@ When validating hooks, keep the proof boundary explicit:
    - behavior came from notify-hook / derived watcher / tmux runtime, not native Codex hooks
 
 Do not claim “native hooks work” when only tmux or synthetic notify fallback paths were exercised.
+Likewise, do not claim real execution readiness from hook/install evidence alone; validate an actual Codex execution in the active runtime profile when diagnosing auth or provider issues.

@@ -33,22 +33,24 @@
       <pre><code>npm install -g @openai/codex oh-my-codex
 omx setup
 omx doctor</code></pre>
+      <p><code>omx doctor</code> verifies the install shape. Before treating the runtime as ready, also prove that the active Codex profile can perform a real request:</p>
+      <pre><code>codex login status
+omx exec --skip-git-repo-check -C . &quot;Reply with exactly OMX-EXEC-OK&quot;</code></pre>
 
       <h2>Recommended Launch</h2>
-      <pre><code>omx --madmax --high    # recommended for trusted environments
+      <pre><code>omx --xhigh --madmax   # trusted environments
 omx                    # standard launch</code></pre>
-      <p>The <code>--madmax --high</code> flags enable higher reasoning effort and full tool access for better results.</p>
 
       <h2>First Run Walkthrough</h2>
       <ol>
         <li>Create or enter a project directory.</li>
         <li>Run <code>omx setup</code> to install prompts, skills, AGENTS.md, and configuration.</li>
-        <li>Launch interactive Codex session: <code>omx --madmax --high</code></li>
-        <li><strong>Inside Codex</strong>, use <code>$deep-interview "clarify the auth change"</code> when intent or boundaries are still unclear.</li>
-        <li><strong>Inside Codex</strong>, use <code>$ralplan "approve the auth plan and review tradeoffs"</code> to lock the implementation plan.</li>
-        <li><strong>Inside Codex</strong>, choose <code>$ralph "carry the approved plan to completion"</code> or <code>$team 3:executor "execute the approved plan in parallel"</code> based on execution style.</li>
+        <li>Run <code>omx doctor</code>, then the <code>codex login status</code> plus <code>omx exec</code> smoke test above.</li>
+        <li>Start Codex CLI with <code>omx</code>.</li>
+        <li>Use <code>$deep-interview "clarify the auth change"</code> when intent or boundaries are still unclear.</li>
+        <li>Use <code>$ralplan "approve the auth plan and review tradeoffs"</code> to lock the implementation plan.</li>
+        <li>Choose <code>$ralph "carry the approved plan to completion"</code> or <code>$team 3:executor "execute the approved plan in parallel"</code> based on execution style.</li>
       </ol>
-      <p class="muted"><strong>Note:</strong> The <code>$</code> prefix indicates these are keyword triggers used <em>inside</em> the interactive Codex session, not standalone CLI commands.</p>
 
       <h2>Prompt Instruction Source</h2>
       <p>OMX layers project instructions by default (extends Codex behavior, does not replace/bypass Codex core system policies):</p>
@@ -65,8 +67,13 @@ OMX_MODEL_INSTRUCTIONS_FILE=/path/to/instructions.md omx</code></pre>
           <tr><td>Prompts not available</td><td>Confirm files exist in <code>~/.codex/prompts/</code> and re-run <code>omx setup</code>.</td></tr>
           <tr><td>Skills not loading</td><td>Verify <code>~/.codex/skills/*/SKILL.md</code> files were installed.</td></tr>
           <tr><td>Doctor reports config issues</td><td>Run <code>omx doctor</code> and apply the suggested fixes.</td></tr>
+          <tr><td>Doctor is green but execution fails</td><td>Run <code>codex login status</code> and <code>omx exec --skip-git-repo-check -C . &quot;Reply with exactly OMX-EXEC-OK&quot;</code> from the same shell/profile. A green doctor is install evidence, not proof of authenticated model execution.</td></tr>
+          <tr><td>Custom or profile HOME cannot authenticate</td><td>Check the active <code>~/.codex</code> or <code>CODEX_HOME</code>. Containers, profile shells, and service users may not see the same auth/config as your normal user home.</td></tr>
+          <tr><td>Local proxy or compatible endpoint returns 401</td><td>If you use a proxy, verify the active <code>~/.codex/config.toml</code> contains the expected <code>openai_base_url</code>. Proxy keys sent to the wrong endpoint can look like missing bearer auth or an incorrect API key.</td></tr>
+          <tr><td><code>omx doctor --team</code> sees a dead tmux team</td><td>If the team is intentionally abandoned, run <code>omx team shutdown &lt;team-name&gt; --force --confirm-issues</code>, then <code>omx cancel</code>, then <code>omx doctor --team</code>.</td></tr>
         </tbody>
       </table>
+      <p class="muted">Need deeper operator help? See <a href="./troubleshooting.md">Troubleshooting execution readiness</a>.</p>
     </main>
 
     <footer>
