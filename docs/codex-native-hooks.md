@@ -40,7 +40,7 @@ OMX only owns the wrapper entries that invoke `dist/scripts/codex-native-hook.js
 | Team-phase continuation | `Stop` | `stop` | native-partial | Native adapter treats per-team `phase.json` as canonical when deciding whether a current-session team run is still non-terminal and can re-block on later fresh Stop replies while keeping leader guidance explicit about rewriting system-generated worker auto-checkpoint commits into Lore-format final history |
 | `ralplan` skill-state continuation | `Stop` | `stop` | native-partial | Native adapter can block on active `skill-active-state.json` for `ralplan`, unless active subagents are already the real in-flight owners |
 | `deep-interview` skill-state continuation | `Stop` | `stop` | native-partial | Native adapter can block on active `skill-active-state.json` for `deep-interview`, unless active subagents are already the real in-flight owners |
-| auto-nudge continuation | `Stop` | `stop` | native-partial | Native adapter continues turns that end in a permission/stall prompt, can re-fire for later fresh replies, and suppresses auto-nudge while interview / deep-interview state is active |
+| auto-nudge continuation | `Stop` | `stop` | native-partial | Native adapter continues turns that end in a permission/stall prompt, can re-fire for later fresh replies, and suppresses auto-nudge while interview / deep-interview state is active; fallback Ralph steer now also treats `blocked_on_user` as terminal instead of only `complete`/`failed`/`cancelled` |
 | `ask-user-question` | none | runtime-only | runtime-fallback | No distinct Codex native hook today |
 | `PostToolUseFailure` | none | runtime-only | runtime-fallback | Fold into runtime/fallback handling until native support exists |
 | non-Bash tool interception | none | runtime-only | runtime-fallback | Current Codex native tool hooks expose Bash only |
@@ -73,6 +73,10 @@ Unsupported overlaps should preserve the current state unchanged and direct the
 operator to clear incompatible state explicitly via `omx state ...` or the
 `omx_state.*` MCP tools before retrying. See
 `docs/contracts/multi-state-transition-contract.md`.
+
+## UserPromptSubmit: triage advisory context
+
+`UserPromptSubmit` can now emit triage advisory context alongside keyword context. When no keyword matches, the triage layer classifies the prompt and may inject an advisory prompt-routing context string — this is advisory prompt-routing context that does not activate a skill or workflow by itself; it adds a developer-context hint the model may follow. Keywords remain the deterministic control surface: a matched keyword always takes precedence over triage output, and users can suppress triage injection per prompt with phrases such as `no workflow`, `just chat`, or `plain answer`.
 
 ## Verification guidance
 

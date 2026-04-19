@@ -8,7 +8,7 @@ This document explains the **behavioral prompt contract** introduced by the GPT-
 
 Use it when you edit any of these surfaces:
 
-- `AGENTS.md`
+- `AGENTS.md` when a repo chooses to track a project-root copy
 - `templates/AGENTS.md`
 - canonical XML-tagged role prompt surfaces in `prompts/*.md`
 - generated top-level `developer_instructions` text in `src/config/generator.ts`
@@ -19,7 +19,7 @@ Issue [#615](https://github.com/Yeachan-Heo/oh-my-codex/issues/615) uses example
 
 The GPT-5.4 contract is currently distributed across:
 
-- orchestration surfaces: `AGENTS.md`, `templates/AGENTS.md`
+- orchestration surfaces: `templates/AGENTS.md` and any tracked project-root `AGENTS.md`
 - canonical XML-tagged subagent role prompt surfaces: `prompts/*.md`
 - generated top-level Codex config guidance: `src/config/generator.ts`
 - regression tests: `src/hooks/__tests__/prompt-guidance-*.test.ts`
@@ -71,7 +71,6 @@ Representative locations:
 
 | Surface | Evidence |
 |---|---|
-| `AGENTS.md` | `AGENTS.md:29` |
 | `templates/AGENTS.md` | `templates/AGENTS.md:29` |
 | `prompts/executor.md` | `prompts/executor.md:47`, `prompts/executor.md:121` |
 | `prompts/planner.md` | `prompts/planner.md:35`, `prompts/planner.md:79` |
@@ -92,7 +91,6 @@ Representative locations:
 
 | Surface | Evidence |
 |---|---|
-| `AGENTS.md` | `AGENTS.md:30` |
 | `templates/AGENTS.md` | `templates/AGENTS.md:30` |
 | `prompts/executor.md` | `prompts/executor.md:48`, `prompts/executor.md:139-143` |
 | `prompts/planner.md` | `prompts/planner.md:36`, `prompts/planner.md:118-122` |
@@ -115,7 +113,6 @@ Representative locations:
 
 | Surface | Evidence |
 |---|---|
-| `AGENTS.md` | `AGENTS.md:31`, `AGENTS.md:300` |
 | `templates/AGENTS.md` | `templates/AGENTS.md:31`, `templates/AGENTS.md:300` |
 | `src/config/generator.ts` | `src/config/generator.ts:77` |
 | `prompts/executor.md` | `prompts/executor.md:49-50`, `prompts/executor.md:60`, `prompts/executor.md:141-147` |
@@ -137,7 +134,6 @@ Representative locations:
 
 | Surface | Evidence |
 |---|---|
-| `AGENTS.md` | `AGENTS.md:32`, `AGENTS.md:288`, `AGENTS.md:297-301`, `AGENTS.md:307-308` |
 | `templates/AGENTS.md` | `templates/AGENTS.md:32`, `templates/AGENTS.md:288`, `templates/AGENTS.md:297-301`, `templates/AGENTS.md:307-308` |
 | `src/config/generator.ts` | `src/config/generator.ts:77` |
 | `prompts/executor.md` | `prompts/executor.md:32-38`, `prompts/executor.md:45`, `prompts/executor.md:50`, `prompts/executor.md:101-109` |
@@ -153,7 +149,7 @@ Example prompt text:
 
 ## Orchestration sharpness rules for root AGENTS surfaces
 
-When editing `AGENTS.md`, `templates/AGENTS.md`, or other root orchestration guidance, keep the orchestration contract mode-driven and terse:
+When editing `templates/AGENTS.md`, any tracked root `AGENTS.md`, or other root orchestration guidance, keep the orchestration contract mode-driven and terse:
 
 1. **Mode selection comes first.** Distinguish between `$deep-interview`, `$ralplan`, `$team`, and direct solo execution instead of blending them into one generic flow.
 2. **Leader and worker responsibilities stay separate.** Leaders choose the mode, own verification, and integrate work; workers execute assigned slices and report blockers upward.
@@ -190,7 +186,7 @@ Keep these separate when editing docs and prompts:
 
 | Topic | Primary sources |
 |---|---|
-| GPT-5.4 prompt behavior contract | `AGENTS.md`, `templates/AGENTS.md`, canonical XML-tagged role prompt surfaces in `prompts/*.md`, `src/config/generator.ts`, `src/hooks/__tests__/prompt-guidance-*.test.ts` |
+| GPT-5.4 prompt behavior contract | `templates/AGENTS.md`, any tracked `AGENTS.md`, canonical XML-tagged role prompt surfaces in `prompts/*.md`, `src/config/generator.ts`, `src/hooks/__tests__/prompt-guidance-*.test.ts` |
 | exact-model mini composition seam | `src/agents/native-config.ts`, `src/team/runtime.ts`, `src/team/scaling.ts`, `src/team/worker-bootstrap.ts`, targeted native/runtime/scaling/bootstrap tests |
 | role/tier/posture routing | `README.md:133-179`, `docs/shared/agent-tiers.md:7-56`, `src/agents/native-config.ts:12-40` |
 
