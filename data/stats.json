@@ -2,10 +2,10 @@
   "agents": 33,
   "skills": 37,
   "mcpServers": 5,
-  "version": "0.13.2",
+  "version": "0.14.0",
   "promptFiles": 33,
   "skillFiles": 37,
   "downloads": 55298,
   "stars": 23383,
-  "lastUpdated": "2026-04-18T00:00:00.000Z"
+  "lastUpdated": "2026-04-19T00:00:00.000Z"
 }
