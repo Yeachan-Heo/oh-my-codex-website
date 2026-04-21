@@ -40,7 +40,7 @@ OMX only owns the wrapper entries that invoke `dist/scripts/codex-native-hook.js
 | Team-phase continuation | `Stop` | `stop` | native-partial | Native adapter treats per-team `phase.json` as canonical when deciding whether a current-session team run is still non-terminal and can re-block on later fresh Stop replies while keeping leader guidance explicit about rewriting system-generated worker auto-checkpoint commits into Lore-format final history |
 | `ralplan` skill-state continuation | `Stop` | `stop` | native-partial | Native adapter can block on active `skill-active-state.json` for `ralplan`, unless active subagents are already the real in-flight owners |
 | `deep-interview` skill-state continuation | `Stop` | `stop` | native-partial | Native adapter can block on active `skill-active-state.json` for `deep-interview`, unless active subagents are already the real in-flight owners |
-| auto-nudge continuation | `Stop` | `stop` | native-partial | Native adapter continues turns that end in a permission/stall prompt, can re-fire for later fresh replies, and suppresses auto-nudge while interview / deep-interview state is active; fallback Ralph steer now also treats `blocked_on_user` as terminal instead of only `complete`/`failed`/`cancelled` |
+| auto-nudge continuation | `Stop` | `stop` | native-partial | Native adapter continues turns that end in a permission/stall prompt, can re-fire for later fresh replies, and suppresses auto-nudge while interview / deep-interview state is active; explicit terminal lifecycle metadata should be authoritative when present, legacy `blocked_on_user` remains a suppress-continuation compatibility signal, and `cancelled` stays internal legacy-only for user-facing lifecycle summaries |
 | `ask-user-question` | none | runtime-only | runtime-fallback | No distinct Codex native hook today |
 | `PostToolUseFailure` | none | runtime-only | runtime-fallback | Fold into runtime/fallback handling until native support exists |
 | non-Bash tool interception | none | runtime-only | runtime-fallback | Current Codex native tool hooks expose Bash only |
@@ -59,6 +59,21 @@ The approved OMX-native wiki backport keeps lifecycle ownership intentionally na
 - **SessionEnd** remains a runtime/notify-path responsibility for best-effort, non-blocking session capture into `.omx/wiki/`.
 - **PreCompact parity is intentionally deferred** in v1 unless a clearly OMX-native compaction seam exists.
 - **Routing should stay explicit**: prefer `$wiki` or task verbs like `wiki query` / `wiki add`, and avoid implicit bare `wiki` noun activation.
+
+## Explicit terminal stop model note
+
+The approved explicit terminal stop model adds a canonical lifecycle layer for active workflow handoffs:
+
+- `finished`
+- `blocked`
+- `failed`
+- `userinterlude`
+- `askuserQuestion`
+
+Hook readers should prefer explicit lifecycle metadata over assistant-text heuristics when those signals are available.
+During migration, legacy `blocked_on_user` still suppresses continuation, but `cancelled` should be treated as internal legacy/admin compatibility rather than a canonical user-facing outcome.
+
+There is still no distinct native Codex `ask-user-question` hook today. That means `askuserQuestion` classification remains a runtime/fallback responsibility unless a future native hook surface exposes first-class question-stop metadata.
 
 ## Combined workflow note
 

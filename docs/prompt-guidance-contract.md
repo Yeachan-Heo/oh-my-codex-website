@@ -147,6 +147,19 @@ Example prompt text:
 >
 > Verification loop: identify what proves the claim, run the verification, read the output, then report with evidence.
 
+## Active workflow terminal handoff contract
+
+Prompt surfaces that control active workflows should describe terminal user-facing replies as explicit handoffs, not as casual optional follow-ups.
+
+Contributor rules:
+
+1. Terminal active-workflow replies should name an explicit outcome such as `finished`, `blocked`, `failed`, `userinterlude`, or `askuserQuestion`.
+2. Terminal replies should include the evidence or blocking reason that justifies that outcome.
+3. Terminal replies should identify the handoff clearly: completed artifact, blocking dependency, failure recovery owner, or the single required question.
+4. Terminal replies should not end in permission-seeking softeners such as `If you want, I can ...`, `If you'd like, I can ...`, or `Would you like me to continue?`.
+
+This rule is specific to active workflow handoffs. Normal explanatory conversation outside an active workflow may still be conversational, but workflow-owned terminal replies must make the lifecycle state explicit.
+
 ## Orchestration sharpness rules for root AGENTS surfaces
 
 When editing `templates/AGENTS.md`, any tracked root `AGENTS.md`, or other root orchestration guidance, keep the orchestration contract mode-driven and terse:
@@ -221,7 +234,8 @@ node --test \
   dist/hooks/__tests__/prompt-guidance-contract.test.js \
   dist/hooks/__tests__/prompt-guidance-wave-two.test.js \
   dist/hooks/__tests__/prompt-guidance-scenarios.test.js \
-  dist/hooks/__tests__/prompt-guidance-catalog.test.js
+  dist/hooks/__tests__/prompt-guidance-catalog.test.js \
+  dist/hooks/__tests__/explicit-terminal-stop-docs-contract.test.js
 ```
 
 If you touch the exact-model `gpt-5.4-mini` composition seam, also run:
