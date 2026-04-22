@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Oh My Codex v0.14.0 Documentation - Security hardening, persistent Stop-hook correctness, Ralph activation safety, explore reentry guards, and worker runtime identity preservation for Codex CLI">
+  <meta name="description" content="Oh My Codex v0.14.2 Documentation - Operator reliability, safer omx question rendering, duplicate MCP cleanup, deep-interview state hardening, Korean IME routing, and TypeScript 6 toolchain refresh for Codex CLI">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
   <meta property="og:title" content="Documentation | Oh My Codex">
-  <meta property="og:description" content="Complete documentation for oh-my-codex v0.14.0 - Security hardening, persistent Stop-hook correctness, Ralph activation safety, explore reentry guards, and worker runtime identity preservation.">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.14.2 - Operator reliability, safer omx question rendering, duplicate MCP cleanup, deep-interview state hardening, Korean IME routing, and TypeScript 6 toolchain refresh.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Documentation | Oh My Codex">
-  <meta name="twitter:description" content="v0.14.0 is live: security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, and worker runtime identity preservation.">
+  <meta name="twitter:description" content="v0.14.2 is live: operator reliability, safer omx question rendering, duplicate MCP cleanup, deep-interview state hardening, Korean IME routing, and TypeScript 6 toolchain refresh.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>Documentation | Oh My Codex</title>
@@ -765,7 +765,7 @@
       <a href="index.html" class="sidebar-brand">
         <div class="sidebar-brand__icon">OMX</div>
         <span class="sidebar-brand__text">Oh My Codex</span>
-        <span class="sidebar-brand__version">v0.14.0</span>
+        <span class="sidebar-brand__version">v0.14.2</span>
       </a>
 
       <div class="sidebar-search">
@@ -877,7 +877,7 @@
           <div class="docs-hero tilt-3d-polish">
             <div class="docs-hero__inner">
               <div>
-                <p class="docs-hero__lede">v0.14.0 tightens security on the identifier, HUD, and notification surfaces, keeps native Stop auto-nudge persistent while blocking Stop for live OMX workflows, gates conversational Ralph activation, guards <code>omx explore</code> against shell-startup re-entry, and preserves worker runtime role identity through startup and scaling.</p>
+                <p class="docs-hero__lede">v0.14.2 hardens operator reliability: safer <code>omx question</code> rendering outside attached tmux, stale duplicate MCP sibling self-cleanup, tighter deep-interview session and intent handling, Korean IME drift routing for the <code>ulw</code> shorthand, shared tmux answer-submit semantics, and a TypeScript&nbsp;6 / Biome toolchain refresh.</p>
                 <div class="docs-hero__chips">
                   <span class="docs-hero__chip"><strong>Security</strong> hardening</span>
                   <span class="docs-hero__chip"><strong>Stop-hook</strong> persistence</span>
@@ -914,8 +914,8 @@ omx deep-interview "feature idea"</code></pre>
               <p>State, memory, code intelligence, team orchestration, and trace visibility wired into one operator surface.</p>
             </div>
             <div class="card tilt-3d-polish">
-              <h3 style="margin-top:0" class="tilt-3d-child">v0.14.0 Highlights</h3>
-              <p>Security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, and worker runtime identity preservation.</p>
+              <h3 style="margin-top:0" class="tilt-3d-child">v0.14.2 Highlights</h3>
+              <p>Operator reliability, safer question rendering, duplicate MCP cleanup, deep-interview state hardening, Korean IME routing, and TypeScript&nbsp;6 toolchain refresh.</p>
             </div>
           </div>
         </section>
@@ -930,10 +930,46 @@ omx deep-interview "feature idea"</code></pre>
           <!-- One mode-card per version with collapsible details -->
           <div class="mode-card tilt-3d-polish">
             <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.14.2</span>
+              Operator Reliability &amp; Toolchain Refresh
+            </div>
+            <details open>
+              <summary>View changes in v0.14.2</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Safer <code>omx question</code> rendering:</strong> Fails closed outside attached tmux panes with a clear operator-facing error instead of spawning an unseen detached renderer.</li>
+                <li><strong>Duplicate MCP cleanup:</strong> Older same-parent stdio duplicate siblings self-exit after a safe post-traffic idle window, reducing stale MCP server buildup.</li>
+                <li><strong>Deep-interview state hardening:</strong> Session-scoped mode clears leave an inactive tombstone so legacy root fallback does not immediately reactivate the mode; failed question launches clear pending obligations.</li>
+                <li><strong>Korean IME drift routing:</strong> Prompts typed as <code>ㅕㅣㅈ</code> on a Korean 2-set keyboard normalize to the <code>ulw</code> ultrawork shorthand before activation.</li>
+                <li><strong>Shared tmux submit semantics:</strong> Question-answer injection now routes through the same <code>buildSendPaneArgvs</code> path as reply-listener pane injection.</li>
+                <li><strong>Background question guidance:</strong> Agents now explicitly wait for background <code>omx question</code> terminals to finish and read the JSON answer before continuing.</li>
+                <li><strong>Tooling refresh:</strong> TypeScript upgraded to <code>6.0.3</code>, Biome lockfile metadata refreshed to <code>2.4.12</code>, and <code>tsconfig.json</code> pins Node ambient types for the TS&nbsp;6 build path.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Released April 21, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.14.1</span>
+              Interactive Surface Reliability Patch
+            </div>
+            <details>
+              <summary>View changes in v0.14.1</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Deep-interview Stop gating:</strong> Pending question obligations now block Stop correctly even after the mode marks itself inactive.</li>
+                <li><strong>Question pane resilience:</strong> Non-POSIX shells, missing panes, and detached-session startup failures now fail closed instead of leaving a dead question UI behind.</li>
+                <li><strong>Setup refresh recovery:</strong> Explicit <code>omx update</code> can refresh setup state even when the installed version is already current; advisory update-state write failures no longer block the refresh path.</li>
+                <li><strong>Lifecycle normalization:</strong> Terminal lifecycle helpers now reuse the shared runtime run-outcome contract instead of a parallel implementation.</li>
+                <li><strong>Guidance polish:</strong> Code-review skill requires a more comprehensive dual-perspective review posture; lightweight fallback lanes stay intentionally lean.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Released April 21, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.14.0</span>
               Security, Stop-Hook &amp; Ralph Safety Patch
             </div>
-            <details open>
+            <details>
               <summary>View changes in v0.14.0</summary>
               <ul style="list-style-type: disc;">
                 <li><strong>Security hardening:</strong> Identifier path traversal closed, HUD git helpers reject shell/regex metacharacters, reply acknowledgements redact multi-part secrets, and <code>npm audit fix</code> patches transitive CVEs.</li>
