@@ -3,32 +3,2342 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oh My Codex Docs — redirecting</title>
-  <meta http-equiv="refresh" content="0; url=https://omx.vibetip.help/">
-  <link rel="canonical" href="https://omx.vibetip.help/">
-  <meta name="robots" content="noindex">
+  <meta name="description" content="Oh My Codex v0.14.0 Documentation - Security hardening, persistent Stop-hook correctness, Ralph activation safety, explore reentry guards, and worker runtime identity preservation for Codex CLI">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
+  <meta property="og:title" content="Documentation | Oh My Codex">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.14.0 - Security hardening, persistent Stop-hook correctness, Ralph activation safety, explore reentry guards, and worker runtime identity preservation.">
+  <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Documentation | Oh My Codex">
+  <meta name="twitter:description" content="v0.14.0 is live: security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, and worker runtime identity preservation.">
+  <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
+
+  <title>Documentation | Oh My Codex</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="css/design-system.css">
+
   <style>
+    /* =========================================
+       DOCS LAYOUT & THEME OVERRIDES
+       ========================================= */
+    :root {
+      --sidebar-width: 280px;
+      --header-height-mobile: 60px;
+      --content-max-width: 960px;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0a0a0a;
-      color: #ffffff;
+      background:
+        radial-gradient(circle at top left, rgba(16, 163, 127, 0.12), transparent 28%),
+        radial-gradient(circle at 82% 10%, rgba(59, 130, 246, 0.1), transparent 24%),
+        linear-gradient(180deg, #0f1220 0%, var(--bg-primary) 28%, #07080d 100%);
+      color: var(--text-primary);
+    }
+
+    /* Layout */
+    .docs-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .docs-sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%),
+        rgba(12, 15, 24, 0.88);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      overflow-y: auto;
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(18px);
+      box-shadow: 20px 0 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .docs-main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      min-width: 0;
+      padding: 2rem 4rem;
+    }
+
+    .docs-content {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+
+    .docs-hero {
+      position: relative;
+      padding: 2rem;
+      margin: 1rem 0 2.5rem;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 28%),
+        radial-gradient(circle at left center, rgba(16, 163, 127, 0.18), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 22%),
+        rgba(12, 15, 24, 0.82);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .docs-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 25%, rgba(255, 255, 255, 0.08) 50%, transparent 75%);
+      transform: translateX(-100%);
+      animation: shimmer 7s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .docs-hero__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .docs-hero__lede {
+      font-size: 1.1rem;
+      max-width: 52ch;
+    }
+
+    .docs-hero__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .docs-hero__chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      background: rgba(19, 24, 34, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .docs-hero__chip strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .docs-command-panel {
+      padding: 1.1rem;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(8, 11, 18, 0.78);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.24);
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .docs-command-panel__kicker {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-primary);
+    }
+
+    .docs-command-panel pre {
+      margin: 0;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #d7f7ee;
+    }
+
+    .docs-command-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .docs-command-panel li {
+      margin: 0;
+      padding: 0.8rem 0.9rem;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-secondary);
+    }
+
+    .docs-command-panel li strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-primary);
+    }
+
+    .docs-command-panel li {
+      line-height: 1.5;
+    }
+
+    /* Typography Overrides */
+    .docs-content h1 {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      padding-bottom: 1rem;
+    }
+
+    .docs-content h2 {
+      margin-top: 3.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-default);
+      position: relative;
+    }
+
+    .docs-content h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .docs-content h4 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+.docs-content p, .docs-content ul, .docs-content ol {
+  margin-bottom: 1.25rem;
+  color: var(--text-secondary);
+}
+
+/* 3D Polish */
+.tilt-3d-polish {
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+}
+
+.tilt-3d-polish::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(16, 163, 127, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  transform: translateZ(-10px);
+}
+
+.tilt-3d-polish:hover {
+  transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) translateY(-8px);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(16, 163, 127, 0.2);
+}
+
+.tilt-3d-polish:hover::before {
+  opacity: 1;
+}
+
+.tilt-3d-child {
+  transform: translateZ(40px);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.tilt-3d-polish:hover .tilt-3d-child {
+  transform: translateZ(60px) scale(1.05);
+}
+
+    .docs-content ul, .docs-content ol {
+      padding-left: 1.5rem;
+    }
+
+    .docs-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .docs-content code {
+      font-size: 0.85em;
+    }
+
+    /* Code Blocks (docs-specific wrapper) */
+    .code-block-wrapper {
+      background: var(--code-bg, #161b22);
+      border: 1px solid var(--code-border, #30363d);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      margin: 1.25rem 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .code-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      background: var(--code-header-bg, #1c2129);
+      border-bottom: 1px solid var(--code-border, #30363d);
+    }
+
+    .code-lang {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-block-wrapper pre {
+      margin: 0;
+      padding: 1rem;
+      overflow-x: auto;
+      background: transparent;
+    }
+
+    .code-block-wrapper code {
+      font-family: inherit;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+
+    .code-with-line-numbers {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .line-numbers {
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+      color: var(--text-tertiary, #484f58);
+      user-select: none;
+      flex-shrink: 0;
+      line-height: 1.6;
+      font-size: 0.85rem;
+    }
+
+    .line-number {
+      display: block;
+    }
+
+    .copy-btn {
+      padding: 4px 8px;
+      background: transparent;
+      border: 1px solid var(--code-border, #30363d);
+      border-radius: 0.25rem;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    .copy-btn:hover {
+      color: var(--text-secondary);
+      border-color: var(--border-hover, #6e7681);
+    }
+
+    .copy-btn.copied {
+      color: #3fb950;
+      border-color: #3fb950;
+    }
+
+    /* Anchor Links */
+    .anchor-link {
+      position: absolute;
+      left: -1.25rem;
+      opacity: 0;
+      color: var(--accent-primary);
+      text-decoration: none;
+      transition: opacity 0.2s;
+      font-weight: 400;
+    }
+
+    h2:hover .anchor-link,
+    h3:hover .anchor-link {
+      opacity: 1;
+    }
+
+    /* Sidebar Components */
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-default);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .sidebar-brand__icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent-primary), #059669);
+      border-radius: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 1rem;
-      text-align: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
     }
-    a { color: #10a37f; }
+
+    .sidebar-brand__version {
+      font-size: 0.75rem;
+      background: var(--bg-tertiary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-secondary);
+      margin-left: auto;
+      border: 1px solid var(--border-default);
+    }
+
+    .sidebar-search {
+      padding: 1rem 1.5rem 0.5rem;
+      position: sticky;
+      top: 0;
+      background: var(--bg-secondary);
+      z-index: 10;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 1.5rem 2rem;
+    }
+
+    .sidebar-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.4rem 0.75rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-radius: 0.6rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-left: 2px solid transparent;
+    }
+
+    .sidebar-link:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.04);
+      text-decoration: none;
+    }
+
+    .sidebar-link.active {
+      color: var(--accent-primary);
+      background: rgba(16, 163, 127, 0.08);
+      border-left-color: var(--accent-primary);
+      font-weight: 500;
+      box-shadow: inset 0 0 0 1px rgba(16, 163, 127, 0.12);
+    }
+
+    /* Collapsible */
+    .collapsible { margin-bottom: 0.25rem; }
+    .collapsible-toggle {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .collapsible-toggle:hover { color: var(--text-primary); }
+    .submenu { padding-left: 0.75rem; list-style: none !important; }
+
+    /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-default);
+    }
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-default);
+      color: var(--text-secondary);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface-hover); }
+
+    /* Callouts */
+    .callout {
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      border-radius: 0.5rem;
+      border-left: 4px solid;
+      background: var(--bg-tertiary);
+    }
+    .callout-title { font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .callout p { margin: 0; }
+    .callout.warning { border-color: var(--accent-warning); background: rgba(245, 158, 11, 0.05); }
+    .callout.info { border-color: var(--accent-info); background: rgba(59, 130, 246, 0.05); }
+
+    /* Pipeline Diagram */
+    .pipeline-diagram {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: var(--bg-secondary);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-default);
+      margin: 2rem 0;
+    }
+    .pipeline-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: 0.5rem;
+      min-width: 100px;
+    }
+    .pipeline-stage__icon {
+      width: 28px;
+      height: 28px;
+      background: var(--surface-default);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--accent-primary);
+      border: 1px solid var(--border-default);
+    }
+    .pipeline-stage__label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    .pipeline-arrow {
+      color: var(--text-tertiary);
+      font-size: 1.25rem;
+    }
+
+    /* Mode Cards */
+    .mode-card {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%),
+        rgba(17, 20, 31, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
+    }
+    .mode-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 24px 44px rgba(0, 0, 0, 0.28);
+    }
+    .mode-card__header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .mode-card__icon {
+      width: 48px; height: 48px; border-radius: 0.5rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; background: var(--bg-tertiary);
+    }
+    .mode-card__title { margin: 0; font-size: 1.1rem; color: var(--text-primary); }
+    .mode-card__keyword {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      padding: 2px 6px; background: var(--surface-hover);
+      border-radius: 4px; color: var(--accent-primary);
+    }
+    .mode-card__description { margin-bottom: 1rem; font-size: 0.95rem; }
+    .mode-card__features { list-style: none; padding: 0; margin: 0; }
+    .mode-card__features li {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      font-size: 0.85rem; margin-bottom: 0.25rem;
+    }
+    .mode-card__features li::before {
+      content: '•'; color: var(--accent-primary); font-weight: bold;
+    }
+
+    /* Lane Cards */
+    .lane-card {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%),
+        rgba(17, 20, 31, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
+    }
+    .lane-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .lane-card--build::before { background: #3b82f6; }
+    .lane-card--review::before { background: #8b5cf6; }
+    .lane-card--domain::before { background: #f59e0b; }
+    .lane-card--product::before { background: #22c55e; }
+    .lane-card--coord::before { background: #ec4899; }
+
+    .lane-card__badge {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em;
+    }
+    .lane-card--build .lane-card__badge { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+    .lane-card--review .lane-card__badge { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+    .lane-card--domain .lane-card__badge { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+    .lane-card--product .lane-card__badge { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+    .lane-card--coord .lane-card__badge { background: rgba(236, 72, 153, 0.1); color: #ec4899; }
+
+    .lane-card__title { margin: 0.75rem 0 1rem; font-size: 1.1rem; }
+    .lane-card__agents { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .agent-tag {
+      font-family: var(--font-mono); font-size: 0.8rem;
+      background: var(--bg-tertiary); border: 1px solid var(--border-default);
+      padding: 4px 8px; border-radius: 4px; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .agent-tag small { color: var(--text-tertiary); font-size: 0.7rem; }
+
+    /* Quick Start Steps */
+    .quick-start-steps { list-style: none; padding: 0; counter-reset: step; }
+    .quick-start-steps li {
+      display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border-default);
+      counter-increment: step;
+    }
+    .quick-start-steps li:last-child { border-bottom: none; }
+    .quick-start-steps li::before {
+      content: counter(step); width: 24px; height: 24px;
+      background: var(--accent-primary); color: white;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .qs-content h4 { margin: 0 0 0.25rem 0; font-size: 0.95rem; }
+    .qs-content p { margin: 0; font-size: 0.85rem; }
+
+    /* Workflow Diagram */
+    .workflow {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+      background: var(--bg-tertiary); padding: 1rem; border-radius: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.85rem; margin: 1rem 0;
+    }
+    .workflow__step {
+      background: var(--bg-secondary); border: 1px solid var(--border-default);
+      padding: 0.25rem 0.5rem; border-radius: 0.25rem; color: var(--accent-primary);
+    }
+    .workflow__arrow { color: var(--text-tertiary); }
+
+    /* Mobile Responsive */
+    .mobile-menu-btn {
+      display: none; position: fixed; top: 1rem; left: 1rem; z-index: 100;
+      background: var(--bg-secondary); border: 1px solid var(--border-default);
+      padding: 0.5rem; border-radius: 0.5rem; cursor: pointer;
+      touch-action: manipulation;
+    }
+    .mobile-menu-btn svg { width: 24px; height: 24px; color: var(--text-primary); }
+    .sidebar-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 40; opacity: 0; visibility: hidden; transition: all 0.3s;
+      backdrop-filter: blur(2px);
+    }
+    .sidebar-overlay.active { opacity: 1; visibility: visible; }
+
+    @media (max-width: 1024px) {
+      .docs-sidebar { transform: translateX(-100%); }
+      .docs-sidebar.open { transform: translateX(0); }
+      .docs-main { margin-left: 0; padding: 5rem 1.5rem 2rem; }
+      .mobile-menu-btn { display: block; }
+      .docs-hero__inner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .docs-main {
+        padding: 5rem 1rem 2rem;
+      }
+
+      .docs-hero {
+        padding: 1.4rem;
+        border-radius: 22px;
+      }
+    }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 40px; height: 40px; background: var(--accent-primary);
+      color: white; border: none; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s;
+      z-index: 90;
+    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { transform: translateY(-2px); background: var(--accent-primary-hover); }
+
+    /* Utility */
+    .skip-to-content {
+      position: absolute; top: -100px; left: 0; background: var(--accent-primary);
+      color: white; padding: 0.5rem 1rem; z-index: 200; transition: top 0.2s;
+    }
+    .skip-to-content:focus { top: 0; }
+    .search-results {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--bg-secondary); border: 1px solid var(--border-default);
+      border-radius: 0.5rem; max-height: 300px; overflow-y: auto;
+      z-index: 100; display: none; margin-top: 0.5rem;
+    }
+    .search-overlay { position: fixed; inset: 0; z-index: 9; display: none; }
   </style>
 </head>
 <body>
-  <main>
-    <h1>The Oh My Codex docs moved</h1>
-    <p>Redirecting to <a href="https://omx.vibetip.help/">omx.vibetip.help</a>…</p>
-    <p><small>If you are not redirected automatically, please follow the link above.</small></p>
-  </main>
-  <script>window.location.replace('https://omx.vibetip.help/');</script>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+  </button>
+
+  <div class="docs-layout">
+    <!-- SIDEBAR -->
+    <aside class="docs-sidebar" id="sidebar">
+      <a href="index.html" class="sidebar-brand">
+        <div class="sidebar-brand__icon">OMX</div>
+        <span class="sidebar-brand__text">Oh My Codex</span>
+        <span class="sidebar-brand__version">v0.14.0</span>
+      </a>
+
+      <div class="sidebar-search">
+        <div class="search-input-wrapper">
+          <input type="search" id="search-input" class="search__input" placeholder="Search docs..." autocomplete="off">
+          <div id="search-results" class="search-results"></div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <!-- Getting Started -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Getting Started</div>
+          <a href="#introduction" class="sidebar-link" data-section="introduction">Introduction</a>
+          <a href="#release-notes" class="sidebar-link" data-section="release-notes">Release Notes</a>
+          <a href="#v08-feature-guides" class="sidebar-link" data-section="v08-feature-guides">v0.12.x Feature Guides</a>
+          <a href="#feat-dynamic-scaling" class="sidebar-link" data-section="feat-dynamic-scaling">Dynamic Scaling</a>
+          <a href="#feat-ralplan-dr" class="sidebar-link" data-section="feat-ralplan-dr">RALPLAN-DR</a>
+          <a href="#feat-openclaw" class="sidebar-link" data-section="feat-openclaw">OpenClaw</a>
+          <a href="#feat-worktree-orchestration" class="sidebar-link" data-section="feat-worktree-orchestration">Worktree Orchestration</a>
+          <a href="#feat-gemini-teams" class="sidebar-link" data-section="feat-gemini-teams">Gemini Teams</a>
+          <a href="#installation" class="sidebar-link" data-section="installation">Installation</a>
+          <a href="#quick-start" class="sidebar-link" data-section="quick-start">Quick Start</a>
+        </div>
+
+        <!-- Architecture -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Architecture</div>
+          <a href="#philosophy" class="sidebar-link" data-section="philosophy">Conductor Philosophy</a>
+          <a href="#agent-tiers" class="sidebar-link" data-section="agent-tiers">Agent Tiers</a>
+          <a href="#team-architecture" class="sidebar-link" data-section="team-architecture">Team Architecture</a>
+          <a href="#model-routing" class="sidebar-link" data-section="model-routing">Model Routing</a>
+          <a href="#delegation" class="sidebar-link" data-section="delegation">Delegation Rules</a>
+          <a href="#advanced-orchestration" class="sidebar-link" data-section="advanced-orchestration">Advanced Orchestration</a>
+        </div>
+
+        <!-- Execution Modes -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Execution Modes</div>
+          <div class="collapsible">
+            <button class="collapsible-toggle">Core Modes <span>▾</span></button>
+            <div class="submenu">
+              <a href="#autopilot" class="sidebar-link" data-section="autopilot">Autopilot</a>
+              <a href="#ralph" class="sidebar-link" data-section="ralph">Ralph</a>
+              <a href="#ultrawork" class="sidebar-link" data-section="ultrawork">Ultrawork</a>
+            </div>
+          </div>
+          <a href="#team-compositions" class="sidebar-link" data-section="team-compositions">Team Compositions</a>
+        </div>
+
+        <!-- Agent Catalog (link to team compositions in execution modes) -->
+
+
+        <!-- Tools & Config -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Tools & Config</div>
+          <a href="#mcp-tools" class="sidebar-link" data-section="mcp-tools">MCP Tools</a>
+          <a href="#skills" class="sidebar-link" data-section="skills">Skills & Commands</a>
+          <a href="#state-memory" class="sidebar-link" data-section="state-memory">State & Memory</a>
+          <a href="#configuration" class="sidebar-link" data-section="configuration">Configuration</a>
+        </div>
+
+        <!-- CLI Reference -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">CLI Reference</div>
+          <a href="#cli-getting-started" class="sidebar-link" data-section="cli-getting-started">Getting Started</a>
+          <a href="#cli-commands" class="sidebar-link" data-section="cli-commands">Core Commands</a>
+          <a href="#cli-launch-flags" class="sidebar-link" data-section="cli-launch-flags">Launch Flags</a>
+          <a href="#cli-team" class="sidebar-link" data-section="cli-team">Team Commands</a>
+          <a href="#cli-other" class="sidebar-link" data-section="cli-other">Other Commands</a>
+        </div>
+
+        <!-- Notifications -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Notifications</div>
+          <a href="#notify-overview" class="sidebar-link" data-section="notify-overview">Overview</a>
+          <a href="#notify-setup" class="sidebar-link" data-section="notify-setup">Quick Setup</a>
+          <a href="#notify-platforms" class="sidebar-link" data-section="notify-platforms">Platforms</a>
+          <a href="#notify-events" class="sidebar-link" data-section="notify-events">Events</a>
+          <a href="#notify-verbosity" class="sidebar-link" data-section="notify-verbosity">Verbosity</a>
+          <a href="#notify-env-vars" class="sidebar-link" data-section="notify-env-vars">Environment Variables</a>
+          <a href="#notify-templates" class="sidebar-link" data-section="notify-templates">Templates</a>
+          <a href="#notify-example-config" class="sidebar-link" data-section="notify-example-config">Example Config</a>
+          <a href="#notify-reply" class="sidebar-link" data-section="notify-reply">Reply Injection</a>
+        </div>
+
+        <!-- Workflows -->
+        <div class="sidebar-section">
+          <div class="sidebar-title">Workflows</div>
+          <a href="#wf-full-auto" class="sidebar-link" data-section="wf-full-auto">Full-Auto from PRD</a>
+          <a href="#wf-no-brainer" class="sidebar-link" data-section="wf-no-brainer">No-Brainer</a>
+          <a href="#wf-fix-debug" class="sidebar-link" data-section="wf-fix-debug">Fix / Debugging</a>
+          <a href="#wf-parallel-issues" class="sidebar-link" data-section="wf-parallel-issues">Parallel Issues</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="docs-main" id="main-content">
+      <div class="docs-content">
+        
+        <!-- Introduction -->
+        <section id="introduction" data-section>
+          <h1>Oh My Codex Documentation</h1>
+          <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem;">
+            Turn Codex CLI into a coordinated operating layer with autonomous research, orchestration wrappers, team worktrees, and intent-first deep interviews.
+          </p>
+
+          <div class="docs-hero tilt-3d-polish">
+            <div class="docs-hero__inner">
+              <div>
+                <p class="docs-hero__lede">v0.14.0 tightens security on the identifier, HUD, and notification surfaces, keeps native Stop auto-nudge persistent while blocking Stop for live OMX workflows, gates conversational Ralph activation, guards <code>omx explore</code> against shell-startup re-entry, and preserves worker runtime role identity through startup and scaling.</p>
+                <div class="docs-hero__chips">
+                  <span class="docs-hero__chip"><strong>Security</strong> hardening</span>
+                  <span class="docs-hero__chip"><strong>Stop-hook</strong> persistence</span>
+                  <span class="docs-hero__chip"><strong>Ralph</strong> safety</span>
+                  <span class="docs-hero__chip"><strong>Quality-first</strong> defaults</span>
+                </div>
+              </div>
+
+              <aside class="docs-command-panel tilt-3d-polish">
+                <span class="docs-command-panel__kicker">Current command surface</span>
+                <pre><code>omx setup          # refreshes native hook wiring
+omx team 3:executor "parallel task"
+omx deep-interview "feature idea"</code></pre>
+                <ul>
+                  <li><strong>Native hooks:</strong> PreToolUse/PostToolUse fire through the Codex runtime contract without shims.</li>
+                  <li><strong>Team hardening:</strong> Leader mailbox, nudge delivery, and pane-status are reliable across live flows.</li>
+                  <li><strong>Canonical pipeline:</strong> deep-interview → ralplan → team/ralph for quality-first execution.</li>
+                </ul>
+              </aside>
+            </div>
+          </div>
+
+          <div class="grid grid--2">
+            <div class="card tilt-3d-polish">
+              <h3 style="margin-top:0" class="tilt-3d-child">33 Agent Prompts</h3>
+              <p>Specialized prompt catalog across build, review, domain, product, and coordination lanes.</p>
+            </div>
+            <div class="card tilt-3d-polish">
+              <h3 style="margin-top:0" class="tilt-3d-child">36 Skills</h3>
+              <p>Execution workflows spanning autopilot, review, orchestration, notifications, research, and recovery.</p>
+            </div>
+            <div class="card tilt-3d-polish">
+              <h3 style="margin-top:0" class="tilt-3d-child">5 MCP Servers</h3>
+              <p>State, memory, code intelligence, team orchestration, and trace visibility wired into one operator surface.</p>
+            </div>
+            <div class="card tilt-3d-polish">
+              <h3 style="margin-top:0" class="tilt-3d-child">v0.14.0 Highlights</h3>
+              <p>Security hardening, persistent Stop-hook correctness, Ralph activation and recovery safety, explore reentry guards, and worker runtime identity preservation.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Release Notes -->
+        <section id="release-notes" data-section>
+          <h2><span class="anchor-link">#</span>Release Notes</h2>
+          <div class="callout info">
+            <div class="callout-title">Quick Summary</div>
+            <p>Recent releases sharpen the operator loop: autonomous research, orchestration wrappers, default team worktrees, intent-first deep interviews, and incremental merge tracking.</p>
+          </div>
+          <!-- One mode-card per version with collapsible details -->
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.14.0</span>
+              Security, Stop-Hook &amp; Ralph Safety Patch
+            </div>
+            <details open>
+              <summary>View changes in v0.14.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Security hardening:</strong> Identifier path traversal closed, HUD git helpers reject shell/regex metacharacters, reply acknowledgements redact multi-part secrets, and <code>npm audit fix</code> patches transitive CVEs.</li>
+                <li><strong>Persistent Stop-hook correctness:</strong> Native Stop auto-nudge runs without being gated by the OMX runtime, while active OMX workflows still block Stop until they truly finish.</li>
+                <li><strong>Ralph activation &amp; recovery:</strong> Conversational Ralph mentions no longer seed workflow state, Ralph stays visibly active across continuation recovery, and steer-lock retries are capped.</li>
+                <li><strong>Explore reentry guards:</strong> <code>omx explore</code> fails closed on shell-startup re-entry and allowlist wrappers no longer self-resolve.</li>
+                <li><strong>Worker runtime identity:</strong> Worker runtime role identity is preserved through startup and scaling via one reviewable verification path.</li>
+                <li><strong>Hooks &amp; state:</strong> Forked notify-hook routing, watcher PID liveness checks, tmux extended-keys stale-lock recovery, MCP duplicate-sibling cleanup, <code>.omx</code>-based project-root discovery, and AGENTS.md preservation during auto-update.</li>
+                <li><strong>Skill UX:</strong> Analyze skill revived as a read-only investigation surface, OMX-installed skills are marked in <code>/skills</code> without renaming, Shift+Enter tmux triage docs added.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Released April 18, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.13.1</span>
+              Team Status &amp; Worker PID Patch
+            </div>
+            <details>
+              <summary>View changes in v0.13.1</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Team status JSON:</strong> Leader mailbox pruning no longer replays duplicate delivered-message bridge calls, keeping <code>omx team status --json</code> parseable.</li>
+                <li><strong>Worker PID metadata:</strong> Interactive team workers now record the PID from the resolved pane id and persist it into config/identity state.</li>
+                <li><strong>Release alignment:</strong> Metadata synchronized across Node, Cargo, changelog, and release collateral.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Released April 7, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.12.0</span>
+              Native Hooks, Bash Guidance &amp; Runtime Hardening
+            </div>
+            <details>
+              <summary>View changes in v0.12.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Native Codex hooks:</strong> Hook ownership now lives in the repo/runtime contract for non-team OMX sessions via <code>.codex/hooks.json</code>.</li>
+                <li><strong>Bash guidance:</strong> First-party <code>PreToolUse</code>/<code>PostToolUse</code> guidance shipped and documented for destructive-command warnings and error guidance.</li>
+                <li><strong>Team runtime:</strong> Delivery, mailbox handling, pane-status visibility, and next-action steering are more robust.</li>
+                <li><strong>Windows/tmux:</strong> Launch reliability and command resolution improved; detached launches and PowerShell resolution hardened.</li>
+                <li><strong>Quality-first defaults:</strong> Prompt and AGENTS defaults emphasize quality-first, evidence-backed execution.</li>
+                <li><strong>Docs reorganization:</strong> Translated README/docs collateral expanded and reorganized under <code>docs/readme/</code> (15 languages).</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">185 changed files, 65 non-merge commits, 26 merge commits. Released April 6, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.11.13</span>
+              Team Delivery Integrity &amp; Windows Stability
+            </div>
+            <details>
+              <summary>View changes in v0.11.13</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Mailbox delivery:</strong> Team leader mailbox delivery stays reliable across runtime/CLI seams.</li>
+                <li><strong>Leader nudges:</strong> Busy Codex leader panes can now receive queued nudges instead of silent deferral.</li>
+                <li><strong>Windows/worktree:</strong> HUD targeting and leader activity polling stay reliable in detached/worktree launches.</li>
+                <li><strong>Deep-interview locks:</strong> Fallback nudges honor active deep-interview input locks.</li>
+                <li><strong>Cleanup:</strong> Uninstall warns about legacy skills; shutdown cleanup reaps detached worker descendants more safely.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Released April 4, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.11.12</span>
+              Autonomous Research &amp; Worktree Merge Tracking
+            </div>
+            <details>
+              <summary>View changes in v0.11.12</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Autoresearch:</strong> New <code>omx autoresearch</code> mode iteratively explores topics and self-terminates when the research goal is satisfied.</li>
+                <li><strong>Exec wrapper:</strong> <code>omx exec</code> runs commands through the OMX orchestration layer with full agent context.</li>
+                <li><strong>Team worktrees:</strong> Team workers now get isolated git worktrees by default, enabling conflict-free parallel execution.</li>
+                <li><strong>Deep-interview intent-first:</strong> Intent classification happens upfront before the Socratic interview loop.</li>
+                <li><strong>Incremental merge tracking:</strong> Smarter conflict detection across worktrees with incremental diff-based merge awareness.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">54 commits, 26 PRs, 105 files changed. Released March 15, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.10.0</span>
+              Autonomous Research &amp; Team Worktrees
+            </div>
+            <details open>
+              <summary>View changes in v0.10.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Autoresearch:</strong> New <code>omx autoresearch</code> mode iteratively explores topics and self-terminates when the research goal is satisfied.</li>
+                <li><strong>Exec wrapper:</strong> <code>omx exec</code> runs commands through the OMX orchestration layer with full agent context and coordination.</li>
+                <li><strong>Team worktrees:</strong> Team workers now get isolated git worktrees by default, enabling conflict-free parallel execution.</li>
+                <li><strong>Deep-interview intent-first:</strong> Intent classification happens upfront before the Socratic interview loop, improving question targeting.</li>
+                <li><strong>Incremental merge tracking:</strong> Smarter conflict detection across worktrees with incremental diff-based merge awareness.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">54 commits, 26 PRs, 105 files changed, +7581/&minus;388 lines. Released March 15, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.9.0</span>
+              Spark Initiative
+            </div>
+            <details>
+              <summary>View changes in v0.9.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>CLI:</strong> Added <code>omx explore</code> as the default read-only exploration entrypoint with a constrained native harness and repository-safe allowlists.</li>
+                <li><strong>Inspection:</strong> Added <code>omx sparkshell</code> for shell-native command execution, adaptive summaries, and tmux pane capture.</li>
+                <li><strong>Recovery:</strong> Added <code>omx resume</code> as the direct terminal command for restoring an earlier interactive Codex session.</li>
+                <li><strong>Releases:</strong> Tagged releases now ship native archives for <code>omx-explore-harness</code> and <code>omx-sparkshell</code> with manifest-based hydration.</li>
+                <li><strong>Verification:</strong> Release lanes now cover <code>npm run build:full</code>, <code>npm run test:explore</code>, <code>npm run test:sparkshell</code>, and packed-install smoke checks.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.8.1</span>
+              Team CLI Interop API
+            </div>
+            <details>
+              <summary>View changes in v0.8.1</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>API:</strong> Added Team CLI interop API for specialized worker coordination.</li>
+                <li><strong>Config:</strong> Unified <code>configure-notifications</code> skill.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.8.0</span>
+              Model Ask and Socratic Interview
+            </div>
+            <details>
+              <summary>View changes in v0.8.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>CLI:</strong> Added <code>omx ask</code> command for direct claude/gemini querying.</li>
+                <li><strong>Workflow:</strong> Added <code>deep-interview</code> workflow with Socratic ambiguity gating.</li>
+                <li><strong>Skills:</strong> Added <code>web-clone</code> skill.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.7.6</span>
+              Hotfix
+            </div>
+            <details>
+              <summary>View changes in v0.7.6</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Fix:</strong> Hotfix after 0.7.5 release.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.7.5</span>
+              Ralph Cleanup and Worker Routing
+            </div>
+            <details>
+              <summary>View changes in v0.7.5</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Refactor:</strong> 26 commits including <code>ralph auto-run</code> cleanup.</li>
+                <li><strong>Mode:</strong> Added tmux session mode.</li>
+                <li><strong>Routing:</strong> Added per-worker role routing.</li>
+                <li><strong>Fix:</strong> OpenClaw notification fixes.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.7.3</span>
+              Pipeline Orchestrator
+            </div>
+            <details>
+              <summary>View changes in v0.7.3</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Skill:</strong> Added <code>pipeline</code> orchestrator.</li>
+                <li><strong>CLI:</strong> Added <code>uninstall</code> command.</li>
+                <li><strong>Core:</strong> Team dispatch hardening.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.7.2</span>
+              Team Shutdown Force Flag (Hotfix)
+            </div>
+            <details>
+              <summary>View changes in v0.7.2</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Fix:</strong> Team shutdown <code>--force</code> now parses correctly from CLI arguments.</li>
+                <li><strong>Audit:</strong> Added the <code>shutdown_gate_forced</code> audit event.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.7.0</span>
+              Major Release (153 files changed)
+            </div>
+            <details>
+              <summary>View changes in v0.7.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Scaling:</strong> Added dynamic team worker scaling (Phase 1 manual <code>scale_up</code> and <code>scale_down</code>).</li>
+                <li><strong>Planning:</strong> Added RALPLAN-DR structured deliberation for consensus planning.</li>
+                <li><strong>Scoping:</strong> Added a task-size detector for pre-execution guidance.</li>
+                <li><strong>Triggers:</strong> Added a keyword trigger registry with 31 keyword triggers.</li>
+                <li><strong>Notifications:</strong> Overhauled notifications across Slack, Discord, and Telegram.</li>
+                <li><strong>Integration:</strong> Added OpenClaw gateway integration.</li>
+                <li><strong>CLI:</strong> Added the star-prompt command.</li>
+                <li><strong>Setup:</strong> Simplified setup from 3 scopes to 2 scopes (user and project).</li>
+                <li><strong>MCP:</strong> Added an MCP bootstrap module.</li>
+                <li><strong>HUD:</strong> Added watch render serialization, quota rendering, and session duration improvements.</li>
+                <li><strong>Tests:</strong> Reached 1,472 tests across 308 suites.</li>
+                <li><strong>Security:</strong> Hardened MCP <code>workingDirectory</code>, prevented path traversal, and blocked HUD escape injection.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.6.x</span>
+              Mixed Team Workers and Reliability
+            </div>
+            <details>
+              <summary>View changes in v0.6.x</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Routing:</strong> Added mixed team worker CLI routing via <code>OMX_TEAM_WORKER_CLI_MAP</code> for per-worker provider selection.</li>
+                <li><strong>Fallback:</strong> Added leader-side all-workers-idle nudge fallback.</li>
+                <li><strong>Reliability:</strong> Added an adaptive trigger submit retry guard.</li>
+                <li><strong>Startup:</strong> Fixed team Claude worker startup issues.</li>
+                <li><strong>HUD:</strong> Added a HUD reconcile hook for detached launches.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.5.x</span>
+              Worktree and Ralph CLI
+            </div>
+            <details>
+              <summary>View changes in v0.5.x</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Worktrees:</strong> Added native worktree orchestration for team mode.</li>
+                <li><strong>State:</strong> Added cross-worktree team state resolution.</li>
+                <li><strong>CLI:</strong> Added the <code>omx ralph</code> subcommand.</li>
+                <li><strong>Persistence:</strong> Added scoped ralph state with canonical persistence migration.</li>
+                <li><strong>Interop:</strong> Added a claim-safe team transition tool for MCP interop.</li>
+                <li><strong>Notifications:</strong> Cleaned tmux pane output for notifications.</li>
+                <li><strong>Startup:</strong> Added a startup codebase map injection hook.</li>
+                <li><strong>Security:</strong> Added command injection prevention and path traversal prevention.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.5.0</span>
+              Catalog Consolidation
+            </div>
+            <details>
+              <summary>View changes in v0.5.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Setup:</strong> Added scope-aware setup (user and project).</li>
+                <li><strong>Routing:</strong> Added Spark worker routing via <code>--spark</code> and <code>--madmax-spark</code>.</li>
+                <li><strong>Cleanup:</strong> Consolidated the catalog by removing deprecated prompts and 9 skills.</li>
+                <li><strong>Logging:</strong> Added notifier verbosity levels.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.4.x</span>
+              Hook Extensibility and Auto-nudge
+            </div>
+            <details>
+              <summary>View changes in v0.4.x</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Hooks:</strong> Added hook extensibility runtime with CLI integration.</li>
+                <li><strong>Detection:</strong> Expanded auto-nudge stall detection patterns.</li>
+                <li><strong>Notifications:</strong> Added worker-idle aggregation notifications.</li>
+                <li><strong>Tmux:</strong> Enabled automatic tmux mouse scrolling for team sessions.</li>
+                <li><strong>Agents:</strong> Registered OMX agents as Codex native multi-agent roles.</li>
+              </ul>
+            </details>
+          </div>
+        </section>
+
+        <section id="v08-feature-guides" data-section>
+          <h2><span class="anchor-link">#</span>Feature Guides</h2>
+          <p>These quick references cover the major operational surfaces added across v0.7 through v0.9, from scaling and consensus planning to native exploration and notification integrations.</p>
+
+          <article class="mode-card">
+            <h3 id="feat-dynamic-scaling"><span class="anchor-link">#</span>Dynamic Team Worker Scaling</h3>
+            <ul style="list-style-type: disc;">
+              <li>Phase 1 supports manual <code>scale_up</code> / <code>scale_down</code> while a team is running.</li>
+              <li>Enable scaling with <code>OMX_TEAM_SCALING_ENABLED=1</code>.</li>
+              <li><code>scale_down</code> drains workers safely before removal, and scaling operations are lock-protected to prevent overlapping changes.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3 id="feat-ralplan-dr"><span class="anchor-link">#</span>RALPLAN-DR Consensus Planning</h3>
+            <ul style="list-style-type: disc;">
+              <li><code>$ralplan</code> is shorthand for <code>$plan --consensus</code>.</li>
+              <li>Workflow uses Planner → Architect → Critic with a structured RALPLAN-DR summary before execution.</li>
+              <li>Default mode is short consensus; use <code>--deliberate</code> for high-risk work (security, migrations, destructive operations, public API breakage).</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3 id="feat-openclaw"><span class="anchor-link">#</span>OpenClaw Integration</h3>
+            <ul style="list-style-type: disc;">
+              <li>OpenClaw can be configured with explicit <code>notifications.openclaw</code> hooks or generic command/webhook aliases.</li>
+              <li>Set <code>OMX_OPENCLAW=1</code> to enable the dispatch path. For command gateways, also set <code>OMX_OPENCLAW_COMMAND=1</code>.</li>
+              <li>Common hook events: <code>session-start</code>, <code>session-idle</code>, <code>ask-user-question</code>, <code>session-stop</code>, and <code>session-end</code>.</li>
+            </ul>
+            <p>Full guide: <a href="https://github.com/Yeachan-Heo/oh-my-codex/blob/main/docs/openclaw-integration.md" target="_blank" rel="noopener noreferrer">OpenClaw / Generic Notification Gateway Integration Guide</a>.</p>
+          </article>
+
+          <article class="mode-card">
+            <h3 id="feat-worktree-orchestration"><span class="anchor-link">#</span>Worktree Orchestration (Default in v0.10.0)</h3>
+            <div class="callout info">
+              <div class="callout-title">Game-changer in v0.10.0</div>
+              <p>Team workers now run in isolated git worktrees <strong>by default</strong>. The <code>--worktree</code> flag is deprecated and treated as a no-op &mdash; worktrees are always on.</p>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol style="list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+              <li><strong>Clean leader workspace required</strong> &mdash; leader must have a committed/stashed workspace before <code>omx team</code> starts.</li>
+              <li><strong>Automatic worktree provisioning</strong> &mdash; each worker gets a detached worktree at <code>.omx/team/&lt;name&gt;/worktrees/worker-N</code>.</li>
+              <li><strong>Workers commit to their worktree</strong> &mdash; isolated branches mean zero write conflicts between workers.</li>
+              <li><strong>Leader merges incrementally</strong> &mdash; the runtime continuously integrates worker commits back into the leader branch.</li>
+              <li><strong>Shutdown cleanup</strong> &mdash; provisioned worktrees are rolled back and branches deleted on team shutdown.</li>
+            </ol>
+
+            <h4>Incremental Merge Strategies</h4>
+            <p>The integration engine selects the best strategy per worker automatically:</p>
+            <ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem;">
+              <li><strong>Merge (<code>--no-ff -X theirs</code>)</strong> &mdash; when the worker is cleanly ahead of the leader. Fast and conflict-free.</li>
+              <li><strong>Cherry-pick</strong> &mdash; when histories have diverged. Picks individual worker commits into the leader branch.</li>
+              <li><strong>Cross-worker rebase</strong> &mdash; for sequential dependencies between workers. Rebases one worker's branch onto another's integrated state.</li>
+            </ul>
+            <p>Conflicts are detected early and logged to <code>.omx/state/team/&lt;team&gt;/integration-report.md</code> with per-file detail.</p>
+
+            <h4>Worker Commit Protocol</h4>
+            <p>Workers must commit before reporting completion: <code>git add -A &amp;&amp; git commit -m "task: &lt;subject&gt;"</code>. The runtime auto-commits as a fallback if a worker forgets, but explicit commits are preferred for cleaner history.</p>
+
+            <div class="code-block-wrapper">
+              <div class="code-block-header"><span class="code-lang">BASH</span></div>
+              <pre><code># Worktrees are automatic &mdash; no flags needed
+omx team 3:executor "implement feature X"
+
+# Check worker worktree status
+omx team status &lt;team-name&gt;
+# Output includes: worktree_path, worktree_branch, worktree_detached per worker
+
+# Mixed providers &mdash; all get worktrees
+OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini omx team 3:executor "full-stack work"</code></pre>
+            </div>
+
+            <h4>Cross-Worktree State Resolution</h4>
+            <ul style="list-style-type: disc; padding-left: 1.5rem;">
+              <li>Team state root is resolved from the leader cwd (<code>&lt;leader-cwd&gt;/.omx/state</code>) and shared across all worktrees via <code>OMX_TEAM_STATE_ROOT</code>.</li>
+              <li>Dispatch, task claims, mailbox delivery, and lifecycle updates remain consistent across all worker worktrees.</li>
+              <li>Worker identity files track <code>worktree_path</code>, <code>worktree_branch</code>, <code>worktree_detached</code>, and <code>worktree_created</code> for full observability.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card tilt-3d-polish">
+            <h3 id="feat-gemini-teams" class="tilt-3d-child"><span class="anchor-link">#</span>Gemini-Powered Teams</h3>
+            <ul style="list-style-type: disc;">
+              <li>Full support for <strong>Gemini CLI</strong> workers in OMX Team mode.</li>
+              <li>Leverage Gemini's massive context window and reasoning capabilities for complex architectural planning and codebase-wide refactors.</li>
+              <li>Mixed-provider teams (Codex + Claude + Gemini) enable the ultimate "best-of-breed" orchestration.</li>
+              <li>Configure with <code>OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini</code>.</li>
+            </ul>
+
+            <h4>Runtime Examples</h4>
+            <p>Run mixed teams with Gemini to leverage specialized reasoning strengths.</p>
+            <div class="code-block-wrapper">
+              <div class="code-block-header"><span class="code-lang">BASH</span></div>
+              <pre><code># 1. Start a mixed provider team
+export OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini
+omx team 3:executor "full-stack implementation"
+
+# 2. Force all workers to Gemini
+export OMX_TEAM_WORKER_CLI=gemini
+omx team 2:architect "large-scale architectural review"
+
+# 3. Pass explicit Gemini models
+export OMX_TEAM_WORKER_LAUNCH_ARGS="--model gemini-2.0-flash-exp"
+omx team 1:executor "experimental feature"</code></pre>
+            </div>
+
+            <p><strong>Gemini worker behavior notes:</strong></p>
+            <ul>
+              <li><strong>Prompt-interactive startup:</strong> Gemini workers are automatically seeded with an initial prompt using <code>--approval-mode yolo -i "..."</code> to ensure reliable tmux bring-up.</li>
+              <li><strong>Model Filtering:</strong> Non-Gemini default models (like Spark) are automatically filtered out when launching Gemini workers to prevent provider/model mismatches.</li>
+              <li><strong>Context Advantage:</strong> Use Gemini workers for tasks requiring deep codebase context or long-form architectural synthesis.</li>
+            </ul>
+          </article>
+        </section>
+
+        <!-- Installation -->
+        <section id="installation" data-section>
+          <h2><span class="anchor-link">#</span>Installation</h2>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># 1. Install globally
+npm install -g oh-my-codex
+
+# 2. Run setup
+omx setup
+
+# 3. Verify installation
+omx doctor</code></pre>
+          </div>
+        </section>
+
+        <!-- Quick Start -->
+        <section id="quick-start" data-section>
+          <h2><span class="anchor-link">#</span>Quick Start</h2>
+          <p>OMX uses "Magic Keywords" and <code>$skill</code> commands to detect your intent. Just describe what you want.</p>
+
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">EXAMPLES</span></div>
+            <pre><code># Inside Codex CLI:
+/prompts:architect "analyze current auth boundaries"
+/prompts:executor "implement input validation in login"
+$plan "ship OAuth callback safely"
+$team 3:executor "fix all TypeScript errors"
+
+# From terminal:
+omx team 4:executor "parallelize a multi-module refactor"
+omx team status &lt;team-name&gt;
+omx team shutdown &lt;team-name&gt;</code></pre>
+          </div>
+
+          <ul class="quick-start-steps">
+            <li>
+              <div class="qs-content">
+                <h4>Autonomous Building</h4>
+                <p><code>"autopilot build a React dashboard"</code> &mdash; Full autonomous execution from idea to code.</p>
+              </div>
+            </li>
+            <li>
+              <div class="qs-content">
+                <h4>Refactoring</h4>
+                <p><code>"ralph refactor the API"</code> &mdash; Persists until verified clean ("The boulder never stops").</p>
+              </div>
+            </li>
+            <li>
+              <div class="qs-content">
+                <h4>Parallel Work</h4>
+                <p><code>"ulw fix all errors"</code> &mdash; Runs multiple agents in parallel for speed.</p>
+              </div>
+            </li>
+            <li>
+              <div class="qs-content">
+                <h4>tmux Teams</h4>
+                <p><code>"team 5:executor refactor backend"</code> &mdash; Spawns a team of 5 agents coordinated from the leader pane.</p>
+              </div>
+            </li>
+            <li>
+              <div class="qs-content">
+                <h4>Planning</h4>
+                <p><code>"plan the auth system"</code> &mdash; Starts an interactive planning interview.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Architecture -->
+        <section id="philosophy" data-section>
+          <h2><span class="anchor-link">#</span>Why OMX</h2>
+          <p>Codex CLI is strong for direct tasks. OMX adds structure for larger work:</p>
+          <ul>
+            <li><strong>Decomposition and staged execution:</strong> Managed through <code>team-plan &rarr; team-prd &rarr; team-exec &rarr; team-verify &rarr; team-fix</code> pipeline.</li>
+            <li><strong>Persistent mode lifecycle state:</strong> Stored in <code>.omx/state/</code> for resumable execution.</li>
+            <li><strong>Memory + notepad surfaces:</strong> Dedicated workspace for long-running sessions.</li>
+            <li><strong>Operational controls:</strong> Fine-grained control over launch, verification, and cancellation.</li>
+          </ul>
+
+          <h2><span class="anchor-link">#</span>Conductor Philosophy</h2>
+          <p>The core principle of OMX is: <strong>You are the conductor, not the performer.</strong></p>
+
+          <div class="callout warning">
+            <div class="callout-title">Golden Rule</div>
+            <p>NEVER make code changes directly. ALWAYS delegate to specialized agents. Your role is to guide, review, and orchestrate.</p>
+          </div>
+          <p>Agents have specialized roles. The <strong>architect</strong> sees the big picture, the <strong>executor</strong> writes the code, and the <strong>verifier</strong> proves it works. Respecting this division ensures higher quality output.</p>
+        </section>
+
+        <section id="agent-tiers" data-section>
+          <h2><span class="anchor-link">#</span>Agent Tiers & Catalog</h2>
+          <p>OMX organizes 30+ specialized agents into functional lanes. Use <code>/prompts:name</code> to invoke them.</p>
+
+          <div class="grid grid--2">
+            <!-- Build/Analysis -->
+            <div class="lane-card lane-card--build tilt-3d-polish">
+              <span class="lane-card__badge tilt-3d-child">Build & Analysis</span>
+              <h4 class="lane-card__title">Implementation Core</h4>
+              <div class="lane-card__agents">
+                <span class="agent-tag">explore <small>Search</small></span>
+                <span class="agent-tag">planner <small>Sequence</small></span>
+                <span class="agent-tag">architect <small>Design</small></span>
+                <span class="agent-tag">executor <small>Code</small></span>
+                <span class="agent-tag">debugger <small>Fix</small></span>
+                <span class="agent-tag">verifier <small>Evidence</small></span>
+              </div>
+            </div>
+
+            <!-- Review -->
+            <div class="lane-card lane-card--review tilt-3d-polish">
+              <span class="lane-card__badge tilt-3d-child">Review Lane</span>
+              <h4 class="lane-card__title">Quality Gates</h4>
+              <div class="lane-card__agents">
+                <span class="agent-tag">code-reviewer</span>
+                <span class="agent-tag">security-reviewer</span>
+                <span class="agent-tag">performance-reviewer</span>
+                <span class="agent-tag">api-reviewer</span>
+                <span class="agent-tag">style-reviewer</span>
+              </div>
+            </div>
+
+            <!-- Domain Specialists -->
+            <div class="lane-card lane-card--domain tilt-3d-polish">
+              <span class="lane-card__badge tilt-3d-child">Domain Specialists</span>
+              <h4 class="lane-card__title">Deep Expertise</h4>
+              <div class="lane-card__agents">
+                <span class="agent-tag">dependency-expert</span>
+                <span class="agent-tag">test-engineer</span>
+                <span class="agent-tag">git-master</span>
+                <span class="agent-tag">designer</span>
+                <span class="agent-tag">researcher</span>
+              </div>
+            </div>
+
+            <!-- Product & Coordination -->
+            <div class="lane-card lane-card--product tilt-3d-polish">
+              <span class="lane-card__badge tilt-3d-child">Product & Coordination</span>
+              <h4 class="lane-card__title">Strategy & Feedback</h4>
+              <div class="lane-card__agents">
+                <span class="agent-tag">product-manager</span>
+                <span class="agent-tag">ux-researcher</span>
+                <span class="agent-tag">critic <small>Challenge</small></span>
+                <span class="agent-tag">vision <small>Images</small></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="team-architecture" data-section>
+          <h2><span class="anchor-link">#</span>Team Architecture</h2>
+          <p>OMX uses a staged pipeline for teams in tmux. Transitions are strictly defined to ensure quality gates.</p>
+
+          <div class="pipeline-diagram">
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">1</div>
+              <div class="pipeline-stage__label">team-plan</div>
+            </div>
+            <div class="pipeline-arrow">&rarr;</div>
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">2</div>
+              <div class="pipeline-stage__label">team-prd</div>
+            </div>
+            <div class="pipeline-arrow">&rarr;</div>
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">3</div>
+              <div class="pipeline-stage__label">team-exec</div>
+            </div>
+            <div class="pipeline-arrow">&rarr;</div>
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">4</div>
+              <div class="pipeline-stage__label">team-verify</div>
+            </div>
+            <div class="pipeline-arrow">&rarr;</div>
+            <div class="pipeline-stage">
+              <div class="pipeline-stage__icon">5</div>
+              <div class="pipeline-stage__label">team-fix</div>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>From</th><th>To</th><th>Trigger Condition</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>team-plan</td><td>team-prd</td><td>Planning and decomposition complete</td></tr>
+                <tr><td>team-prd</td><td>team-exec</td><td>Acceptance criteria explicitly defined</td></tr>
+                <tr><td>team-exec</td><td>team-verify</td><td>All tasks reach terminal state</td></tr>
+                <tr><td>team-verify</td><td>team-fix / complete</td><td>Verification outcome</td></tr>
+                <tr><td>team-fix</td><td>team-exec / team-verify</td><td>Fix strategies defined</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="model-routing" data-section>
+          <h3><span class="anchor-link">#</span>Model Routing</h3>
+          <p>OMX intelligently routes tasks to the most appropriate model tier to balance cost and capability.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Complexity</th><th>Model</th><th>Use Case</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Simple</strong></td><td>Spark</td><td>Lookups, formatting, simple docs ("What does this return?")</td></tr>
+                <tr><td><strong>Standard</strong></td><td>Default</td><td>Implementation, tests, refactoring ("Add error handling")</td></tr>
+                <tr><td><strong>Complex</strong></td><td>xhigh reasoning</td><td>Architecture, deep debugging, planning ("Refactor auth system")</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="delegation" data-section>
+          <h3><span class="anchor-link">#</span>Delegation Rules</h3>
+          <ul style="list-style-type: none; padding: 0;">
+            <li style="margin-bottom: 1rem;">
+              <strong>✅ Delegate:</strong> Multi-file implementations, refactors, debugging, reviews, planning, research, verification.
+            </li>
+            <li>
+              <strong>🛑 Do It Yourself:</strong> Small clarifications, quick status checks, single-command operations. Direct writes are OK for <code>.omx/</code>, <code>.codex/</code> config files.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Execution Modes -->
+        <section id="execution-modes" data-section>
+          <h2><span class="anchor-link">#</span>Execution Modes</h2>
+          
+          <div id="autopilot">
+            <article class="mode-card tilt-3d-polish">
+              <div class="mode-card__header tilt-3d-child">
+                <div class="mode-card__icon">🤖</div>
+                <div>
+                  <h3 class="mode-card__title">Autopilot</h3>
+                  <span class="mode-card__keyword">autopilot</span>
+                </div>
+              </div>
+              <p class="mode-card__description">The flagship mode. Full autonomous execution from idea to delivered code. Self-correcting loop.</p>
+              <ul class="mode-card__features">
+                <li>Expansion (Analyst + Architect)</li>
+                <li>Planning (Architect + Critic)</li>
+                <li>Execution (Ralph + Ultrawork)</li>
+                <li>QA Cycling (UltraQA)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="ralph">
+            <article class="mode-card tilt-3d-polish">
+              <div class="mode-card__header tilt-3d-child">
+                <div class="mode-card__icon">🔄</div>
+                <div>
+                  <h3 class="mode-card__title">Ralph</h3>
+                  <span class="mode-card__keyword">ralph</span>
+                </div>
+              </div>
+              <p class="mode-card__description">"The boulder never stops." Persistence mode. Keeps working until the Architect verifies the goal is met.</p>
+              <ul class="mode-card__features">
+                <li>Infinite persistence loop</li>
+                <li>Includes Ultrawork automatically</li>
+                <li>Strong verification requirements</li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="ultrawork">
+            <article class="mode-card tilt-3d-polish">
+              <div class="mode-card__header tilt-3d-child">
+                <div class="mode-card__icon">⚡</div>
+                <div>
+                  <h3 class="mode-card__title">Ultrawork</h3>
+                  <span class="mode-card__keyword">ulw</span>
+                </div>
+              </div>
+              <p class="mode-card__description">Maximum parallelism. Aggressively delegates subtasks to multiple background agents.</p>
+              <ul class="mode-card__features">
+                <li>Up to 5+ concurrent agents</li>
+                <li>Smart model routing</li>
+                <li>Non-blocking background execution</li>
+              </ul>
+            </div>
+          </div>
+          <h3 id="team-compositions"><span class="anchor-link">#</span>Team Compositions</h3>
+          <div class="callout info" style="margin-bottom: 1.5rem;">
+            <div class="callout-title">v0.10.0</div>
+            <p>All team compositions below run in <strong>isolated git worktrees by default</strong>. Each worker gets its own worktree automatically &mdash; zero merge conflicts, incremental integration, and clean shutdown rollback.</p>
+          </div>
+          <div class="workflow">
+            <strong>Feature Dev:</strong>
+            <span class="workflow__step">analyst</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">planner</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">executor</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">test-engineer</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">verifier</span>
+          </div>
+          <div class="workflow">
+            <strong>Bug Fix:</strong>
+            <span class="workflow__step">explore</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">debugger</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">executor</span> <span class="workflow__arrow">&rarr;</span>
+            <span class="workflow__step">verifier</span>
+          </div>
+        </section>
+
+        <!-- MCP Tools -->
+        <section id="mcp-tools" data-section>
+          <h2><span class="anchor-link">#</span>MCP Tools</h2>
+          
+          <h3>State & Runtime</h3>
+          <ul>
+            <li><strong>State tools:</strong> <code>state_read</code>, <code>state_write</code>, <code>state_clear</code> for managing execution mode state.</li>
+            <li><strong>Notepad:</strong> <code>notepad_read</code>, <code>notepad_write_priority</code>, <code>notepad_write_working</code>, <code>notepad_write_manual</code>.</li>
+          </ul>
+
+          <h3>Code Intelligence</h3>
+          <p><strong>LSP Tools:</strong> <code>lsp_hover</code>, <code>lsp_goto_definition</code>, <code>lsp_find_references</code>, <code>lsp_diagnostics</code>, <code>lsp_rename</code>.</p>
+          <p><strong>AST Grep:</strong> <code>ast_grep_search</code>, <code>ast_grep_replace</code> for structural refactoring.</p>
+
+          <h3>Utilities</h3>
+          <p><strong>Python REPL:</strong> Persistent environment for data analysis.</p>
+          
+          <h3 id="mcp-working-directory-policy">MCP workingDirectory policy (optional hardening)</h3>
+          <p>By default, MCP state/memory/trace tools accept caller-provided <code>workingDirectory</code>. To constrain this, set an allowlist of roots:</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code>export OMX_MCP_WORKDIR_ROOTS="/path/to/project:/path/to/another-root"</code></pre>
+          </div>
+          <p>When set, <code>workingDirectory</code> values outside these roots will be rejected by the tools for security.</p>
+        </section>
+
+        <!-- Skills & Commands -->
+        <section id="skills" data-section>
+          <h2><span class="anchor-link">#</span>Skills & Commands</h2>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td><code>autopilot</code></td><td>Autonomous execution</td><td>"autopilot build a login page"</td></tr>
+                <tr><td><code>ralph</code></td><td>Persistence mode</td><td>"ralph refactor the API"</td></tr>
+                <tr><td><code>ulw</code></td><td>Ultrawork (Parallel)</td><td>"ulw fix these 5 bugs"</td></tr>
+                <tr><td><code>$team</code></td><td>tmux Team workers</td><td>"$team 3:executor build it"</td></tr>
+                <tr><td><code>plan</code></td><td>Strategic planning</td><td>"plan the migration"</td></tr>
+                <tr><td><code>$ralplan</code></td><td>Consensus planning</td><td>"$ralplan the API"</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Skills are invoked with <code>$name</code> inside Codex CLI. Agent prompts are loaded with <code>/prompts:name</code>.</p>
+          <p><strong>Utility Skills:</strong> <code>$cancel</code>, <code>$note</code>, <code>$hud</code>, <code>$omc-doctor</code>.</p>
+        </section>
+
+        <!-- State & Memory -->
+        <section id="state-memory" data-section>
+          <h2><span class="anchor-link">#</span>State & Memory</h2>
+          
+          <h3>Notepad System</h3>
+          <p>Located at <code>.omx/notepad.md</code>. Resilient memory surviving context pruning.</p>
+          <ul>
+            <li><strong>Priority:</strong> Always injected into context.</li>
+            <li><strong>Working:</strong> Auto-pruned after 7 days.</li>
+            <li><strong>Manual:</strong> Never pruned.</li>
+          </ul>
+
+          <h3>Project Memory</h3>
+          <p>Located at <code>.omx/project-memory.json</code>. Stores tech stack, conventions, and architectural directives.</p>
+        </section>
+
+        <!-- Configuration -->
+        <section id="configuration" data-section>
+          <h2><span class="anchor-link">#</span>Configuration</h2>
+          <p>Run <code>omx setup</code> to configure defaults. Use <code>--scope user</code> or <code>--scope project</code> to control where files are installed.</p>
+          <p><strong>Worktree Paths:</strong></p>
+          <ul>
+            <li><code>.omx/state/</code> - Mode state files</li>
+            <li><code>.omx/logs/</code> - Audit logs</li>
+            <li><code>.omx/plans/</code> - Planning documents</li>
+          </ul>
+        </section>
+
+        <!-- CLI Reference -->
+        <section id="cli-reference" data-section>
+          <h2><span class="anchor-link">#</span>CLI Reference</h2>
+          <p>The <code>omx</code> command-line tool lets you launch, configure, and manage OMX from your terminal.</p>
+
+          <h3 id="cli-getting-started">Getting Started</h3>
+          <p>Run these commands to install and start fast.</p>
+          <ul>
+            <li>Install: <code>npm install -g oh-my-codex</code></li>
+            <li>Launch: <code>omx</code> (launches Codex CLI with HUD in tmux)</li>
+            <li>Setup: <code>omx setup</code></li>
+            <li>Doctor: <code>omx doctor</code></li>
+            <li>Resume a previous session: <code>omx resume</code></li>
+          </ul>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code>npm install -g oh-my-codex
+omx
+omx setup
+omx doctor
+omx resume
+omx --xhigh --madmax</code></pre>
+          </div>
+          <div class="callout info">
+            <div class="callout-title">Tip</div>
+            <p>For maximum power, run <code>omx --xhigh --madmax</code>.</p>
+          </div>
+
+          <h3 id="cli-commands">Core Commands</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>What It Does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>omx</code></td><td>Launch Codex CLI (HUD auto-attaches in tmux)</td></tr>
+                <tr><td><code>omx setup</code></td><td>Install skills, prompts, MCP servers, and AGENTS.md. Supports <code>--scope user|project</code>.</td></tr>
+                <tr><td><code>omx agents-init .</code></td><td>Bootstrap lightweight <code>AGENTS.md</code> files for a repository or subtree.</td></tr>
+                <tr><td><code>omx doctor</code></td><td>Check installation health. Use <code>--team</code> for worker diagnostics.</td></tr>
+                <tr><td><code>omx ask &lt;provider&gt;</code></td><td>Directly query advisor (claude|gemini). Supports <code>--agent-prompt &lt;name&gt;</code>.</td></tr>
+                <tr><td><code>omx resume</code></td><td>Resume a previous interactive Codex session from the terminal.</td></tr>
+                <tr><td><code>omx explore</code></td><td>Default read-only exploration surface for shell-native repository inspection. May route through sparkshell when appropriate.</td></tr>
+                <tr><td><code>omx sparkshell</code></td><td>Explicit shell-native inspection command with adaptive summaries and tmux pane capture support.</td></tr>
+                <tr><td><code>omx team</code></td><td>Spawn/status/resume/shutdown parallel worker panes in tmux.</td></tr>
+                <tr><td><code>omx ralph</code></td><td>Launch Codex with ralph persistence mode active.</td></tr>
+                <tr><td><code>omx status</code></td><td>Show active modes and execution state.</td></tr>
+                <tr><td><code>omx cancel</code></td><td>Cancel active execution modes (autopilot, team, etc.).</td></tr>
+                <tr><td><code>omx hud</code></td><td>Inspect runtime HUD state with watch/json/preset-oriented operator views.</td></tr>
+                <tr><td><code>omx reasoning [mode]</code></td><td>Show or set model reasoning effort (low|medium|high|xhigh).</td></tr>
+                <tr><td><code>omx version</code></td><td>Show version information.</td></tr>
+                <tr><td><code>omx help</code></td><td>Show the help message.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="cli-launch-flags">Launch Flags</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Flag</th>
+                  <th>What It Does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>--yolo</code></td><td>Launch Codex in yolo mode.</td></tr>
+                <tr><td><code>--high / --xhigh</code></td><td>Shorthand for high/extra-high reasoning effort.</td></tr>
+                <tr><td><code>--madmax</code></td><td>DANGEROUS: bypass Codex approvals and sandbox.</td></tr>
+                <tr><td><code>--spark</code></td><td>Use Codex spark model (~1.3x faster) for team workers.</td></tr>
+                <tr><td><code>--madmax-spark</code></td><td>Spark model + bypass approvals for leader and workers.</td></tr>
+                <tr><td><code>-w, --worktree[=&lt;name&gt;]</code></td><td>Launch in a git worktree (isolated environment).</td></tr>
+                <tr><td><code>--force</code></td><td>Force reinstall (overwrite existing files) during setup.</td></tr>
+                <tr><td><code>--dry-run</code></td><td>Show what would be done without doing it.</td></tr>
+                <tr><td><code>--verbose</code></td><td>Show detailed output for debugging.</td></tr>
+                <tr><td><code>--scope &lt;user|project&gt;</code></td><td>Control installation target (global or local).</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="cli-explore-examples">Explore, Sparkshell, and Resume</h3>
+          <p><code>omx explore</code> is intentionally read-only and shell-only. It is suited to quick repository discovery, while <code>omx resume</code> and <code>omx sparkshell</code> cover operator recovery and direct shell-native inspection.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Read-only repository exploration
+omx explore --prompt "which files define team routing"
+omx explore --prompt-file prompts/explore-task.md
+
+# Resume interactive work
+omx resume
+
+# Direct sparkshell inspection
+omx sparkshell git --version
+omx sparkshell --tmux-pane %12 --tail-lines 400</code></pre>
+          </div>
+          <div class="callout warning">
+            <div class="callout-title">Explore constraints</div>
+            <p><code>omx explore</code> does not promise full Codex tool parity. It stays read-only, shell-only, and blocks pipes, redirection, shell chaining, and path escapes outside the target repository.</p>
+          </div>
+          <ul>
+            <li><code>omx explore</code> currently allowlists <code>rg</code>, <code>grep</code>, <code>ls</code>, <code>find</code>, <code>wc</code>, <code>cat</code>, <code>head</code>, <code>tail</code>, <code>pwd</code>, and <code>printf</code>.</li>
+            <li><code>omx sparkshell</code> uses env-based model routing such as <code>OMX_SPARKSHELL_MODEL</code> and supports explicit tmux-pane summarization when requested.</li>
+          </ul>
+
+          <h3 id="cli-ask-examples">Advisor (Ask) Examples</h3>
+          <p>The <code>omx ask</code> command allows you to query specialized advisors directly from your terminal.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Simple queries
+omx ask claude "review this diff"
+omx ask gemini "brainstorm alternatives for the auth system"
+
+# Role-specific queries
+omx ask claude --agent-prompt executor "implement feature X with tests"
+omx ask gemini --agent-prompt planner "draft a rollout plan for v0.9"
+
+# Shorthand prompt flags
+omx ask claude -p "summarize the recent changes"
+omx ask gemini --prompt "check this regex for errors"</code></pre>
+          </div>
+
+          <h3 id="cli-team">Team Commands</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>What It Does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>omx team 3:executor "task"</code></td><td>Start team workers on a task</td></tr>
+                <tr><td><code>omx team 2:explore "short scoped analysis task"</code></td><td>Launch a small read-only exploration team for fast repository analysis.</td></tr>
+                <tr><td><code>omx team status &lt;team-name&gt;</code></td><td>Check team status</td></tr>
+                <tr><td><code>omx team resume &lt;team-name&gt;</code></td><td>Resume team</td></tr>
+                <tr><td><code>omx team shutdown &lt;team-name&gt; [--force]</code></td><td>Shutdown team</td></tr>
+                <tr><td>Env vars</td><td><code>OMX_TEAM_WORKER_CLI</code> (auto|codex|claude|gemini), <code>OMX_TEAM_WORKER_CLI_MAP</code> (per-worker mix like codex,claude,gemini)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="cli-other">Hooks, Extensions, and Native Build Helpers</h3>
+          <p>OMX also exposes hook scaffolding, HUD inspection, and native build or verification helpers for autoresearch, exec, and team worktree surfaces.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>omx hooks init</code></td><td>Scaffold a new hook plugin in <code>.omx/hooks/</code>.</td></tr>
+                <tr><td><code>omx hooks status</code></td><td>Show status of installed hook plugins.</td></tr>
+                <tr><td><code>omx hooks validate</code></td><td>Validate hook plugin implementation.</td></tr>
+                <tr><td><code>omx hud --watch</code></td><td>Watch runtime state and HUD output live.</td></tr>
+                <tr><td><code>omx hud --json</code></td><td>Emit HUD status as machine-readable JSON.</td></tr>
+                <tr><td><code>omx tmux-hook init</code></td><td>Initialize tmux prompt injection workaround.</td></tr>
+                <tr><td><code>npm run build:full</code></td><td>One-shot TypeScript plus packaged native build for explore harness and sparkshell.</td></tr>
+                <tr><td><code>npm run test:explore</code></td><td>Verify the native exploration harness and integration path.</td></tr>
+                <tr><td><code>npm run test:sparkshell</code></td><td>Verify sparkshell behavior, summaries, and native bridge wiring.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Plugins are disabled by default. Enable them by setting <code>OMX_HOOK_PLUGINS=1</code> in your environment.</p>
+        </section>
+
+        <!-- Notifications -->
+        <section id="notifications" data-section>
+          <h2><span class="anchor-link">#</span>Notifications</h2>
+          <p>Get alerts when your OMX session changes state or needs your input.</p>
+
+          <h3 id="notify-overview">Overview</h3>
+          <ul>
+            <li>OMX can send alerts when a Codex session starts, stops, goes idle, or asks for input.</li>
+            <li>Five platforms are supported: Discord (webhook), Discord (bot API), Telegram, Slack, and generic webhook.</li>
+            <li>You can configure notifications in <code>config.toml</code> or with environment variables.</li>
+          </ul>
+
+          <div class="callout info">
+            <div class="callout-title">Tip</div>
+            <p>Start with environment variables, then run <code>omx setup</code> to write a config file.</p>
+          </div>
+
+          <h3 id="notify-setup">Quick Setup</h3>
+          <p>The fastest setup is exporting env vars, then running setup.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code>export OMX_TELEGRAM_BOT_TOKEN=xxx
+export OMX_TELEGRAM_CHAT_ID=xxx
+export OMX_DISCORD_WEBHOOK_URL=xxx
+export OMX_SLACK_WEBHOOK_URL=xxx
+
+omx setup</code></pre>
+          </div>
+
+          <h3 id="notify-platforms">Platforms</h3>
+          <p>OMX supports multiple platforms to ensure you stay informed wherever you work.</p>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Platform</th>
+                  <th>Key Config Fields</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Telegram</strong></td>
+                  <td><code>botToken</code>, <code>chatId</code></td>
+                  <td>Supports <code>parseMode</code> (Markdown or HTML). Responds to authorized chat IDs for reply injection.</td>
+                </tr>
+                <tr>
+                  <td><strong>Discord (Webhook)</strong></td>
+                  <td><code>webhookUrl</code></td>
+                  <td>Simple one-way alerts. Supports custom <code>username</code> and <code>mention</code> target (e.g. <code>&lt;@123456&gt;</code>).</td>
+                </tr>
+                <tr>
+                  <td><strong>Discord (Bot API)</strong></td>
+                  <td><code>botToken</code>, <code>channelId</code></td>
+                  <td>Recommended for two-way communication. Requires a Discord bot with <code>Send Messages</code> permissions.</td>
+                </tr>
+                <tr>
+                  <td><strong>Slack</strong></td>
+                  <td><code>webhookUrl</code></td>
+                  <td>Supports custom <code>channel</code>, <code>username</code>, and <code>mention</code> target (e.g. <code>&lt;!here&gt;</code>).</td>
+                </tr>
+                <tr>
+                  <td><strong>Generic Webhook</strong></td>
+                  <td><code>url</code></td>
+                  <td>POST or PUT JSON payloads to any endpoint. Supports custom <code>headers</code> for auth.</td>
+                </tr>
+                <tr>
+                  <td><strong>OpenClaw</strong></td>
+                  <td><code>openclaw: { enabled: true }</code></td>
+                  <td>Advanced gateway for programmable hook orchestration. See <a href="#notify-openclaw">OpenClaw Configuration</a>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="notify-openclaw">OpenClaw Configuration</h3>
+          <p>OpenClaw is the recommended path for production-grade notification orchestration. It allows you to trigger agent turns and complex follow-up behaviors.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">JSON (openclaw profile)</span></div>
+            <pre><code>{
+  "notifications": {
+    "verbosity": "verbose",
+    "openclaw": {
+      "enabled": true,
+      "gateways": {
+        "local": {
+          "type": "http",
+          "url": "http://127.0.0.1:18789/hooks/agent",
+          "headers": { "Authorization": "Bearer ${HOOKS_TOKEN}" }
+        }
+      },
+      "hooks": {
+        "session-start": {
+          "enabled": true,
+          "gateway": "local",
+          "instruction": "[session-start|exec] project={{projectName}} session={{sessionId}}"
+        },
+        "ask-user-question": {
+          "enabled": true,
+          "gateway": "local",
+          "instruction": "[ask-user-question|exec] session={{sessionId}} question={{question}}"
+        }
+      }
+    }
+  }
+}</code></pre>
+          </div>
+          <p>For more details, see the <a href="https://github.com/Yeachan-Heo/oh-my-codex/blob/main/docs/openclaw-integration.md" target="_blank" rel="noopener noreferrer">Full OpenClaw Integration Guide</a>.</p>
+
+          <h3 id="notify-events">Events</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Event</th>
+                  <th>When It Fires</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>session-start</code></td><td>Fires when Codex session starts.</td></tr>
+                <tr><td><code>session-stop</code></td><td>Fires when session stops (mode complete or user interrupt).</td></tr>
+                <tr><td><code>session-end</code></td><td>Fires when session exits.</td></tr>
+                <tr><td><code>session-idle</code></td><td>Fires when session is idle (waiting for input).</td></tr>
+                <tr><td><code>ask-user-question</code></td><td>Fires when agent asks user a question.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="notify-verbosity">Verbosity</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>Behavior</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>verbose</code></td><td>All text and tool call output.</td></tr>
+                <tr><td><code>agent</code></td><td>Per-agent-call events (includes <code>ask-user-question</code>).</td></tr>
+                <tr><td><code>session</code></td><td>Start, idle, stop, and end events plus tmux tail snippet (default).</td></tr>
+                <tr><td><code>minimal</code></td><td>Start, stop, and end only. No idle, no tmux tail.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="notify-env-vars">Environment Variables</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>OMX_DISCORD_WEBHOOK_URL</code></td><td>Discord webhook endpoint.</td></tr>
+                <tr><td><code>OMX_DISCORD_NOTIFIER_BOT_TOKEN</code></td><td>Discord bot token for Bot API mode.</td></tr>
+                <tr><td><code>OMX_DISCORD_NOTIFIER_CHANNEL</code></td><td>Discord channel ID for Bot API mode.</td></tr>
+                <tr><td><code>OMX_DISCORD_MENTION</code></td><td>Optional mention target for Discord notifications.</td></tr>
+                <tr><td><code>OMX_TELEGRAM_BOT_TOKEN</code></td><td>Telegram bot token.</td></tr>
+                <tr><td><code>OMX_TELEGRAM_CHAT_ID</code></td><td>Telegram chat ID.</td></tr>
+                <tr><td><code>OMX_SLACK_WEBHOOK_URL</code></td><td>Slack webhook endpoint.</td></tr>
+                <tr><td><code>OMX_SLACK_MENTION</code></td><td>Optional mention target for Slack notifications.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="notify-templates">Templates</h3>
+          <ul>
+            <li>Custom message templates use <code>{{variable}}</code> syntax.</li>
+            <li>Available variables: <code>event</code>, <code>sessionId</code>, <code>timestamp</code>, <code>projectName</code>, <code>activeMode</code>, <code>question</code>, <code>tmuxTail</code>.</li>
+          </ul>
+
+          <h3 id="notify-example-config">Example Configuration</h3>
+          <p>Configurations are stored in <code>~/.codex/config.toml</code> (Codex native) or <code>.omx-config.json</code> (OMX advanced).</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">TOML (Codex Native)</span></div>
+            <pre><code>[notifications]
+enabled = true
+verbosity = "session"
+
+[notifications.telegram]
+enabled = true
+botToken = "123456:ABC-DEF"
+chatId = "-100123456789"
+
+[notifications.slack]
+enabled = true
+webhookUrl = "https://hooks.slack.com/services/xxx"
+mention = "@U12345"</code></pre>
+          </div>
+
+          <p>For more advanced routing, you can use generic command or webhook aliases:</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">JSON (.omx-config.json)</span></div>
+            <pre><code>{
+  "notifications": {
+    "custom_webhook_command": {
+      "enabled": true,
+      "url": "https://api.example.com/hooks",
+      "method": "POST",
+      "headers": { "X-Api-Key": "my-secret-key" },
+      "events": ["session-end", "ask-user-question"]
+    },
+    "custom_cli_command": {
+      "enabled": true,
+      "command": "notify-send \"OMX: {{event}}\" \"{{message}}\"",
+      "events": ["session-start", "session-end"]
+    }
+  }
+}</code></pre>
+          </div>
+
+          <h3 id="advanced-team-config">Advanced Team Configuration</h3>
+          <p>You can fine-tune team behavior using environment variables or <code>.omx-config.json</code>.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Mix different AI providers in one team
+export OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini
+omx team 3:executor "parallel refactoring"
+
+# Force all workers to Gemini CLI
+export OMX_TEAM_WORKER_CLI=gemini
+omx team 2:executor "sync docs and report"
+
+# Force a specific model for workers
+export OMX_TEAM_WORKER_LAUNCH_ARGS="--model gpt-5.3-codex-spark"
+omx team 2:architect "design the system"
+
+# Enable dynamic scaling
+export OMX_TEAM_SCALING_ENABLED=1
+omx team 2:executor "task"</code></pre>
+          </div>
+
+          <h3 id="notify-reply">Reply Injection</h3>
+          <ul>
+            <li>You can reply from Telegram, Discord, or Slack to inject text into the Codex session.</li>
+            <li>This feature requires tmux and authorized user IDs.</li>
+            <li>Core config fields are <code>enabled</code>, <code>pollIntervalMs</code>, <code>maxMessageLength</code>, and <code>rateLimitPerMinute</code>.</li>
+          </ul>
+        </section>
+
+        <!-- Recommended Workflows -->
+        <section id="workflows" data-section>
+          <h2><span class="anchor-link">#</span>Recommended Workflows</h2>
+          <p>Battle-tested patterns for common tasks. Pick the one that fits.</p>
+
+          <article class="mode-card" id="wf-full-auto">
+            <h3>Full-Auto from PRD</h3>
+            <p>For big features that need a plan first.</p>
+            <div class="workflow">
+              <span class="workflow__step">$ralplan</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$team</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralph</span>
+            </div>
+            <ol>
+              <li>$ralplan gathers requirements and creates a plan with planner + architect + critic consensus.</li>
+              <li>$team spawns parallel tmux workers to build in parallel.</li>
+              <li>$ralph persists until everything is verified complete.</li>
+            </ol>
+          </article>
+
+          <article class="mode-card" id="wf-no-brainer">
+            <h3>No-Brainer</h3>
+            <p>When the task is clear and you just want it done.</p>
+            <div class="workflow">
+              <span class="workflow__step">$autopilot</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ultrawork</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralph</span>
+            </div>
+            <ol>
+              <li>$autopilot takes the wheel and runs autonomously.</li>
+              <li>$ultrawork parallelizes subtasks for speed.</li>
+              <li>$ralph persists until verified ("The boulder never stops").</li>
+            </ol>
+          </article>
+
+          <article class="mode-card" id="wf-fix-debug">
+            <h3>Fix / Debugging</h3>
+            <p>For bugs and errors.</p>
+            <div class="workflow">
+              <span class="workflow__step">$plan</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralph</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ultraqa</span>
+            </div>
+            <ol>
+              <li>$plan investigates the problem and creates a fix strategy.</li>
+              <li>$ralph implements fixes and keeps going until done.</li>
+              <li>$ultraqa cycles through test -&gt; verify -&gt; fix until all tests pass.</li>
+            </ol>
+          </article>
+
+          <article class="mode-card" id="wf-parallel-issues">
+            <h3>Parallel Issue Handling</h3>
+            <p>For handling multiple issues or tickets at the same time.</p>
+            <div class="workflow">
+              <span class="workflow__step">omx team (architect)</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">omx team (workers)</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralplan</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ralph + $ultrawork</span>
+              <span class="workflow__arrow">&rarr;</span>
+              <span class="workflow__step">$ultraqa</span>
+            </div>
+            <ol>
+              <li>Start architect workers to analyze all issues and draft one complete plan.</li>
+              <li>Run workers in parallel on separate worktrees, each submitting a PR to dev.</li>
+              <li>Review and merge open PRs, then run $ralplan to resolve conflicts safely.</li>
+              <li>Finish with $ralph, $ultrawork, and $ultraqa until all tests pass.</li>
+            </ol>
+          </article>
+
+          <div class="callout info">
+            <div class="callout-title">Good to know</div>
+            <p>These four patterns cover most real-world work. Other skills exist for specific tasks, but you rarely need them day-to-day.</p>
+          </div>
+        </section>
+
+        <!-- Advanced Orchestration -->
+        <section id="advanced-orchestration" data-section>
+          <h2><span class="anchor-link">#</span>Advanced Orchestration</h2>
+          <p>For large-scale engineering, OMX supports complex team configurations, mixed CLI workers, and git worktree isolation.</p>
+
+          <h3>Mixed CLI Teams</h3>
+          <p>You can mix different AI providers (Codex, Claude, and Gemini) within a single team to leverage their unique strengths.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Mix Codex, Gemini, and Claude workers in one team
+export OMX_TEAM_WORKER_CLI_MAP=codex,gemini,claude
+omx team 3:executor "refactor the shared runtime docs"</code></pre>
+          </div>
+
+          <h3>Team CLI API</h3>
+          <p>All mutations and coordination should use the CLI interop API for stable JSON-based state transitions. This is critical for automated tooling and complex worker coordination.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Create a task programmatically
+omx team api create-task --input '{"team_name":"my-team","subject":"Fix bug","description":"..."}' --json
+
+# Claim a task with versioned safety
+omx team api claim-task --input '{"team_name":"my-team","task_id":"1","worker":"worker-1"}' --json
+
+# Transition terminal task status after claiming
+omx team api transition-task-status --input '{"team_name":"my-team","task_id":"1","from":"in_progress","to":"completed","claim_token":"<token>"}' --json</code></pre>
+          </div>
+
+          <h3>Worktree Isolation</h3>
+          <p>Launch teams in dedicated git worktrees to prevent parallel workers from clobbering each other's files. OMX handles state resolution across these worktrees automatically.</p>
+          <div class="code-block-wrapper">
+            <div class="code-block-header"><span class="code-lang">BASH</span></div>
+            <pre><code># Launch in a new worktree
+omx team 4:executor "feature work" --worktree=feature-branch</code></pre>
+          </div>
+
+          <div class="callout info">
+            <div class="callout-title">Architecture Insight</div>
+            <p>OMX maintains a durable, claim-safe lifecycle for every task. If a worker fails or a session is interrupted, the state is preserved in <code>.omx/state/team/</code>, allowing for safe resumes with <code>omx team resume &lt;team-name&gt;</code>.</p>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <div id="search-overlay" class="search-overlay"></div>
+
+  <script type="module">
+    import { SidebarSpy } from './js/ui/sidebarSpy.js';
+    import { SearchService } from './js/ui/searchService.js';
+    import { Accordion } from './js/ui/accordion.js';
+    import { CodeBlocks } from './js/ui/codeBlocks.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new SidebarSpy({
+        sidebar: '.docs-sidebar',
+        content: '.docs-content',
+        links: '.sidebar-link',
+        sections: '[data-section]'
+      });
+
+      new SearchService({
+        contentSelector: '.docs-content',
+        searchInput: '#search-input',
+        results: '#search-results',
+        overlay: '#search-overlay'
+      });
+
+      new Accordion();
+      new CodeBlocks();
+
+      // Mobile Menu Logic
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const docsMain = document.querySelector('.docs-main');
+
+      function toggleMenu() {
+        const isOpen = sidebar.classList.contains('open');
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('active');
+        mobileBtn.setAttribute('aria-expanded', String(!isOpen));
+        document.body.style.overflow = isOpen ? '' : 'hidden';
+
+        if (!isOpen) {
+          docsMain?.setAttribute('inert', '');
+          sidebar.querySelector('.sidebar-link')?.focus();
+        } else {
+          docsMain?.removeAttribute('inert');
+        }
+      }
+
+      function closeMenu() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        mobileBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        docsMain?.removeAttribute('inert');
+        mobileBtn.focus();
+      }
+
+      mobileBtn.addEventListener('click', toggleMenu);
+      overlay.addEventListener('click', closeMenu);
+
+      // Close on link click (mobile)
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 1024) closeMenu();
+        });
+      });
+
+      // Back to top
+      const backToTop = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => {
+        backToTop.classList.toggle('visible', window.scrollY > 500);
+      });
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+    });
+  </script>
+
+  <script type="module" src="./js/ui/codeBlocks.js"></script>
 </body>
 </html>
