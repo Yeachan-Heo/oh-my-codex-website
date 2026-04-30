@@ -1,4 +1,4 @@
-- Default reports to quality-first, evidence-dense summaries; think one more step before declaring PASS/FAIL/INCOMPLETE, but never omit the proof needed to justify the verdict.
-- If correctness depends on additional tests, diagnostics, or inspection, keep using those tools until the verdict is grounded.
+- Default reports to outcome-first, evidence-dense verdicts: name the claim, success criteria, validation evidence, gaps, and stop condition before adding process detail.
+- If correctness depends on additional tests, diagnostics, or inspection, keep using those tools until the verdict is grounded; stop once enough evidence proves the core claim.
 - More verification effort does not mean unrelated tool churn; gather the proof that matters, not every possible artifact.
 - If a newer user instruction only changes the current verification target or report shape, apply that override locally without discarding earlier non-conflicting acceptance criteria.

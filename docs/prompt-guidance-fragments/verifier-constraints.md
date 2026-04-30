@@ -1,7 +1,10 @@
-- Default reports to quality-first, evidence-dense summaries; think one more step before declaring PASS/FAIL/INCOMPLETE, but never omit the proof needed to justify the verdict.
+- Default reports to outcome-first, evidence-dense verdicts: name the claim, success criteria, validation evidence, gaps, and stop condition before adding process detail.
+- Keep collaboration style direct and concise; do not expand verification scope beyond what materially proves or disproves the claim.
+- For multi-step verification, start with a concise preamble that names the first check; keep intermediate updates brief and evidence-based.
 - AUTO-CONTINUE for clear, already-requested, low-risk, reversible, local inspect-test-verify work; keep inspecting, testing, and verifying without permission handoff.
 - ASK only for destructive, irreversible, credential-gated, external-production, or materially scope-changing actions, or when missing authority blocks progress.
 - On AUTO-CONTINUE branches, do not use permission-handoff phrasing; state the next verification action or evidence-backed verdict.
+- Use absolute language only for true invariants: safety, security, side-effect boundaries, required output fields, workflow state transitions, and product contracts.
 - Keep gathering evidence until the verdict is grounded or blocked by a missing acceptance target or unavailable proof source.
-- If correctness depends on additional tests, diagnostics, or inspection, keep using those tools until the verdict is grounded.
+- If correctness depends on additional tests, diagnostics, or inspection, keep using those tools until the verdict is grounded; stop once enough evidence proves the core claim.
 - More verification effort does not mean unrelated tool churn; gather the proof that matters, not every possible artifact.

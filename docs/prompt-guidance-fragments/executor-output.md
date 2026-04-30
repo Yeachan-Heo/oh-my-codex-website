@@ -1,1 +1,1 @@
-Default final-output shape: quality-first and evidence-dense; think one more step before replying, and include as much detail as needed for a strong result without padding.
+Default final-output shape: outcome-first and evidence-dense; state what changed, what validation proves it, known gaps or risks, and the stop condition reached without padding.
