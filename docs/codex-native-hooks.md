@@ -8,7 +8,7 @@ This page is the canonical answer to:
 
 `omx setup` now owns both of these native Codex artifacts:
 
-- `.codex/config.toml` → enables `[features].codex_hooks = true`
+- `.codex/config.toml` → enables setup-owned runtime feature flags including `[features].codex_hooks = true` and `[features].goals = true`
 - `.codex/hooks.json` → registers the OMX-managed native hook command while preserving non-OMX hook entries already in the file
 
 For project scope, `.gitignore` keeps generated `.codex/hooks.json` out of source control.
@@ -30,8 +30,8 @@ OMX only owns the wrapper entries that invoke `dist/scripts/codex-native-hook.js
 | --- | --- | --- | --- | --- |
 | `session-start` | `SessionStart` | `session-start` | native | Native adapter refreshes leader session bookkeeping, preserves the canonical leader scope when a native subagent `SessionStart` is detected from rollout `session_meta`, restores startup developer context, and ensures `.omx/` is gitignored at the repo root |
 | wiki startup context | `SessionStart` | `session-start` | native | Wiki session-start context can append a compact `.omx/wiki/` summary when wiki pages exist; startup writes stay config-gated |
-| `keyword-detector` | `UserPromptSubmit` | `keyword-detector` | native | Persists skill activation state and can add prompt-side developer context; `$ralph` prompt routing seeds workflow state only and does not launch `omx ralph --prd ...` |
-| `pre-tool-use` | `PreToolUse` (`Bash`) | `pre-tool-use` | native-partial | Current native scope is Bash-only; built-in native behavior cautions on `rm -rf dist`, blocks inspectable inline `git commit` commands until Lore-format structure + the required `Co-authored-by: OmX <omx@oh-my-codex.dev>` trailer are present, and emits non-blocking document-refresh warnings for mapped staged commit changes that lack rule-scoped docs/spec refresh evidence |
+| `keyword-detector` | `UserPromptSubmit` | `keyword-detector` | native | Persists skill activation state and can add prompt-side developer context for top-level prompts; native subagent prompt text is treated as delegated task text, so literal workflow keywords inside a child prompt do not activate nested workflow state; `$ralph` prompt routing seeds workflow state only and does not launch `omx ralph --prd ...` |
+| `pre-tool-use` | `PreToolUse` (`Bash`) | `pre-tool-use` | native-partial | Current native scope is Bash-only; built-in native behavior cautions on `rm -rf dist`, blocks inspectable inline `git commit` commands until Lore-format structure + the required `Co-authored-by: OmX <omx@oh-my-codex.dev>` trailer are present unless explicitly opted out with `OMX_LORE_COMMIT_GUARD=0`, and emits non-blocking document-refresh warnings for mapped staged commit changes that lack rule-scoped docs/spec refresh evidence |
 | `post-tool-use` | `PostToolUse` (`Bash`) | `post-tool-use` | native-partial | Current native scope is Bash-only; built-in native behavior covers command-not-found / permission-denied / missing-path guidance only from stderr or non-zero Bash results, ignores failure-looking strings from successful source/log reads, and keeps MCP transport-death guidance scoped to MCP-like tool calls; document-refresh commit warnings use PreToolUse advisory output, with PostToolUse reserved as a future fallback if Codex advisory semantics change |
 | Ralph/persistence stop handling | `Stop` | `stop` | native-partial | Native adapter uses the documented native Stop continuation contract (`decision: "block"` + `reason`) for active Ralph runs, emits a single JSON object on Stop stdout even for no-op Stop decisions, and emits deterministic JSON continuation output if Stop dispatch fails before normal handling |
 | Autopilot continuation | `Stop` | `stop` | native-partial | Native adapter continues non-terminal autopilot sessions from active session/root mode state |
@@ -41,6 +41,7 @@ OMX only owns the wrapper entries that invoke `dist/scripts/codex-native-hook.js
 | `ralplan` skill-state continuation | `Stop` | `stop` | native-partial | Native adapter can block on active `skill-active-state.json` for `ralplan`, unless active subagents are already the real in-flight owners |
 | `deep-interview` skill-state continuation | `Stop` | `stop` | native-partial | Native adapter can block on active `skill-active-state.json` for `deep-interview`, unless active subagents are already the real in-flight owners |
 | auto-nudge continuation | `Stop` | `stop` | native-partial | Native adapter continues turns that end in a permission/stall prompt, can re-fire for later fresh replies, and suppresses auto-nudge while interview / deep-interview state is active; explicit terminal lifecycle metadata should be authoritative when present, legacy `blocked_on_user` remains a suppress-continuation compatibility signal, and `cancelled` stays internal legacy-only for user-facing lifecycle summaries |
+| team worker Stop nudge | `Stop` | `stop` | native-partial | Team worker leader nudges are lifecycle-driven: a resolved allowed native worker Stop may notify the leader through guarded delivery after the non-terminal task guard passes. Deprecated worker stall/progress environment knobs such as `OMX_TEAM_PROGRESS_STALL_MS` and `OMX_TEAM_WORKER_TURN_STALL_MS` are compatibility/test-only surfaces and must not be documented as active team-nudge tuning knobs. |
 | `ask-user-question` | none | runtime-only | runtime-fallback | No distinct Codex native hook today |
 | `PostToolUseFailure` | none | runtime-only | runtime-fallback | Fold into runtime/fallback handling until native support exists |
 | non-Bash tool interception | none | runtime-only | runtime-fallback | Current Codex native tool hooks expose Bash only |
@@ -57,7 +58,26 @@ The native hook adapter includes an agent-only document-refresh warning MVP for
 spec-driven development hygiene. It does **not** install a generic CI gate, does
 **not** add a repo-wide pre-commit framework, and must not hard-block `git
 commit` for document-refresh reasons. Existing Lore commit blocking remains
-separate and still wins when an inline commit message is not Lore-compliant.
+separate and still wins when an inline commit message is not Lore-compliant,
+unless the Lore commit guard is explicitly disabled.
+
+## Lore commit guard opt-out
+
+Lore commit enforcement is enabled by default. To use conventional commits or
+another local commit policy while keeping OMX-managed native hooks installed,
+set `OMX_LORE_COMMIT_GUARD` to `0`, `false`, `no`, or `off`.
+
+For persistent Codex CLI usage, place the opt-out in `config.toml`:
+
+```toml
+[shell_environment_policy.set]
+OMX_LORE_COMMIT_GUARD = "0"
+```
+
+The opt-out disables only the Lore-style `git commit` blocking guard. Other
+native `PreToolUse` checks, including document-refresh warnings and command
+safety checks, still run. `omx doctor` reports when the guard is explicitly
+disabled by environment or config.
 
 Warning scope is intentionally narrow and rule-scoped:
 
@@ -136,6 +156,8 @@ operator to clear incompatible state explicitly via `omx state ...` or the
 ## UserPromptSubmit: triage advisory context
 
 `UserPromptSubmit` can now emit triage advisory context alongside keyword context. When no keyword matches, the triage layer classifies the prompt and may inject an advisory prompt-routing context string — this is advisory prompt-routing context that does not activate a skill or workflow by itself; it adds a developer-context hint the model may follow. Light advisory destinations include repo-local `explore`, narrow-edit `executor`, visual `designer`, and external documentation/reference `researcher`; researcher routing is for official-doc, version-compatibility, source-backed, or external lookup requests, does not override local anchors or implementation-shaped prompts, and still writes only prompt-routing state. Keywords remain the deterministic control surface: a matched keyword always takes precedence over triage output, and users can suppress triage injection per prompt with phrases such as `no workflow`, `just chat`, or `plain answer`.
+
+Tracked native subagent `UserPromptSubmit` events are intentionally isolated from keyword activation and triage injection. The parent may delegate a child prompt that starts with text such as `$ralplan Architect review step...`; once the child native session is known in `.omx/state/subagent-tracking.json`, that prompt is handled as literal task text rather than as a fresh workflow invocation. Top-level prompt submits are unchanged and still activate workflows normally.
 
 ## Verification guidance
 

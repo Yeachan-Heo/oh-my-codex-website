@@ -30,7 +30,7 @@ Current code recognizes these top-level `.omx-config.json` keys:
 | `notifications` | Object | Notification transports, profiles, templates, cooldowns, replies, and OpenClaw/custom aliases. See the notification summary below and the OpenClaw guide for full examples. |
 | `stopHookCallbacks` | Legacy object | Backward-compatible legacy session-end notification config for `telegram` and `discord`; prefer `notifications`. |
 | `promptRouting` | `{ "triage": { "enabled": boolean } }` | Enables/disables advisory triage prompt routing. Missing key defaults to enabled; malformed shape fails closed to disabled. |
-| `autoNudge` | Object | Managed-tmux stall nudge settings. Supported keys: `enabled`, `patterns`, `response`, `delaySec`, `stallMs`, `ttlMs`, and legacy `cooldownMs`. |
+| `autoNudge` | Object | Native auto-continuation settings for matched permission/stall prompts. Supported keys: `enabled`, `patterns`, `response`, `delaySec`, `stallMs`, `ttlMs`, and legacy `cooldownMs`. This is not the deprecated team worker stall/progress nudge path; do not add `OMX_TEAM_PROGRESS_STALL_MS` or `OMX_TEAM_WORKER_TURN_STALL_MS` as operator tuning guidance. |
 | `wiki` | Object | Project wiki lifecycle settings. Supported keys: `enabled`, `autoCapture`, `maxContextLines`, `staleDays`, `maxPageSize`, `feedProjectMemoryOnStart`. |
 
 ### Notification-owned keys
@@ -45,7 +45,7 @@ Current code recognizes these top-level `.omx-config.json` keys:
 - `reply` supports `enabled`, `authorizedDiscordUserIds`, `pollIntervalMs`, `rateLimitPerMinute`, `maxMessageLength`, and `includePrefix`.
 - `notifications.openclaw` supports `enabled`, `gateways`, and `hooks`. Gateway entries are HTTP (`type`, `url`, `headers`, `method`, `timeout`) or command (`type`, `command`, `timeout`). Hook entries use `gateway`, `instruction`, and `enabled`.
 
-Use [`docs/openclaw-integration.md`](../openclaw-integration.md) for full notification/OpenClaw examples. Keep credentials in environment variables where possible.
+Use [`docs/discord-integration.md`](../discord-integration.md) for Discord webhook-vs-bot setup and [`docs/openclaw-integration.md`](../openclaw-integration.md) for full notification/OpenClaw examples. Keep credentials in environment variables where possible.
 
 ## Supported model/env keys
 
