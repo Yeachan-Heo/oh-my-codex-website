@@ -2,31 +2,33 @@
 
 Target version: **0.16.2**
 Date: 2026-05-08
-Compare link after tag: [`v0.16.1...v0.16.2`](https://github.com/Yeachan-Heo/oh-my-codex/compare/v0.16.1...v0.16.2)
+Compare link: [`v0.16.1...v0.16.2`](https://github.com/Yeachan-Heo/oh-my-codex/compare/v0.16.1...v0.16.2)
+Release: https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.16.2
 
 ## Verdict
 
-**READY after CI is green.** Local review found and fixed a release-blocking Codex hook feature-flag regression before tagging.
+**SHIPPED.** `0.16.2` is published to GitHub Releases and npm after correcting the release notes/body inventory.
 
-## Release blocker resolved
+## Release surface
 
-- Generated setup config now emits `[features].codex_hooks = true`, matching current official Codex docs for lifecycle hooks.
-- Plugin-mode setup now emits setup-owned hook trust-state tables for generated `codex-native-hook.js` wrappers.
-- Setup cleanup strips stale OMX-owned hook trust state and legacy/unreleased `hooks = true` aliases before re-upserting supported config.
+- #2174 — Codex hook feature-flag migration work, audited and corrected during release review.
+- #2188 — `$ultragoal` aggregate Codex goal mode and planning/skill/docs guidance.
+- #2180 — commit-shared `omx_wiki/` storage plus native compact hooks.
+- #2194 — setup-owned Codex hook trust state.
+- #2193 — session-isolated stateful workflow state.
+- Release-review fixes — restored generated `[features].codex_hooks = true`, repaired stale `hooks = true` aliases, preserved plugin-mode hook trust state, and restored the release-body contributors anchor.
 
-## Local verification evidence
+## Verification evidence
 
 | Gate | Result |
 | --- | --- |
-| Official Codex docs check | PASS — docs state hooks are enabled with `[features].codex_hooks = true`. |
-| `npm run build` | PASS |
-| `npm run check:no-unused` | PASS |
-| Targeted Node tests for config/setup/uninstall/hooks | PASS — 136/136 |
-| `npm run verify:native-agents` | PASS |
-| `npm run verify:plugin-bundle` | PASS |
-| Catalog docs check | PASS |
-| `cargo test` | PASS |
+| Official Codex docs check | PASS — lifecycle hooks use `[features].codex_hooks = true`. |
+| Local release-review gates | PASS — build, no-unused, targeted setup/config/uninstall/hook tests, native-agent verify, plugin-bundle verify, catalog-doc check, `cargo test`. |
+| Main CI | PASS — run `25545439756` on `d1863f72` after rerun of transient `team-state-runtime` lane. |
+| Release workflow | PASS — run `25546037771` built native assets, published GitHub release assets, smoke verified archives/global install, and published npm. |
+| GitHub release | PASS — `v0.16.2`, non-draft, non-prerelease, 43 native assets. |
+| npm | PASS — `npm view oh-my-codex version` returned `0.16.2`. |
 
-## Remaining external gate
+## Notes
 
-GitHub CI must pass on pushed `dev` before merging to `main` and pushing `v0.16.2`.
+- Earlier release-body text understated the release scope as only a Codex hook setup blocker. This readiness record and the release notes now list the full `v0.16.1...v0.16.2` PR inventory and the major `$ultragoal`/wiki/state changes.

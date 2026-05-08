@@ -1,21 +1,31 @@
 # Release notes — 0.16.2
 
-`0.16.2` is a release-review patch for the `0.16.1` train. It preserves the `0.16.1` hardening surface while fixing a Codex native-hook setup blocker found during pre-ship review.
+`0.16.2` is a post-`0.16.1` release-train correction and workflow hardening release. It ships the major `$ultragoal` aggregate-goal amendments, commit-shared wiki/compaction support, state isolation fixes, and the Codex native-hook setup corrections found during release review.
 
-## Fixed
+## Highlights
 
-- Restored the official Codex lifecycle-hook feature flag to `[features].codex_hooks = true` in generated setup config. The unsupported `[features].hooks = true` alias is repaired during setup instead of being emitted.
-- Added plugin-mode hook trust-state generation in `config.toml` for setup-owned `codex-native-hook.js` wrappers, matching legacy/full setup behavior while preserving user hooks and user-owned hook state.
-- Updated setup, uninstall, docs, and plugin-skill mirrors so runtime feature-flag guidance consistently names `codex_hooks`.
+- **`$ultragoal` now defaults to aggregate Codex goals** — new plans use one aggregate Codex objective while OMX tracks per-story `G001`/`G002` checkpoints. Existing/no-mode plans keep legacy per-story behavior, and explicit `--codex-goal-mode per-story` remains supported. Planning, ralplan, deep-interview, plugin-skill mirrors, help text, and docs now point users toward `$ultragoal` as the default goal-mode follow-up. ([#2188](https://github.com/Yeachan-Heo/oh-my-codex/pull/2188))
+- **Project wiki pages are now commit-shared** — canonical wiki storage moved to repository-root `omx_wiki/`, with legacy `.omx/wiki/` retained as a read-only fallback. Native `PreCompact`/`PostCompact` hooks now preserve and promote durable compaction findings into the shared wiki surface. ([#2180](https://github.com/Yeachan-Heo/oh-my-codex/pull/2180))
+- **Stateful workflows are isolated by OMX session** — session-scoped workflow state no longer inherits or autocompletes from root/global state, and explicit `all_sessions` cleanup remains the global reset path. ([#2193](https://github.com/Yeachan-Heo/oh-my-codex/pull/2193))
+
+## Codex native hooks and setup
+
+- Added Codex-compatible trust-state generation for setup-owned `codex-native-hook.js` wrappers so generated hooks can be trusted without manual `/hooks` review, while user hook entries and user-owned hook state remain preserved. ([#2194](https://github.com/Yeachan-Heo/oh-my-codex/pull/2194))
+- Audited the hook feature-flag migration work from [#2174](https://github.com/Yeachan-Heo/oh-my-codex/pull/2174) during release review and restored generated setup config to the official lifecycle-hook flag, `[features].codex_hooks = true`.
+- Repaired stale/unreleased `[features].hooks = true` aliases back to `codex_hooks` during setup, and updated setup, uninstall, docs, tests, and plugin-skill mirrors to consistently document the supported flag.
+
+## Merged PR inventory
+
+- [#2174](https://github.com/Yeachan-Heo/oh-my-codex/pull/2174) — fix: use supported Codex hooks feature flag
+- [#2188](https://github.com/Yeachan-Heo/oh-my-codex/pull/2188) — Default ultragoal to aggregate Codex goals
+- [#2180](https://github.com/Yeachan-Heo/oh-my-codex/pull/2180) — Make OMX wiki commit-shared and add compact hooks
+- [#2194](https://github.com/Yeachan-Heo/oh-my-codex/pull/2194) — Trust setup-owned Codex hooks during setup
+- [#2193](https://github.com/Yeachan-Heo/oh-my-codex/pull/2193) — Fix stateful workflow session isolation
 
 ## Validation
 
-- `npm run build`
-- `npm run check:no-unused`
-- Targeted Node release-blocker tests: `dist/config/__tests__/codex-hooks.test.js`, `dist/cli/__tests__/setup-install-mode.test.js`, `dist/config/__tests__/generator-notify.test.js`, `dist/config/__tests__/generator-idempotent.test.js`, `dist/cli/__tests__/setup-scope.test.js`, `dist/cli/__tests__/uninstall.test.js`
-- `npm run verify:native-agents`
-- `npm run verify:plugin-bundle`
-- `node dist/scripts/generate-catalog-docs.js --check`
-- `cargo test`
+- Local release-review gates: `npm run build`, `npm run check:no-unused`, targeted setup/config/uninstall/hook Node tests, `npm run verify:native-agents`, `npm run verify:plugin-bundle`, catalog-doc check, and `cargo test`.
+- Changed-area PR gates included targeted `$ultragoal`, wiki/MCP/storage, state/session, native-hook, setup, lint, no-unused, and plugin-bundle checks.
+- GitHub CI passed on `dev` and `main`; the tag release workflow passed native builds, release-asset publishing, smoke verification, packed global install smoke, and npm publish.
 
 **Full Changelog**: [`v0.16.1...v0.16.2`](https://github.com/Yeachan-Heo/oh-my-codex/compare/v0.16.1...v0.16.2)
