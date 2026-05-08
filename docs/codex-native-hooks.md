@@ -10,6 +10,7 @@ This page is the canonical answer to:
 
 - `.codex/config.toml` → enables setup-owned runtime feature flags including `[features].codex_hooks = true` and `[features].goals = true`
 - `.codex/hooks.json` → registers the OMX-managed native hook command while preserving non-OMX hook entries already in the file
+- `.codex/config.toml` → also records `hooks.state."<hooks.json>:<event>:<group>:<handler>".trusted_hash` for the OMX-owned wrappers so recent Codex releases do not require a manual `/hooks` review for setup-managed hooks
 
 For project scope, `.gitignore` keeps generated `.codex/hooks.json` out of source control.
 `omx uninstall` removes only the OMX-managed wrapper entries from `.codex/hooks.json`; if user hooks remain, the file stays in place.
@@ -23,13 +24,14 @@ For project scope, `.gitignore` keeps generated `.codex/hooks.json` out of sourc
 - **tmux/runtime fallbacks**: `omx tmux-hook`, notify-hook, derived watcher, idle/session-end reporters
 
 OMX only owns the wrapper entries that invoke `dist/scripts/codex-native-hook.js`. User-managed hook entries in the same `.codex/hooks.json` file are preserved across `omx setup` refreshes and `omx uninstall`.
+Setup-owned trust state is limited to those generated wrapper identities; user hooks and user-owned `hooks.state` entries are preserved and remain subject to Codex's normal review flow.
 
 ## Mapping matrix
 
 | OMC / OMX surface | Native Codex source | OMX runtime target | Status | Notes |
 | --- | --- | --- | --- | --- |
 | `session-start` | `SessionStart` | `session-start` | native | Native adapter refreshes leader session bookkeeping, preserves the canonical leader scope when a native subagent `SessionStart` is detected from rollout `session_meta`, restores startup developer context, and ensures `.omx/` is gitignored at the repo root |
-| wiki startup context | `SessionStart` | `session-start` | native | Wiki session-start context can append a compact `.omx/wiki/` summary when wiki pages exist; startup writes stay config-gated |
+| wiki startup context | `SessionStart` | `session-start` | native | Wiki session-start context can append a compact `omx_wiki/` summary when wiki pages exist; startup writes stay config-gated |
 | `keyword-detector` | `UserPromptSubmit` | `keyword-detector` | native | Persists skill activation state and can add prompt-side developer context for top-level prompts; native subagent prompt text is treated as delegated task text, so literal workflow keywords inside a child prompt do not activate nested workflow state; `$ralph` prompt routing seeds workflow state only and does not launch `omx ralph --prd ...` |
 | `pre-tool-use` | `PreToolUse` (`Bash`) | `pre-tool-use` | native-partial | Current native scope is Bash-only; built-in native behavior cautions on `rm -rf dist`, blocks inspectable inline `git commit` commands until Lore-format structure + the required `Co-authored-by: OmX <omx@oh-my-codex.dev>` trailer are present unless explicitly opted out with `OMX_LORE_COMMIT_GUARD=0`, and emits non-blocking document-refresh warnings for mapped staged commit changes that lack rule-scoped docs/spec refresh evidence |
 | `post-tool-use` | `PostToolUse` (`Bash`) | `post-tool-use` | native-partial | Current native scope is Bash-only; built-in native behavior covers command-not-found / permission-denied / missing-path guidance only from stderr or non-zero Bash results, ignores failure-looking strings from successful source/log reads, and keeps MCP transport-death guidance scoped to MCP-like tool calls; document-refresh commit warnings use PreToolUse advisory output, with PostToolUse reserved as a future fallback if Codex advisory semantics change |
@@ -119,10 +121,10 @@ instead of using an unrelated docs edit as a blanket suppression.
 
 The approved OMX-native wiki backport keeps lifecycle ownership intentionally narrow:
 
-- **Storage** lives under `.omx/wiki/`, not `.omc/wiki/`.
-- **SessionStart** may surface bounded wiki context from `.omx/wiki/` when the wiki already exists, but it should stay read-mostly and must not block the native hook path on expensive writes or index rebuilds.
-- **SessionEnd** remains a runtime/notify-path responsibility for best-effort, non-blocking session capture into `.omx/wiki/`.
-- **PreCompact parity is intentionally deferred** in v1 unless a clearly OMX-native compaction seam exists.
+- **Storage** lives under repository `omx_wiki/`, not ignored `.omx/wiki/` runtime state and not `.omc/wiki/`.
+- **SessionStart** may surface bounded wiki context from `omx_wiki/` when the wiki already exists, but it should stay read-mostly and must not block the native hook path on expensive writes or index rebuilds.
+- **SessionEnd** remains a runtime/notify-path responsibility for best-effort, non-blocking session capture into `omx_wiki/`.
+- **PreCompact** is native and bounded: it can surface compact wiki context before compaction. **PostCompact** is native and advisory: it nudges agents to write/update `omx_wiki/` entries about compaction artifacts.
 - **Routing should stay explicit**: prefer `$wiki` or task verbs like `wiki query` / `wiki add`, and avoid implicit bare `wiki` noun activation.
 
 ## Explicit terminal stop model note

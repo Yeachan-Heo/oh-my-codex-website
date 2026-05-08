@@ -8,7 +8,7 @@ It is intentionally **not** a literal OMC port.
 - Keep the reusable wiki domain under `src/wiki/*`.
 - Expose wiki operations from a dedicated MCP server at `src/mcp/wiki-server.ts`.
 - Register the server as `omx_wiki`.
-- Keep wiki storage under `.omx/wiki/`.
+- Keep wiki storage under repository-root `omx_wiki/` so project knowledge can be committed and shared.
 - Do **not** add vector embeddings; query stays keyword/tag based.
 
 ## Config + generator contract
@@ -31,9 +31,9 @@ executable that ran `omx setup` rather than a PATH-dependent bare `node`.
 
 Wiki state is project-local and should live under:
 
-- `.omx/wiki/*.md` — content pages
-- `.omx/wiki/index.md` — generated catalog
-- `.omx/wiki/log.md` — append-only operation log
+- `omx_wiki/*.md` — content pages
+- `omx_wiki/index.md` — generated catalog
+- `omx_wiki/log.md` — append-only operation log
 
 Guardrails that must stay true:
 
@@ -49,12 +49,12 @@ The docs and code should never regress back to `.omc/wiki/`.
 ## Lifecycle + hook contract
 
 - `SessionStart` stays **native** and **bounded**.
-  - It may read `.omx/wiki/` and surface brief context when the wiki already exists.
+  - It may read `omx_wiki/` and surface brief context when the wiki already exists.
   - It should stay read-mostly and must not block startup on heavy writes.
 - `SessionEnd` stays **runtime-fallback** and **non-blocking**.
   - Best-effort capture is okay.
   - Missing wiki state should degrade to a no-op.
-- Literal `PreCompact` parity is **deferred in v1** unless an OMX-native seam is proven clean.
+- `PreCompact` and `PostCompact` are native lifecycle seams: `PreCompact` surfaces bounded wiki context, and `PostCompact` nudges durable wiki capture about compaction artifacts.
 
 ## Routing contract
 
@@ -68,7 +68,7 @@ This keeps the routing surface specific enough to avoid false positives from ord
 
 ## MCP tool surface
 
-The dedicated `omx_wiki` server should expose the seven stabilized wiki tools:
+The dedicated `omx_wiki` server should expose the eight stabilized wiki tools:
 
 - `wiki_ingest`
 - `wiki_query`
@@ -77,5 +77,6 @@ The dedicated `omx_wiki` server should expose the seven stabilized wiki tools:
 - `wiki_list`
 - `wiki_read`
 - `wiki_delete`
+- `wiki_refresh`
 
-These tools should operate only on `.omx/wiki/` and keep lifecycle behavior bounded.
+These tools should write to `omx_wiki/`, may read legacy `.omx/wiki/` only as conservative compatibility fallback when `omx_wiki/` is absent, and keep lifecycle behavior bounded.
