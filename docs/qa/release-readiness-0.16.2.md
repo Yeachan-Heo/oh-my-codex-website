@@ -16,7 +16,7 @@ Release: https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.16.2
 - #2180 — commit-shared `omx_wiki/` storage plus native compact hooks.
 - #2194 — setup-owned Codex hook trust state.
 - #2193 — session-isolated stateful workflow state.
-- Release-review fixes — restored generated `[features].codex_hooks = true`, repaired stale `hooks = true` aliases, preserved plugin-mode hook trust state, and restored the release-body contributors anchor.
+- Release-review fixes — updated generated `[features].codex_hooks = true`, repaired legacy hook aliases, preserved plugin-mode hook trust state, and restored the release-body contributors anchor.
 
 ## Verification evidence
 

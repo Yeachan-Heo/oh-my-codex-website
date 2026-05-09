@@ -54,7 +54,7 @@ The docs and code should never regress back to `.omc/wiki/`.
 - `SessionEnd` stays **runtime-fallback** and **non-blocking**.
   - Best-effort capture is okay.
   - Missing wiki state should degrade to a no-op.
-- `PreCompact` and `PostCompact` are native lifecycle seams: `PreCompact` surfaces bounded wiki context, and `PostCompact` nudges durable wiki capture about compaction artifacts.
+- `PreCompact` and `PostCompact` are native lifecycle seams that stay no-stdout by default unless a future Codex compact-hook output contract explicitly supports more.
 
 ## Routing contract
 
