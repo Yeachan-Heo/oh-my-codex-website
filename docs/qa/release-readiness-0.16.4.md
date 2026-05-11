@@ -7,7 +7,7 @@ Release: https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.16.4
 
 ## Verdict
 
-**IN PROGRESS.** `0.16.4` is the release candidate for the post-`0.16.3` approved-execution, hook/setup, runtime-visibility, Ralph audit, and Ultragoal proof train. CI, release-body generation, tag workflow, and publication evidence must be filled before this becomes a final release-readiness record.
+**COMPLETE.** `0.16.4` shipped from tag `v0.16.4` at commit `0f77c608` with dev/main CI green, tag release workflow green, GitHub release assets attached, and npm publication verified. This file includes post-publish docs-only evidence recorded after the immutable release tag.
 
 ## Release surface
 
@@ -45,24 +45,20 @@ Release: https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.16.4
 | Targeted release tests | PASS — `node --test dist/cli/__tests__/version-sync-contract.test.js` plus release-focused setup/planning/Team/Ralph/Ultragoal/hook suites. |
 | Rust tests | PASS — `cargo test`. |
 | Package dry run | PASS — `npm pack --dry-run`. |
-| Release body generation | PENDING — run `generate-release-body.js` against the local annotated `v0.16.4` tag before pushing the tag, then record the generated output path/checksum. |
+| Release body generation | PASS — local pre-tag generation wrote `/tmp/RELEASE_BODY.v0.16.4.generated.md` with sha256 `a8e0d1812cf012ec62d8ccdb785a2fbb6f5a3f9d557a20f90a998aba70bb3c23`; release workflow `25648158495` also generated and attached the GitHub release body. |
 | Diff hygiene | PASS — `git diff --check`. |
-| Dev CI | PASS — GitHub Actions CI run `25647673921` on `dev` commit `ae09fd9e` completed successfully on 2026-05-11. |
-| Main CI | PENDING — verify after promotion. |
-| Release workflow | PENDING — verify after pushing tag `v0.16.4`. |
-| GitHub release | PENDING — verify non-draft/non-prerelease release and native assets. |
-| npm | PENDING — verify `npm view oh-my-codex version` returns `0.16.4`. |
+| Dev CI | PASS — GitHub Actions CI run `25647833872` on `dev` commit `0f77c608` completed successfully on 2026-05-11 before tag publication. |
+| Main CI | PASS — GitHub Actions CI run `25647985176` on `main` commit `0f77c608` completed successfully on 2026-05-11 before tag publication. |
+| Release workflow | PASS — tag-triggered Release run `25648158495` for `v0.16.4` completed successfully on 2026-05-11. |
+| GitHub release | PASS — `gh release view v0.16.4` reports non-draft, non-prerelease release at https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.16.4 with 43 native assets. |
+| npm | PASS — `npm view oh-my-codex version` returned `0.16.4` after workflow publication. |
 
 ## Known gaps / pending gates
 
-- Final `$code-review` approval must be recorded after the Ralph audit and readiness evidence fixes are validated.
-- Release body generation evidence must be recorded after the local annotated tag exists and before it is pushed.
-- Dev CI run ID and result must be recorded after the release-prep commit is pushed.
-- Main CI run ID and result must be recorded after promotion to `main`.
-- Tag-triggered release workflow run ID, GitHub release URL/assets, and `npm view oh-my-codex version` proof must be recorded after `v0.16.4` is pushed.
-- Until those external gates are green, this document is a local release-candidate readiness record, not final publication proof.
+- None for the shipped `v0.16.4` tag.
+- This readiness update is a deliberate post-publish docs-only evidence commit; the release tag remains at `0f77c608`.
 
 ## Notes
 
-- Local npm credentials are not used by this prep step; publication is expected to run through the repository release workflow/trusted publishing path after the annotated tag is pushed.
-- If post-publish evidence is committed after the tag, document the deliberate docs-only divergence per `RELEASE_PROTOCOL.md`.
+- npm publication ran through the repository release workflow trusted-publishing path; local npm credentials were not used.
+- This post-publish evidence commit documents the deliberate docs-only divergence from tag `v0.16.4` per `RELEASE_PROTOCOL.md`.
