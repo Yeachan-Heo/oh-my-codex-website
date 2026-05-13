@@ -36,6 +36,9 @@ jobs:
         run: |
           # Copy all docs from source repo
           cp -r oh-my-codex-source/docs/* docs/
+          # Keep website post-publish corrections that intentionally supersede
+          # stale pre-publication source collateral until the source catches up.
+          git checkout -- docs/qa/release-readiness-0.17.0.md
 
       - name: Sync version
         env:
