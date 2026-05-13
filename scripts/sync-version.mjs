@@ -13,14 +13,15 @@ const ROOT = join(__dirname, '..');
 
 // Try multiple possible locations for the source repo
 const possibleSourcePaths = [
+  // Explicit override for release/sync jobs and local recovery. Keep this first so
+  // a stale sibling checkout cannot silently downgrade the website.
+  process.env.OMX_SOURCE_PACKAGE_JSON,
   // GitHub Actions path (checked out as oh-my-codex-source)
   join(ROOT, 'oh-my-codex-source', 'package.json'),
   // Local development path (sibling directory)
   join(ROOT, '..', 'oh-my-codex', 'package.json'),
   // Alternative sibling path with different name
   join(ROOT, '..', 'oh-my-codex-main', 'package.json'),
-  // Environment variable override
-  process.env.OMX_SOURCE_PACKAGE_JSON,
 ].filter(Boolean);
 
 let sourcePkgPath = null;
@@ -57,19 +58,24 @@ let indexHtml = readFileSync(indexPath, 'utf8');
 const versionMatch = indexHtml.match(/v(\d+\.\d+\.\d+)/);
 const currentVersion = versionMatch ? versionMatch[1] : null;
 
-if (currentVersion === version) {
-  console.log(`Version already up-to-date: v${version}`);
-  process.exit(0);
+if (!currentVersion) {
+  console.error(`ERROR: Could not detect current website version in ${indexPath}`);
+  process.exit(1);
 }
 
-console.log(`Updating version: v${currentVersion} -> v${version}`);
+if (currentVersion === version) {
+  console.log(`Index version already up-to-date: v${version}`);
+} else {
+  console.log(`Updating version: v${currentVersion} -> v${version}`);
+}
 
 // Replace all version occurrences
 const versionRegex = new RegExp(`v${currentVersion.replace(/\./g, '\\.')}`, 'g');
-indexHtml = indexHtml.replace(versionRegex, `v${version}`);
-
-writeFileSync(indexPath, indexHtml);
-console.log(`Updated ${indexPath}`);
+if (currentVersion !== version) {
+  indexHtml = indexHtml.replace(versionRegex, `v${version}`);
+  writeFileSync(indexPath, indexHtml);
+  console.log(`Updated ${indexPath}`);
+}
 
 // Also update any other files that might have version references
 const filesToCheck = ['docs.html', 'js/config.js', 'data/stats.json'];
@@ -81,12 +87,27 @@ for (const file of filesToCheck) {
     let content = readFileSync(filePath, 'utf8');
     let updated = false;
     if (content.includes(`v${currentVersion}`)) {
-      content = content.replace(versionRegex, `v${version}`);
-      updated = true;
+      const next = content.replace(versionRegex, `v${version}`);
+      if (next !== content) {
+        content = next;
+        updated = true;
+      }
     }
     if (content.includes(`"${currentVersion}"`) || content.includes(`'${currentVersion}'`)) {
-      content = content.replace(bareVersionRegex, version);
-      updated = true;
+      const next = content.replace(bareVersionRegex, version);
+      if (next !== content) {
+        content = next;
+        updated = true;
+      }
+    }
+    if (file === 'docs.html') {
+      const next = content
+        .replace(/(<span class="sidebar-brand__version">)v\d+\.\d+\.\d+(<\/span>)/, `$1v${version}$2`)
+        .replace(/(Oh My Codex )v\d+\.\d+\.\d+( Documentation)/, `$1v${version}$2`);
+      if (next !== content) {
+        content = next;
+        updated = true;
+      }
     }
     if (updated) {
       writeFileSync(filePath, content);
