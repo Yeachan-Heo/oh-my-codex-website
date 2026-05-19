@@ -87,6 +87,16 @@ Supported model-related keys:
 
 `readConfiguredEnvOverrides()` also passes through other non-empty string values from `env` for launch helpers such as `omx explore` and `omx sparkshell`. Treat those as advanced environment overrides, not a schema for per-role model routing.
 
+For `omx sparkshell`, the documented helper-specific environment keys are:
+
+| Key | Purpose |
+| --- | --- |
+| `OMX_SPARKSHELL_BIN` | Override the native `omx-sparkshell` binary path. |
+| `OMX_SPARKSHELL_MODEL` | Override the primary summary model. |
+| `OMX_SPARKSHELL_FALLBACK_MODEL` | Override the retry summary model when the primary model is unavailable. |
+| `OMX_SPARKSHELL_MODEL_INSTRUCTIONS_FILE` | Override the packaged lightweight summary instructions file. |
+| `OMX_SPARKSHELL_SUMMARY_TIMEOUT_MS` | Override the local API summary timeout in milliseconds. |
+
 ### `models`
 
 `models` maps mode names to explicit model overrides. Values must be non-empty strings.
