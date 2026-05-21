@@ -26,10 +26,21 @@ Codex vẫn là engine chính, OMX giúp bạn:
 
 Nếu bạn muốn trải nghiệm OMX nhanh nhất, bắt đầu từ đây:
 
+Chọn một đường cài đặt. Nếu Codex CLI đã được cài sẵn (ví dụ bằng Homebrew):
+
 ```bash
-npm install -g @openai/codex oh-my-codex
+codex --version
+npm install -g oh-my-codex
 omx setup
 omx --madmax --high
+```
+
+Nếu Codex CLI chưa được cài và bạn muốn để npm quản lý:
+
+```bash
+npm install -g @openai/codex
+npm install -g oh-my-codex
+omx setup
 ```
 
 Sau đó làm việc bình thường trong Codex:
@@ -59,7 +70,7 @@ Nếu bạn chỉ muốn dùng Codex thuần mà không cần thêm workflow, th
 ### Yêu cầu
 
 - Node.js 20+
-- Codex CLI đã cài: `npm install -g @openai/codex`
+- Codex CLI đã cài và kiểm tra bằng `codex --version` (Homebrew hoặc npm)
 - Codex đã xác thực (auth)
 - `tmux` trên macOS/Linux nếu muốn dùng team runtime
 - `psmux` trên Windows nếu muốn dùng team mode

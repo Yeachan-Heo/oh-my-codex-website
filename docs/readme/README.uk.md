@@ -50,10 +50,21 @@ OMX — це шар робочих процесів для [OpenAI Codex CLI](ht
 
 Якщо ви хочете отримати стандартний досвід OMX, почніть тут:
 
+Оберіть один шлях інсталяції. Якщо Codex CLI вже встановлено (наприклад, через Homebrew):
+
 ```bash
-npm install -g @openai/codex oh-my-codex
+codex --version
+npm install -g oh-my-codex
 omx setup
 omx --madmax --high
+```
+
+Якщо Codex CLI ще не встановлено й ви хочете, щоб ним керував npm:
+
+```bash
+npm install -g @openai/codex
+npm install -g oh-my-codex
+omx setup
 ```
 
 Далі працюйте звично всередині Codex:
@@ -83,7 +94,7 @@ $team 3:executor "execute the approved plan in parallel"
 ### Вимоги
 
 - Node.js 20+
-- встановлений Codex CLI: `npm install -g @openai/codex`
+- встановлений Codex CLI, перевірений через `codex --version` (Homebrew або npm)
 - налаштована автентифікація Codex
 - `tmux` на macOS/Linux, якщо пізніше знадобиться стійкий командний рушій
 - `psmux` на нативному Windows, якщо пізніше знадобиться командний режим для Windows

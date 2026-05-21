@@ -26,10 +26,21 @@
 
 Αν θέλετε την προεπιλεγμένη εμπειρία OMX, ξεκινήστε εδώ:
 
+Επιλέξτε μία διαδρομή εγκατάστασης. Αν το Codex CLI είναι ήδη εγκατεστημένο (για παράδειγμα με Homebrew):
+
 ```bash
-npm install -g @openai/codex oh-my-codex
+codex --version
+npm install -g oh-my-codex
 omx setup
 omx --madmax --high
+```
+
+Αν το Codex CLI δεν είναι εγκατεστημένο και θέλετε να το διαχειρίζεται το npm:
+
+```bash
+npm install -g @openai/codex
+npm install -g oh-my-codex
+omx setup
 ```
 
 Στη συνέχεια εργαστείτε κανονικά μέσα στο Codex:
@@ -59,7 +70,7 @@ $team 3:executor "execute the approved plan in parallel"
 ### Απαιτήσεις
 
 - Node.js 20+
-- Εγκατεστημένο Codex CLI: `npm install -g @openai/codex`
+- Εγκατεστημένο Codex CLI, ελεγμένο με `codex --version` (Homebrew ή npm)
 - Ρυθμισμένη αυθεντικοποίηση Codex
 - `tmux` σε macOS/Linux αν θέλετε αργότερα τον ανθεκτικό team runtime
 - `psmux` σε native Windows αν θέλετε αργότερα τη λειτουργία team για Windows

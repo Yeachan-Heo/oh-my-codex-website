@@ -26,10 +26,21 @@ Codex zostaje silnikiem, który wykonuje pracę. OMX daje mu lepszy kontekst, go
 
 Jeśli chcesz po prostu zacząć:
 
+Wybierz jedną ścieżkę instalacji. Jeśli Codex CLI jest już zainstalowany (na przykład przez Homebrew):
+
 ```bash
-npm install -g @openai/codex oh-my-codex
+codex --version
+npm install -g oh-my-codex
 omx setup
 omx --madmax --high
+```
+
+Jeśli Codex CLI nie jest zainstalowany i chcesz, aby zarządzał nim npm:
+
+```bash
+npm install -g @openai/codex
+npm install -g oh-my-codex
+omx setup
 ```
 
 Potem pracuj normalnie w Codexie:
@@ -56,7 +67,7 @@ Jeśli chcesz czystego Codexa bez żadnych dodatków, OMX pewnie nie jest dla Ci
 ### Wymagania
 
 - Node.js 20+
-- Codex CLI: `npm install -g @openai/codex`
+- Codex CLI sprawdzony przez `codex --version` (Homebrew albo npm)
 - Skonfigurowane uwierzytelnianie Codex
 - `tmux` na macOS/Linux — jeśli planujesz używać trybu zespołowego
 - `psmux` na natywnym Windows — jeśli planujesz używać trybu zespołowego

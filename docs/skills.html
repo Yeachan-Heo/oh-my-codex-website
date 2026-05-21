@@ -26,14 +26,15 @@
       <ol>
         <li><code>$deep-interview</code> - clarify intent, boundaries, and non-goals when the task is still fuzzy.</li>
         <li><code>$ralplan</code> - approve the plan and tradeoffs before execution.</li>
-        <li><code>$team</code> or <code>$ralph</code> - choose <code>$team</code> for coordinated parallel execution, or <code>$ralph</code> for a persistent completion loop.</li>
+        <li><code>$ultragoal</code> - execute and verify through durable goal/ledger checkpoints; launch <code>$team</code> only when parallel lanes are warranted.</li>
+        <li><code>$code-review</code> then <code>$ultraqa</code> - finish with merge-readiness and adversarial QA gates.</li>
       </ol>
 
       <h2>Execution Modes</h2>
       <ul>
         <li><code>$team</code> - coordinated multi-agent execution for the approved plan</li>
         <li><code>$ralph</code> - persistence loop until completion</li>
-        <li><code>$autopilot</code> - strict autonomous loop over <code>$ralplan -> $ralph -> $code-review</code>, returning to planning when review is not clean</li>
+        <li><code>$autopilot</code> - strict autonomous loop over <code>$deep-interview -> $ralplan -> $ultragoal (+ $team if needed) -> $code-review -> $ultraqa</code>, returning to planning when review or QA is not clean</li>
         <li><code>$ultrawork</code> - max parallel execution</li>
         <li><code>$ultragoal</code> - durable multi-goal planning and execution over <code>.omx/ultragoal</code> artifacts plus Codex goal handoff</li>
         <li><code>$visual-verdict</code> - structured visual QA loop for screenshot/reference matching</li>
@@ -77,9 +78,9 @@
       <h2>Usage Examples</h2>
       <pre><code>$deep-interview "clarify the auth change"
 $ralplan "approve the auth plan and review tradeoffs"
-$ralph "carry the approved plan to completion"
-$team 3:executor "execute the approved plan in parallel"
-$ultragoal "split this launch into durable Codex goals"
+$ultragoal "carry the approved plan to completion"
+$team 3:executor "execute the active Ultragoal story in parallel"
+$ralph "carry the approved plan to completion with the explicit legacy loop"
 $best-practice-research "find current official best practices for this API"
 $code-review "review current branch"
 $doctor</code></pre>

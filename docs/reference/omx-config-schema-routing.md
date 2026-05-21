@@ -38,10 +38,11 @@ Current code recognizes these top-level `.omx-config.json` keys:
 
 `notifications` supports the following current shapes:
 
-- Global fields: `enabled`, `verbosity` (`verbose`, `agent`, `session`, or `minimal`), `defaultProfile`, `profiles`, `events`, `hookTemplates`, `reply`, `dispatchCooldownSeconds`, and `idleCooldownSeconds`.
+- Global fields: `enabled`, `verbosity` (`verbose`, `agent`, `session`, or `minimal`), `includeChildAgents`, `defaultProfile`, `profiles`, `events`, `hookTemplates`, `reply`, `dispatchCooldownSeconds`, and `idleCooldownSeconds`.
 - Platform fields: `discord`, `discord-bot`, `telegram`, `slack`, `webhook`.
 - OpenClaw/custom transport fields: `openclaw`, `custom_webhook_command`, and `custom_cli_command`.
-- Event keys under `events`: `session-start`, `session-stop`, `session-end`, `session-idle`, and `ask-user-question`. Each event can set `enabled`, `messageTemplate`, and platform overrides.
+- Event keys under top-level `notifications.events`: `session-start`, `session-stop`, `session-end`, `session-idle`, and `ask-user-question`. Each event can set `enabled`, `messageTemplate`, and platform overrides; per-platform blocks such as `notifications.telegram` do not own an `events` filter.
+- Native child-agent/subagent lifecycle hook dispatches are suppressed at `minimal`/`session` verbosity by default. Set `notifications.verbosity` to `agent`/`verbose`, or set `notifications.includeChildAgents: true`, to receive independent child-agent start/finish hook events.
 - `hookTemplates` supports `version`, `enabled`, `events`, and `defaultTemplate`; per-event template config supports `enabled`, `template`, and platform template overrides.
 - `reply` supports `enabled`, `authorizedDiscordUserIds`, `pollIntervalMs`, `rateLimitPerMinute`, `maxMessageLength`, and `includePrefix`.
 - `notifications.openclaw` supports `enabled`, `gateways`, and `hooks`. Gateway entries are HTTP (`type`, `url`, `headers`, `method`, `timeout`) or command (`type`, `command`, `timeout`). Hook entries use `gateway`, `instruction`, and `enabled`.
