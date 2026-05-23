@@ -76,14 +76,16 @@ Completed before promotion:
 
 ## CI / publish evidence
 
-To be filled after promotion:
+Promotion and publication proof:
 
-- `dev` CI for candidate: pending
-- `main` CI after merge: pending
-- `v0.18.2` release workflow: pending
-- GitHub release: pending
-- npm publication: pending
-- Final `dev` CI after fast-forward: pending
+- `dev` CI for shipped candidate `29e87a24a0ed354283604bfc1ba995d1245813c4`: PASS, GitHub Actions run `26334978724`.
+- `main` CI after fast-forward merge to `29e87a24a0ed354283604bfc1ba995d1245813c4`: PASS, GitHub Actions run `26335226535`.
+- `v0.18.2` release workflow for tag `29e87a24a0ed354283604bfc1ba995d1245813c4`: PASS, GitHub Actions run `26335367646`. The first attempt had a transient checkout credential failure in `Build native (aarch64-unknown-linux-gnu)`; rerunning failed jobs passed and the workflow completed successfully.
+- GitHub release: `v0.18.2` is published, non-draft, non-prerelease, target `main`, with `57` assets including `native-release-manifest.json` and native archives/checksums.
+- npm publication: `npm view oh-my-codex version dist-tags --json` returns version `0.18.2` and `latest: 0.18.2`.
+- Final branch/tag state at publication: `origin/main`, `origin/dev`, local `HEAD`, and tag `v0.18.2^{}` all pointed to `29e87a24a0ed354283604bfc1ba995d1245813c4`.
+
+Post-publish correction note: this section was filled after npm publication to replace pre-promotion placeholders with final evidence. The published npm provenance tag was not moved; this docs-only correction may intentionally make `main`/`dev` advance beyond the release tag after the correction is promoted.
 
 ## Known gaps
 
