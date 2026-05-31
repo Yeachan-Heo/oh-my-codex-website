@@ -66,3 +66,16 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "site: auto-sync from oh-my-codex source ($(date +%Y-%m-%d))"
           git push
+
+  gajae-self-hosted-smoke:
+    name: Gajae self-hosted runner smoke
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: [self-hosted, Linux, X64, gajae-layofflabs-2]
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify runner
+        run: |
+          echo "runner=$(uname -a)"
+          git --version
+
