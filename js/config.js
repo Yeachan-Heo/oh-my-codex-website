@@ -11,9 +11,9 @@ const OMX_CONFIG = {
   version: "0.18.8",
   stats: {
     agents: 33,
-    skills: 36,
+    skills: 37,
     mcpServers: 5,
-    downloads: 55298,
-    stars: 23383
+    downloads: 59642,
+    stars: 30086
   }
 };
