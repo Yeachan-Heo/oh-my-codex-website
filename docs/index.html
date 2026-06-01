@@ -28,24 +28,33 @@
         <p>Real global version bumps now print an explicit reminder instead of auto-launching <code>omx setup</code>. When you're ready, run <code>omx setup</code> manually or use <code>omx update</code> to check npm and then run the same setup refresh path. Launch-time update checks are throttled and prompt by default; set <code>OMX_AUTO_UPDATE=0</code> to disable them or <code>OMX_AUTO_UPDATE=defer</code> to schedule deferred updates without prompting. Fresh OMX-managed <code>gpt-5.5</code> configs recommend <code>250000 / 200000</code> only when those keys are missing.</p>
       </section>
 
-      <section aria-labelledby="whats-new-0188">
-        <h2 id="whats-new-0188">What's New in 0.18.8</h2>
+      <section aria-labelledby="whats-new-060">
+        <h2 id="whats-new-060">What's New in 0.6.0</h2>
         <div class="grid">
           <article class="card">
-            <h3>Durable HUD ownership</h3>
-            <p>HUD panes are scoped by leader/source pane, duplicate fallback panes are deduped, deleted-cwd doctor panes are avoided, and native session-id drift preserves ownership.</p>
+            <h3>Mixed Codex + Claude teammates</h3>
+            <p>
+              Route workers per pane with <code>OMX_TEAM_WORKER_CLI_MAP</code> (for example:
+              <code>codex,codex,claude,claude</code>) so one <code>$team</code> run can use both CLIs.
+            </p>
           </article>
           <article class="card">
-            <h3>Safer Autopilot replay</h3>
-            <p>Completed terminal turns no longer reactivate Autopilot, context snapshots are seeded and hardened, and task-seed provenance is clearer.</p>
+            <h3>Claude-team leader nudges</h3>
+            <p>
+              Added a leader-side all-workers-idle fallback so notifications still fire even when worker-side Codex hooks are unavailable.
+            </p>
           </article>
           <article class="card">
-            <h3>Stricter plugin hooks</h3>
-            <p>Plugin hook cache refresh, update refresh setup mode, launcher JSON fallback behavior, and mirror metadata verification are tighter.</p>
+            <h3>Safer trigger retries</h3>
+            <p>
+              Team trigger fallback now gates adaptive resend behind a ready prompt and no-active-task check, with safer clear-line resend behavior.
+            </p>
           </article>
           <article class="card">
-            <h3>Clearer Team runtime</h3>
-            <p>Team mode can be disabled, tmux worktree startup compatibility is fixed, native executor lanes remain leaf-only, and release evidence is more complete.</p>
+            <h3>Reliability fixes</h3>
+            <p>
+              Improved task-claim bootstrap, stricter CLI map validation, predictable <code>auto</code> resolution, and better leader pane targeting for mixed/Claude teams.
+            </p>
           </article>
         </div>
       </section>
