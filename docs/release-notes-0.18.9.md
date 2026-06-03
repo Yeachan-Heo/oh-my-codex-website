@@ -52,6 +52,6 @@ No separately closed GitHub issues were found for the `v0.18.8..HEAD` release ra
 
 Release readiness evidence is recorded in `docs/qa/release-readiness-0.18.9.md`.
 
-Planned gates before tag push include version sync, build, lint/no-unused, native-agent and plugin-bundle verification, catalog docs check, full tests, targeted compatibility/runtime tests, live OMX/Codex smoke where prerequisites are available, mandatory UltraQA, generated release body review, `git diff --check`, `npm pack --dry-run`, packed-install smoke, and native asset/manifest verification evidence.
+Release gates included version sync, build, lint/no-unused, native-agent and plugin-bundle verification, catalog docs check, full tests, targeted compatibility/runtime tests, live OMX/Codex smoke where prerequisites were available, mandatory UltraQA, generated release body review, `git diff --check`, `npm pack --dry-run`, packed-install smoke, native asset/manifest verification evidence, and npm publication proof. The GitHub release includes `native-release-manifest.json`; npm provenance signing hit repeated Fulcio `ECONNRESET` failures, so the exact `v0.18.9` tag artifact was published with `npm publish --provenance=false` via temporary GitHub Actions fallback.
 
 **Full Changelog**: [`v0.18.8...v0.18.9`](https://github.com/Yeachan-Heo/oh-my-codex/compare/v0.18.8...v0.18.9)
