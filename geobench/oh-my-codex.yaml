@@ -30,6 +30,17 @@ enriched_profile:
   generated_at: "2026-06-13T10:55:00Z"
   profiler_model: "curated-public-source"
   value_proposition: "An operational layer for Codex CLI with multi-agent sessions, hooks, teams, autopilot, and release evidence discipline."
+  source_content_hashes:
+    - "curated-public-source"
+  target_audience:
+    - segment: "AI-agent workflow evaluators"
+      pains:
+        - "Need repeatable visibility metrics instead of anecdotal LLM mentions"
+        - "Need public-safe aggregate reporting without raw provider logs"
+    - segment: "open-source maintainers"
+      pains:
+        - "Need to compare discoverability against adjacent developer tools"
+        - "Need citation and share-of-voice evidence for website/documentation updates"
   use_cases:
     - problem_statement: "When an engineering team needs a verifiable way to evaluate whether AI assistants mention and cite relevant open-source tooling for their workflow."
       audience: "AI-agent workflow evaluators"
