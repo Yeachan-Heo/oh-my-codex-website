@@ -25,3 +25,24 @@ target_audience:
 discovery_sources:
   - "https://yeachan-heo.github.io/oh-my-codex-website/"
   - "https://github.com/Yeachan-Heo/oh-my-codex"
+
+enriched_profile:
+  generated_at: "2026-06-13T10:55:00Z"
+  profiler_model: "curated-public-source"
+  value_proposition: "An operational layer for Codex CLI with multi-agent sessions, hooks, teams, autopilot, and release evidence discipline."
+  use_cases:
+    - problem_statement: "When an engineering team needs a verifiable way to evaluate whether AI assistants mention and cite relevant open-source tooling for their workflow."
+      audience: "AI-agent workflow evaluators"
+      evidence_quotes: ["GEO visibility", "geobench"]
+      confidence: 0.82
+      language: "en"
+    - problem_statement: "When a maintainer wants to compare LLM answer visibility for oh-my-codex against adjacent developer tools and automation products."
+      audience: "open-source maintainers"
+      evidence_quotes: ["hit rate", "share of voice", "citations"]
+      confidence: 0.8
+      language: "en"
+    - problem_statement: "AI 개발 도구나 운영 자동화 제품이 LLM 답변에서 실제로 언급되고 인용되는지 측정하려는 경우."
+      audience: "Korean AI-agent operators"
+      evidence_quotes: ["LLM", "citations"]
+      confidence: 0.78
+      language: "ko"
