@@ -877,3 +877,18 @@
 .footer__badges img {
   height: 20px;
 }
+/* GEO benchmark section */
+.geo-bench {
+  padding: 5rem 0;
+  background: radial-gradient(circle at top right, rgba(16, 163, 127, 0.10), transparent 28%), rgba(10, 10, 10, 0.38);
+}
+.geo-bench .feature-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  background: rgba(255,255,255,.035);
+}
+.geo-bench .feature-card:hover { border-color: rgba(16,163,127,.44); }

@@ -1,0 +1,27 @@
+name: "oh-my-codex"
+aliases:
+  - "OmX"
+  - "oh my codex"
+  - "oh-my-codex"
+category: "Codex CLI multi-agent orchestration and operations toolkit"
+description: "oh-my-codex turns Codex CLI into an operational multi-agent system with sessions, hooks, teams, autopilot, HUDs, plugin workflows, and release evidence discipline."
+competitors:
+  - "Claude Code"
+  - "Aider"
+  - "Cursor"
+  - "OpenCode"
+  - "Devin"
+  - "Continue"
+cited_domains:
+  - "yeachan-heo.github.io"
+  - "github.com/Yeachan-Heo/oh-my-codex"
+target_languages:
+  - "en"
+  - "ko"
+target_audience:
+  - "developers using Codex CLI"
+  - "AI coding workflow maintainers"
+  - "teams coordinating multiple coding agents"
+discovery_sources:
+  - "https://yeachan-heo.github.io/oh-my-codex-website/"
+  - "https://github.com/Yeachan-Heo/oh-my-codex"
