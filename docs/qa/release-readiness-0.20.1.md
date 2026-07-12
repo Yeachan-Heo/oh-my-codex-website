@@ -501,3 +501,35 @@ Each gate receipt (`gates/focused.json` and `gates/full.json`), package receipt 
 Before tag creation, the following remain pending: all local gate outcomes, package/body observations, staged-tree and topology values, Architect and Critic reviews, exact dev and main CI results, release-tag validation, GitHub release assets, npm version/latest/integrity/provenance, isolated public install, native startup, and preservation comparison.
 
 Release is acceptable only when the frozen nine-commit inventory and exact nine-path scope match; the deterministic verifier establishes one immutable staged-tree receipt and all required terminal receipts pass or the sole named exception satisfies every predicate; gate and review receipts bind to that same receipt; the guarded verification commit remains live, unpushed, and untagged until the real candidate proves the same parent/tree and its deletion is verified; candidate, promoted tree, annotated tag, and publication evidence agree; and all external receipts are present. Any base, inventory, scope, whitespace, metadata-preservation, index-mode/object-type, gate, receipt status, staged-tree binding, topology, verification-ref lifetime, absence-probe, review, CI, tag, publication, or preservation mismatch blocks release progression.
+
+## Post-publish reconciliation
+
+Release `v0.20.1` completed through the tag-owned workflow with the reviewed tree preserved end to end:
+
+- candidate `e0fa50be9ed999a6d50bd37c37209dddddf23c8f` and promoted merge commit `d8a8595d7ddb2cefc4d386425ed5863176de1d07` resolve to tree `716122b6176f5819ea5cd4cade3a85614ceb61ca`;
+- annotated tag object `59f487083f71bd02eb1751b0cf84d8d669be79bf` peels to the promoted commit;
+- dev CI [29189987623](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/29189987623), main CI [29190477909](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/29190477909), and release workflow [29190721318](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/29190721318) passed;
+- the [GitHub release](https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.20.1) contains the manifest and 56 native archive/checksum assets across four products and seven targets; and
+- npm exposes `oh-my-codex@0.20.1` as `latest` with integrity, signature, and SLSA provenance metadata; isolated public package and Apple Silicon native startup checks passed.
+
+The excluded receipt digests below anchor those observations without moving or rewriting the release tag:
+
+| Receipt | SHA-256 |
+|---|---|
+| `staged-tree.oid` | `67fa083bc6fceeebdeaa863242b1dbb82adca838f53d44a80727ee64f4838ac0` |
+| `verification-commit.json` | `9b11c61375424e0f253bcfd8466ba38c1b374d1e888c30347d8a183d8c2328b4` |
+| `path-scope.json` | `b9709f6354b3738ee26e0287a2bb1d262bf72a6353655b1a3a86b83217b647a3` |
+| `gates/focused.json` | `b34fedd8daad5b31c24844b44b3c2bc172de2384893ad03431ddfb9dfe3eb9cc` |
+| `gates/full.json` | `f96af982588b36acbcb5fb23bcdb20f9ee5c985b1caf9285e5c165fa3ba4b299` |
+| `package/pack.json` | `6b40ce955a4d37dc4dac22bbf9d280c4b781b5f5d10413ebf27f34c1dae28363` |
+| `release-body.json` | `d193173c5c448e0532e6556693f4e0e41365d64446b5b22a0cdc61333f29fe70` |
+| `reviews/architect.json` | `08ebf7f568c8c408a039eccb450d0384f6acc76da8fc07ef29c0bad1fc1b78f3` |
+| `reviews/critic.json` | `e47d1a07f28c940a96f4d9653fc8774098906c79ce4723b6b7fd7afc6a3f1355` |
+| `ci/dev.json` | `c80c93f59436eb544598bbb05aa26e422f45eb12d1ab981e28b9f2010671668f` |
+| `ci/main.json` | `d5a99bbc4a608d31513dadc1955cce442debe7b853b2d90919428ed6b6b8a66e` |
+| `ci/tag-workflow.json` | `55878fe4f5093122077995cba1cd85a4d4b879bfdd5262519951c70e1f5e5a25` |
+| `promotion.json` | `70fdaf9a70959eeae16e9f4f9e89caafae78a05fe32a98fb1060468c32f6b234` |
+| `publication/github-release.json` | `9002b9555c147a0cd0046cfe15d8abf36978ae8a4725516c38aa7202cd5f119c` |
+| `publication/npm.json` | `870da3f27fb7b928c2470d57bde696ad11603ef66ea0da56a530d77e0dc5801d` |
+| `public-install/install.json` | `e1e97147cee708adaa5a803c9d9e76c96d31b8a0fadd0aa39a3f98de8e0c46de` |
+| `native/startup.json` | `e09e001bc108151b5fc6a46970d1c9760811796d77aa28d800dcc21133b53d87` |
