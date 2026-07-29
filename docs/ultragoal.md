@@ -80,7 +80,7 @@ Completed legacy thread-goal blocker handling:
 omx ultragoal checkpoint --goal-id G001-example --status blocked --evidence "completed legacy Codex goal blocks create_goal in this thread" --codex-goal-json ./get-goal.json
 ```
 
-`--status blocked` is a non-terminal ledger checkpoint for legacy per-story or pre-aggregate sessions: a previous, different Codex thread goal is already `complete`, and the current `get_goal`/`create_goal` tool surface has no reset/new-goal operation that can clear that completed goal from the same thread. This writes a `goal_blocked` event, preserves the ultragoal as `in_progress`, and records that the agent must continue the same repo/worktree only from a Codex goal context where `create_goal` can start the active ultragoal objective.
+`--status blocked` is a non-terminal ledger checkpoint. Use it in two cases: (1) legacy per-story or pre-aggregate sessions where a previous, different Codex thread goal is already `complete` and the current `get_goal`/`create_goal` tool surface has no reset/new-goal operation that can clear that completed goal from the same thread; (2) when the matching Codex goal for the active ultragoal objective is truthfully `blocked` and you need to persist a non-terminal `goal_blocked` receipt with evidence. Both cases write a `goal_blocked` event, preserve the ultragoal as `in_progress`, and keep recovery finite without treating the microgoal as complete or failed.
 
 Status:
 
@@ -214,5 +214,5 @@ When Scholastic advisory evidence exists for ontology-heavy goals, add it alongs
 - Ultragoal owns durable plan and ledger state; Codex goal mode owns active-thread focus and accounting.
 - OMX never edits upstream Codex source such as `../../codex`, never shells out to a hidden `/goal` mutator, and never claims that `omx ultragoal checkpoint` changes Codex's active thread goal. The only Codex goal-mode handoff is explicit: `get_goal`, then `create_goal` when no active goal exists, then `update_goal({status: "complete"})` after the real completion audit passes.
 - Completion checkpoints require a fresh `get_goal` snapshot. Save or pass the JSON from `get_goal` with `--codex-goal-json <json-or-path>`; OMX compares the objective and enforces the mode-specific status (`active` for intermediate aggregate stories, `complete` for final aggregate or per-story completion).
-- Active or incomplete wrong Codex goals remain strict mismatch errors. The `--status blocked` workaround only applies when the blocking Codex snapshot is `complete` and has a different objective from the active ultragoal; it must not be used to bypass active-goal mismatch protection.
+- Active or incomplete wrong Codex goals remain strict mismatch errors. The `--status blocked` path accepts either a different completed legacy Codex objective or a matching native Codex `blocked` snapshot with required evidence; it must not be used to bypass active-goal mismatch protection for active or wrong-objective goals.
 - A goal is not complete merely because tests pass or a ledger entry exists. The agent must audit the objective against files, commands, tests, PR state, or other concrete evidence.

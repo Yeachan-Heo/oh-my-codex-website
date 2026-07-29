@@ -29,6 +29,10 @@ Project-scoped resume and search discovery include generated runtime homes under
 
 `omx doctor` can confirm that these files exist and are shaped correctly. It does not prove that the same shell/profile can complete an authenticated Codex request; use `codex login status` plus a real `omx exec --skip-git-repo-check -C . "Reply with exactly OMX-EXEC-OK"` smoke test for that boundary.
 
+The native hook CLI retains at most 1 MiB of stdin for parsing. It still drains
+the complete stream when that limit is exceeded so Codex can finish writing the
+event payload without receiving `EPIPE`.
+
 ## Ownership split
 
 - **Plugin-scoped Codex hooks**: `plugins/oh-my-codex/hooks/hooks.json` for plugin installs on Codex versions with `[features].plugin_hooks`
@@ -50,7 +54,7 @@ Setup-owned trust state is limited to those generated wrapper identities; user h
 | `pre-tool-use` | `PreToolUse` | `pre-tool-use` | native-partial | Native behavior cautions on Bash `rm -rf dist`, blocks inspectable inline `git commit` commands until Lore-format structure + the required `Co-authored-by: OmX <omx@oh-my-codex.dev>` trailer are present only when explicitly opted in with `OMX_LORE_COMMIT_GUARD=1`, emits non-blocking document-refresh warnings for mapped staged commit changes that lack rule-scoped docs/spec refresh evidence, and blocks `close_agent` / parallel close cleanup before it starts when a fresh native subagent capacity blocker was recorded |
 | native `PreToolUse` stdout schema | `PreToolUse` | CLI stdout | native | Codex CLI 0.141.0 accepts only `systemMessage` for `PreToolUse`; the native CLI writer strips internal `decision`, `reason`, `stopReason`, `continue`, and `hookSpecificOutput` fields before stdout while preserving richer internal dispatch results for tests and non-stdout callers. |
 | `post-tool-use` | `PostToolUse` | `post-tool-use` | native-partial | Built-in Bash behavior covers command-not-found / permission-denied / missing-path guidance only from stderr or non-zero Bash results, ignores failure-looking strings from successful source/log reads, keeps MCP transport-death guidance scoped to MCP-like tool calls, and records a short-lived `.omx/state/native-subagent-capacity-blocker.json` when native subagent spawn/collab output reports `agent thread limit reached`; document-refresh commit warnings use PreToolUse advisory output, with PostToolUse reserved as a future fallback if Codex advisory semantics change |
-| Ralph/persistence stop handling | `Stop` | `stop` | native-partial | Native adapter uses the documented native Stop continuation contract (`decision: "block"` + `reason`) for active Ralph runs, emits a single JSON object on Stop stdout even for no-op Stop decisions, and emits deterministic JSON continuation output if Stop dispatch fails before normal handling |
+| Ralph/persistence stop handling | `Stop` | `stop` | native-partial | Native adapter uses the documented native Stop continuation contract (`decision: "block"` + `reason`) for active Ralph runs, emits a single JSON object on Stop stdout even for no-op Stop decisions, emits deterministic JSON continuation output if Stop dispatch fails before normal handling, no-ops immediately when the selected session pointer belongs to a foreign cwd or the Stop session is unmatched, and bounds other unusable session-pointer authorization failures to one diagnostic block per Stop replay chain so active Stop-hook replays no-op instead of looping forever |
 | imagegen continuation helper | `Stop` | `stop` | native-partial | `omx imagegen continuation <session-id> --artifact <name>` records `.omx/state/sessions/<session>/imagegen-pending.json` and queues an audited exec follow-up so built-in `image_gen` turns that must end immediately can resume Ralph visual QA/recovery at the next Stop checkpoint |
 | Autopilot continuation | `Stop` | `stop` | native-partial | Native adapter continues non-terminal autopilot sessions from active session/root mode state |
 | Ultrawork continuation | `Stop` | `stop` | native-partial | Native adapter continues non-terminal ultrawork sessions from active session/root mode state |
@@ -118,6 +122,12 @@ Planning boundaries (`ralplan`, `deep-interview`) remain fail-closed for mutatio
 transports: only their documented planning artifact paths and non-deactivating
 state operations are allowed. No assignment-backed grant, prompt-derived scope,
 or child-write allowance exists in this Option C implementation.
+
+### Exact direct-cancel recovery exception
+
+The native planning/Conductor boundary retains one narrowly authenticated recovery surface: exact canonical `omx cancel` and workflow-supported `omx cancel --force`. An inherited non-empty `NODE_EXTRA_CA_CERTS` does not independently block that exact command because it supplies TLS trust material rather than executable, shell-startup, or loader substitution. Every independent raw-command, canonical executable, PATH/PATHEXT, shell function/startup, `NODE_OPTIONS`, loader/import, `OPENSSL_CONF`, output, dynamic-loader, assignment, chaining, and workflow-force check remains fail-closed.
+
+When a resumed session has current pointer/native-owner/target agreement but a stale top-level `owner_codex_session_id` in session-scoped `skill-active-state.json`, exact cancellation may replace that one field inside its existing exact-session transaction. The stale value never becomes an alias or authority; nested, live, malformed, ambiguous, or cross-session evidence denies without successful mutation. OMX does not infer root `SessionStart` authority for this repair because documented native hooks cannot distinguish a root event from unreadable or malformed child evidence. The transaction provides frozen all-target validation and in-process reverse rollback, not crash-atomic multi-file visibility.
 
 ## Document-refresh warning MVP
 
@@ -232,23 +242,26 @@ operator to clear incompatible state explicitly via `omx state ...` or the
 `omx_state.*` MCP tools before retrying. See
 `docs/contracts/multi-state-transition-contract.md`.
 
-## Codex 0.144.5: adapted Ralplan leader-proof boundary (#3194)
+## Codex 0.144.5 and same-user native-child boundary (#3194, #3212)
 
-Codex CLI **0.144.5** documented hook payloads do not provide a positive proof that a `PreToolUse` event belongs to the root leader required by adapted Ralplan. `session_id` is shared with parent context and is not root identity. The undocumented `thread_id`, session files, session pointers, transcript state, cwd, and the absence of child markers are never authority evidence. OMX therefore does not infer, repair, or synthesize leader identity from them.
+Codex CLI **0.144.5** documented hook payloads do not provide a positive proof that a `PreToolUse` event belongs to the root leader required by adapted Ralplan. Same-user native children are fully hostile: sandbox labels, environment, local files, session/thread IDs, pointers, transcripts, trackers, markers, task names, prompts, and absent child evidence are not authentication. OMX does not infer, repair, or synthesize authority from them.
 
-Typed native role routing remains the preferred path when the task surface exposes `agent_type`; this boundary does not disable that path. When native role routing reports `role_routing_unavailable`, Ralplan must run `omx ralplan preflight --json` before planner, reviewer, HUD, runtime, or adapted role-intent work. The command neutralizes any routing-only Ralplan selection state so Stop cannot treat it as authority, then fails closed with:
+Typed native role routing remains the preferred path when the task surface exposes `agent_type`. `agent_type`, `agent_role`, tracker fields, lifecycle records, and plugin launch routing are non-authoritative routing or diagnostic data; they can select or describe work but cannot release consensus. The documented-leader preflight applies only when both conditions hold: native role routing reports `role_routing_unavailable`, and the caller attempts adapted Ralplan Planner, Architect, or Critic authority, adapted role-intent, or adapted consensus authority. Only then run `omx ralplan preflight --json`. Preflight may neutralize only an exact current keyword-seeded Ralplan routing state; direct hook and CLI denials are zero-write. It then fails closed with:
 
 ```json
 {"ok":false,"reason":"unsupported_documented_leader_proof"}
 ```
 
-A canonical standalone `omx ralplan role-intent write --role <role> --parent-thread "$CODEX_THREAD_ID" --json` Bash command is also denied before pointer, ledger, tracker, or runtime work. For an installed role, the exact `PreToolUse` denial reason is:
+A canonical standalone `omx ralplan role-intent write --role <role> --parent-thread "$CODEX_THREAD_ID" --json` Bash command is denied before pointer, ledger, tracker, or runtime work. For an installed role, the exact `PreToolUse` denial reason is:
 
 ```text
 unsupported_documented_leader_proof: Codex 0.144.5 hooks do not expose documented root identity required for adapted Ralplan.
 ```
 
 The direct CLI result for an installed role is likewise `{"ok":false,"reason":"unsupported_documented_leader_proof"}`. An unknown role remains separately denied as `unknown_role`; it is not a fallback or an authority probe. Wrappers, assignments, compounds, redirects, malformed commands, unrelated tools, and typed native spawn payloads are outside this narrow hook boundary and retain their existing handling.
+Ordinary native planning, lifecycle, state, status, health, HUD, runtime, setup, install, sync, and unrelated delegation are outside this preflight boundary and remain governed by their existing controls; do not run this preflight merely because the surface is native or routing is unavailable.
+
+Ralplan consensus additionally requires an official host-issued receipt verified through a documented host integration. No such integration exists today, so production consensus fails closed with `documented_host_consensus_receipt_unavailable`; native Architect/Critic lifecycle evidence alone cannot release `ralplan -> ultragoal`. The packaged plugin's `OMX_CODEX_LAUNCH_ID` and `plugin-hook-routing` record are a spoofable routing-only discriminator, not a secret, signed claim, or authority source. See [ADR 3194](./adr/3194-codex-01445-documented-leader-proof.md), [ADR 3212](./adr/3212-same-user-native-child-auth-boundary.md), and the [consensus gate contract](./contracts/ralplan-consensus-gate.md).
 
 
 ## UserPromptSubmit: session provenance
@@ -258,6 +271,60 @@ The direct CLI result for an installed role is likewise `{"ok":false,"reason":"u
 Native and notify leader turns classify provenance once and pass an immutable authorization context to activation, continuation, HUD, auto-nudge, pane injection, and Ralph helpers. Notify's compatibility fork keeps Codex owner P separate from an already-existing OMX storage scope F; only the notify resolver may authorize that relation. Trusted child provenance is compared to the Codex owner, never the storage directory: a proven child of the current owner is silently suppressed, while foreign or ambiguous child evidence rejects the turn before workflow reads or writes.
 
 Rejected turns perform no activation, continuation, steering, plugin, HUD, pane, timestamp, or neighboring-session mutation. They may append one redacted `prompt_session_provenance_rejected` diagnostic under the already-selected state root; the record contains the reason and producer but no raw session/thread identifiers, prompt text, environment value, or foreign path. `PreToolUse`, `Stop`, SessionStart reconciliation, and authoritative-root selection retain their existing contracts.
+
+## Stop: session owner provenance
+
+Native root `SessionStart` records process-bound owner evidence under
+`.omx/state/sessions/<native-session-id>/session-owner.json`. The singleton
+`.omx/state/session.json` remains the backward-compatible selected pointer,
+but a different live process cannot replace it.
+
+When a `Stop` payload does not match a usable selected pointer, or the selected
+pointer is stale-dead, OMX reads only the payload session's exact owner sidecar.
+Usable PID, Linux start-tick, command-line, cwd, and session-id evidence
+authorizes only that session's scoped workflow checks. Root/global hook side
+effects remain suppressed, the selected pointer is not rewritten, and missing,
+dead, reused, malformed, foreign, forged, or indeterminate evidence stays
+fail-closed. A foreign, malformed, or identity-indeterminate selected pointer
+also remains fail-closed. An unmatched Stop with no usable exact owner sidecar
+returns a no-op response instead of a diagnostic continuation block.
+
+Native `Stop` ends one assistant turn rather than the Codex process, so a
+successful `Stop` does not delete owner evidence.
+
+## Stop: sloppy fallback/workaround diff audit
+
+Native `Stop` audits the worktree for ungrounded fallback wording in added
+source lines: staged and unstaged diffs, plus untracked source files. A finding
+blocks the stop and asks the agent to ground or rework the line.
+
+The audit is bounded so a single finding cannot hold a session hostage:
+
+- Identical findings block at most `OMX_NATIVE_STOP_SLOPPY_FALLBACK_MAX_REPEATS`
+  times (default 3), tracked per session in
+  `.omx/state/native-stop-state.json` under `sloppy_fallback_diff_guard`. The
+  guard fingerprints the finding set by path, line text, and new-file line
+  number, sorted so the fingerprint is order-insensitive (not the assistant
+  message, and not the staged/unstaged/untracked source, so identical
+  findings keep counting across `git add`/`git reset` and subset staging,
+  while relocating the same text to another line starts a fresh count),
+  resets when findings change, and clears when findings disappear. Past the
+  cap the gate fails open for that identical finding set.
+- `OMX_NATIVE_STOP_SLOPPY_FALLBACK_AUDIT=off` (also `0`/`false`/`disabled`)
+  disables the audit entirely.
+- Untracked files that provably predate the session are skipped, so
+  pre-existing repo content the session never touched cannot block it. A file
+  counts as pre-session only when every available indicator (mtime, ctime,
+  and birth time when reported) predates the session transcript's birth time;
+  lstat semantics keep in-session symlinks to older targets auditable, and
+  symlink targets are stat'ed as well, so a pre-session link whose target is
+  rewritten during the session is audited too. This prevents
+  `cp -p`/`tar`-style preserved mtimes from smuggling new sloppy lines past
+  the audit. The transcript birth time is trusted only when it is
+  immutable — when the filesystem reports no birth time or one
+  indistinguishable from ctime (a mutable fallback that transcript appends
+  would move), the scoping is disabled and all untracked source files are
+  audited.
 
 ## UserPromptSubmit: triage advisory context
 

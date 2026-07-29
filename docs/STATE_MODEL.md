@@ -172,10 +172,9 @@ entering its `ralplan` child stage. Review/QA loopbacks should keep
 `autopilot-state.json` active and set `current_phase: "ralplan"` rather than
 starting standalone `ralplan` over Autopilot.
 
-Inside Autopilot, `ralplan` consensus also requires tracker-backed native
-subagent lane evidence for the Architect and Critic approvals. `codex_exec`
-outputs and authored planning artifacts remain trace evidence, but they do not
-prove that visible native subagent lanes ran.
+Inside Autopilot, `ralplan` consensus requires an official host-issued receipt verified through a documented host integration. No such verifier exists today, so production fails closed with `documented_host_consensus_receipt_unavailable`. Native Architect/Critic lanes, `codex_exec` outputs, trackers, and authored planning artifacts remain lifecycle or trace evidence only.
+
+Fresh default Autopilot also performs a capability-only preflight before entering `deep-interview` or launching Ralplan review work. When the installed surface deterministically has no documented host receipt verifier, Autopilot terminalizes immediately with the same exact blocker. This preflight is an expense/lifecycle decision only: an available capability does not authorize execution, active Autopilot continuations remain resumable, and direct/manual Ralplan remains inspectable.
 
 ## Planning-like vs execution-like
 
