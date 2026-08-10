@@ -242,20 +242,22 @@ operator to clear incompatible state explicitly via `omx state ...` or the
 `omx_state.*` MCP tools before retrying. See
 `docs/contracts/multi-state-transition-contract.md`.
 
-## Codex 0.144.5–0.145.0 and same-user native-child boundary (#3194, #3212, #3358)
+## Exact reviewed Codex releases and same-user native-child boundary (#3194, #3212, #3358, #3452)
 
-Official Codex CLI **0.144.5** and **0.145.0** source contracts include `turn_id` and optional `agent_id`/`agent_type` fields for `ThreadSpawn` subagents, but they do not provide positive proof that a `PreToolUse` event belongs to the root leader required by adapted Ralplan or Team authority. Omission of those optional child fields is shared by other session-source classes and is not positive Main-root proof. The payloads have no issuer, nonce, replay protection, canonical root-thread claim, or host-verifiable receipt. Same-user native children are fully hostile: sandbox labels, environment, local files, session/thread/turn IDs, pointers, transcripts, trackers, markers, task names, prompts, and absent child evidence are not authentication. OMX does not infer, repair, or synthesize authority from them.
+Official Codex CLI **0.144.5**, **0.145.0**, **0.146.1**, and **0.148.0-alpha.5** source contracts include `turn_id` and optional `agent_id`/`agent_type` fields for `ThreadSpawn` subagents, but they do not provide positive proof that a `PreToolUse` event belongs to the root leader required by adapted Ralplan or Team authority. Omission of those optional child fields is shared by other session-source classes and is not positive Main-root proof. The payloads have no issuer, nonce, replay protection, canonical root-thread claim, or host-verifiable receipt. The alpha contract is sourced from official tag commit [`f757695017737bb9fcdbc595a101721704205e76`](https://github.com/openai/codex/tree/f757695017737bb9fcdbc595a101721704205e76). Same-user native children are fully hostile: sandbox labels, environment, local files, session/thread/turn IDs, pointers, transcripts, trackers, markers, task names, prompts, versions, and absent child evidence are not authentication. OMX does not infer, repair, or synthesize authority from them.
 
-Typed native role routing remains the preferred path when the task surface exposes `agent_type`. `agent_type`, `agent_role`, tracker fields, lifecycle records, and plugin launch routing are non-authoritative routing or diagnostic data; they can select or describe work but cannot release consensus. The documented-leader preflight applies only when both conditions hold: native role routing reports `role_routing_unavailable`, and the caller attempts adapted Ralplan Planner, Architect, or Critic authority, adapted role-intent, or adapted consensus authority. Only then run `omx ralplan preflight --json`. Preflight may neutralize only an exact current keyword-seeded Ralplan routing state; direct hook and CLI denials are zero-write. It then fails closed with:
+Typed native role routing remains the preferred path when the task surface exposes `agent_type`. `agent_type`, `agent_role`, tracker fields, lifecycle records, plugin launch routing, and detected versions are non-authoritative routing or diagnostic data; they can select or describe work but cannot release consensus. The documented-leader preflight applies only when both conditions hold: native role routing reports `role_routing_unavailable`, and the caller attempts adapted Ralplan Planner, Architect, or Critic authority, adapted role-intent, or adapted consensus authority. Only then run `omx ralplan preflight --json`. Preflight is a state-preserving compatibility diagnostic: it does not grant authority or mutate routing/workflow state, and a successful reviewed-version probe fails closed with:
 
 ```json
-{"ok":false,"reason":"unsupported_documented_leader_proof"}
+{"ok":false,"reason":"unsupported_documented_leader_proof","diagnostics":{"probe_status":"ok","detected_version":"0.148.0-alpha.5","documented_root_identity":{"status":"missing"}}}
 ```
+
+The bounded diagnostics also represent `start-unavailable`, `exit-failure`, and `timeout`; only the exact reviewed releases report `documented_root_identity.status:"missing"`. Unreviewed, malformed, or over-limit output yields `documented_root_identity.status:"unknown"`. No diagnostic combination authorizes.
 
 A canonical standalone `omx ralplan role-intent write --role <role> --parent-thread "$CODEX_THREAD_ID" --json` Bash command is denied before pointer, ledger, tracker, or runtime work. For an installed role, the exact `PreToolUse` denial reason is:
 
 ```text
-unsupported_documented_leader_proof: Codex 0.144.5 hooks do not expose documented root identity required for adapted Ralplan.
+unsupported_documented_leader_proof: Codex hooks do not expose a documented, non-user-mintable root identity required for adapted Ralplan.
 ```
 
 The direct CLI result for an installed role is likewise `{"ok":false,"reason":"unsupported_documented_leader_proof"}`. An unknown role remains separately denied as `unknown_role`; it is not a fallback or an authority probe. Wrappers, assignments, compounds, redirects, malformed commands, unrelated tools, and typed native spawn payloads are outside this narrow hook boundary and retain their existing handling.

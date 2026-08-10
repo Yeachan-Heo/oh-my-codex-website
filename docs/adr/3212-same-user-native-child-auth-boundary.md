@@ -28,18 +28,20 @@ The packaged plugin uses `OMX_CODEX_LAUNCH_ID` and `OMX_ENTRY_PATH` only as a sp
 
 ## Preflight mutation boundary
 
-Direct hook and direct role-intent CLI denials are zero-write. `omx ralplan preflight --json` may only neutralize an exact current keyword-detector Ralplan routing seed after strict session-scoped, regular-file, bounded, schema, identity, and no-progress checks. It does not call general mode cancellation, reconcile workflow state, or modify pointers, trackers, markers, runtime/HUD state, foreign state, stale state, or substantive work.
+Direct hook and direct role-intent CLI denials are zero-write. Earlier `omx ralplan preflight --json` implementations could neutralize an exact current keyword-detector Ralplan routing seed after strict session-scoped checks. The current preflight is a state-preserving compatibility diagnostic: it returns `unsupported_documented_leader_proof` without calling general mode cancellation, reconciling workflow state, or modifying pointers, trackers, markers, runtime/HUD state, foreign state, stale state, or substantive work.
 
-The exact preflight and installed-role CLI result is:
+The preflight retains the stable reason and adds bounded diagnostics; a successful reviewed-version probe is shaped as:
 
 ```json
-{"ok":false,"reason":"unsupported_documented_leader_proof"}
+{"ok":false,"reason":"unsupported_documented_leader_proof","diagnostics":{"probe_status":"ok","detected_version":"0.146.1","documented_root_identity":{"status":"missing"}}}
 ```
+
+Probe failures and unreviewed or over-limit output produce `documented_root_identity.status:"unknown"`; diagnostics never authorize. The installed-role CLI result remains `{"ok":false,"reason":"unsupported_documented_leader_proof"}`.
 
 The canonical installed-role `PreToolUse` denial reason is:
 
 ```text
-unsupported_documented_leader_proof: Codex 0.144.5 hooks do not expose documented root identity required for adapted Ralplan.
+unsupported_documented_leader_proof: Codex hooks do not expose a documented, non-user-mintable root identity required for adapted Ralplan.
 ```
 
 ## Relationship to ADR 3194
