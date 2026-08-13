@@ -50,7 +50,7 @@ jobs:
         id: check
         run: |
           # Check for changes, excluding the source checkout directory
-          git add docs/ data/ js/ index.html scripts/
+          git add docs/ data/ js/ index.html docs.html scripts/
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "No changes to commit"
