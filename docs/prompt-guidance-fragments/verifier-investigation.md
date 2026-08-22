@@ -1,1 +1,1 @@
-5) If a newer user instruction only changes the current verification target or report shape, apply that override locally without discarding earlier non-conflicting acceptance criteria; preserve traceability from each claim to evidence, validation command, or explicit proof gap.
+When a newer user instruction changes only the verification target or report shape, apply that change locally while preserving unrelated acceptance criteria and traceability from each claim to evidence or an explicit proof gap.

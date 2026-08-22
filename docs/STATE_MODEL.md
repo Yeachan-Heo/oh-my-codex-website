@@ -77,7 +77,10 @@ Recommended read precedence for terminal lifecycle interpretation:
 - `src/state/workflow-transition.ts` — transition policy and decision model
 - `src/state/workflow-transition-reconcile.ts` — shared transition reconciliation helper
 - `src/modes/base.ts` — mode start/update lifecycle
-- `src/mcp/state-server.ts` — MCP state writes/reads/clears
+- `src/mcp/state-server.ts` — MCP state projection, **read-only**: it advertises `state_read`,
+  `state_list_active`, and `state_get_status` only. `state_write`/`state_clear` are not part of
+  the advertised MCP surface; durable mutation goes through `executeStateOperation` in
+  `src/state/operations.ts`
 - `src/hooks/keyword-detector.ts` — prompt keyword activation + state seeding
 - `src/scripts/codex-native-hook.ts` — native hook routing and prompt-submit output
 
@@ -87,7 +90,7 @@ Recommended read precedence for terminal lifecycle interpretation:
 flowchart TD
   A[Prompt / CLI / MCP request] --> B[Detect requested workflow skill(s)]
   B --> C[Evaluate transition policy]
-  C -->|deny| D[Return denial message]
+  C -->|fail closed: malformed state, identity/scope violation| D[Return denial message]
   C -->|allow overlap| E[Keep current active modes + add destination]
   C -->|allow auto-complete| F[Complete source mode(s)]
   F --> G[Sync compatibility skill-active state]
@@ -172,9 +175,12 @@ entering its `ralplan` child stage. Review/QA loopbacks should keep
 `autopilot-state.json` active and set `current_phase: "ralplan"` rather than
 starting standalone `ralplan` over Autopilot.
 
-Inside Autopilot, `ralplan` consensus requires an official host-issued receipt verified through a documented host integration. No such verifier exists today, so production fails closed with `documented_host_consensus_receipt_unavailable`. Native Architect/Critic lanes, `codex_exec` outputs, trackers, and authored planning artifacts remain lifecycle or trace evidence only.
-
-Fresh default Autopilot also performs a capability-only preflight before entering `deep-interview` or launching Ralplan review work. When the installed surface deterministically has no documented host receipt verifier, Autopilot terminalizes immediately with the same exact blocker. This preflight is an expense/lifecycle decision only: an available capability does not authorize execution, active Autopilot continuations remain resumable, and direct/manual Ralplan remains inspectable.
+The hard Autopilot/Ralplan consensus-receipt gate was removed by #3492. Workflow
+transitions no longer require a host-issued receipt, and missing host provenance
+must not terminalize Autopilot or block authority-decreasing recovery. Architect,
+Critic, tracker, and artifact evidence may still inform planning and review, but
+Autopilot's canonical `deep-interview -> ralplan -> ultragoal` progression does
+not turn those local records into an authorization boundary.
 
 ## Planning-like vs execution-like
 

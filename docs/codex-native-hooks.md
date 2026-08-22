@@ -43,6 +43,18 @@ event payload without receiving `EPIPE`.
 OMX only owns the wrapper entries that invoke `dist/scripts/codex-native-hook.js`. User-managed hook entries in the same `.codex/hooks.json` file are preserved across `omx setup` refreshes and `omx uninstall`.
 Setup-owned trust state is limited to those generated wrapper identities; user hooks and user-owned `hooks.state` entries are preserved and remain subject to Codex's normal review flow.
 
+For authority-decreasing recovery without uninstalling OMX, run one of these
+copyable commands from an external shell:
+
+```sh
+omx setup --scope user --disable-hooks
+omx setup --scope project --disable-hooks
+```
+
+The command removes only OMX-owned hook registrations and related enablement
+while preserving project `.omx` artifacts, foreign hooks, and unrelated Codex
+configuration. Re-running it is safe.
+
 ## Mapping matrix
 
 | OMC / OMX surface | Native Codex source | OMX runtime target | Status | Notes |
@@ -263,7 +275,15 @@ unsupported_documented_leader_proof: Codex hooks do not expose a documented, non
 The direct CLI result for an installed role is likewise `{"ok":false,"reason":"unsupported_documented_leader_proof"}`. An unknown role remains separately denied as `unknown_role`; it is not a fallback or an authority probe. Wrappers, assignments, compounds, redirects, malformed commands, unrelated tools, and typed native spawn payloads are outside this narrow hook boundary and retain their existing handling.
 Ordinary native planning, lifecycle, state, status, health, HUD, runtime, setup, install, sync, and unrelated delegation are outside this preflight boundary and remain governed by their existing controls; do not run this preflight merely because the surface is native or routing is unavailable.
 
-Ralplan consensus additionally requires an official host-issued receipt verified through a documented host integration. No such integration exists today, so production consensus fails closed with `documented_host_consensus_receipt_unavailable`; native Architect/Critic lifecycle evidence alone cannot release `ralplan -> ultragoal`. The packaged plugin's `OMX_CODEX_LAUNCH_ID` and `plugin-hook-routing` record are a spoofable routing-only discriminator, not a secret, signed claim, or authority source. See [ADR 3194](./adr/3194-codex-01445-documented-leader-proof.md), [ADR 3212](./adr/3212-same-user-native-child-auth-boundary.md), and the [consensus gate contract](./contracts/ralplan-consensus-gate.md).
+The former Ralplan host-consensus-receipt gate is retired. Missing host receipt
+capability no longer blocks `ralplan -> ultragoal` or terminalizes the ordinary
+workflow. Native Architect/Critic lifecycle evidence remains useful review data,
+not a host authorization token. The packaged plugin's `OMX_CODEX_LAUNCH_ID` and
+`plugin-hook-routing` record remain routing-only discriminators rather than
+secrets or signed claims. See [ADR 3194](./adr/3194-codex-01445-documented-leader-proof.md),
+[ADR 3212](./adr/3212-same-user-native-child-auth-boundary.md), and the retired
+[consensus gate contract](./contracts/ralplan-consensus-gate.md) for historical
+context.
 
 Exact Team launch therefore remains denied on Codex 0.145.0 unless a future documented host verifier supplies non-user-mintable Main-root/session/root-thread proof before any Team state, worktree, tmux, mailbox, worker, or process effect. Exact command grammar and local Ultragoal/task/session state may restrict a request, but they cannot authorize it. Native children remain limited to positively classified reads and verification/advice. Child-to-leader collaboration reporting also remains denied because 0.145.0 does not bind the caller to a host-authenticated direct parent and target; local subagent trackers cannot authorize that relation.
 

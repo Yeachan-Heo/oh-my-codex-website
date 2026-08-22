@@ -34,7 +34,9 @@ These workflows remain standalone in this pass and must reject overlap attempts:
 - `autopilot`
 - `autoresearch`
 
-A denied overlap must preserve the current state unchanged.
+A denied overlap must preserve the current state unchanged. This fail-closed rule
+covers unsupported active-set combinations and state-integrity failures; it does
+not apply to ordinary Autopilot phase, review, or consensus evidence.
 
 ## Transition rules
 
@@ -43,12 +45,17 @@ consumer that mutates workflow state:
 
 1. Is the requested transition allowed from the current active set?
 2. What is the resulting active set if it is allowed?
-3. What operator guidance should be shown if it is denied?
+3. What structured operator guidance should be shown if workflow evidence is
+   missing?
 
-Until a combination is explicitly approved, the default rule is deny-without-
-mutation.
+Identity, scope, corruption, and unsupported active-set checks remain fail-closed.
+Autopilot phase, review, and consensus checks are advisory: a permitted write
+records one structured advisory in `skipped_gates` with the skipped gate and the
+missing evidence. The first matching check wins, so one transition emits exactly
+one advisory. A successful terminalization with any skipped gate is reported as
+`complete with skipped gates`, never as clean success.
 
-## Invalid transition UX
+## Fail-closed transition UX
 
 Every denied transition must:
 
@@ -59,7 +66,15 @@ Every denied transition must:
    - `omx state ...`
    - `omx_state.*` MCP tools
 
-Example operator guidance shape:
+Permitted-but-incomplete Autopilot transitions must instead:
+
+1. preserve the requested phase
+2. persist the structured advisory durably
+3. expose the same advisory through the mode, state-operation, and keyword
+   transports
+4. retain fail-closed identity, scope, and corruption checks
+
+Example operator guidance shape for a denied overlap:
 
 > Cannot activate `<requested>` while `<active-set>` is still active. Clear the
 > incompatible state first via `omx state ...` or the `omx_state.*` MCP tools,
@@ -113,4 +128,8 @@ Implementation should be considered complete only when tests prove:
 5. denial messages mention both `omx state` and `omx_state.*`
 6. HUD / overlay / stop-hook consumers honor the combined set consistently
 7. `autopilot` and `autoresearch` still reject unsupported overlap attempts; Autopilot review-driven planning loopbacks keep `autopilot` active and update its `current_phase` to `ralplan` instead of starting standalone `ralplan`
-8. `deep-interview -> ralplan` is evidence-gated: answered or handoff-cleared question obligations alone do not complete deep-interview, and Autopilot `ralplan -> ultragoal` remains blocked with `documented_host_consensus_receipt_unavailable` until an official non-user-mintable host receipt verifier exists; native lanes, trackers, `codex_exec`, and artifact approvals are non-authoritative.
+8. The retired Autopilot/Ralplan host-receipt gate must not block ordinary
+   progression or authority-decreasing recovery. Native lanes, trackers,
+   `codex_exec`, and artifacts remain planning/review evidence rather than an
+   authorization boundary; missing host provenance does not terminalize the
+   lightweight workflow.

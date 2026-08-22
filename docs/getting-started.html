@@ -66,17 +66,16 @@ omx                                              # standard launch</code></pre>
         <li>After install or real OMX version bumps, rerun the scoped setup command when you're ready, use <code>omx update</code> when you also want npm to update OMX first, or set <code>OMX_AUTO_UPDATE=defer</code> for no-prompt deferred launch-time updates.</li>
         <li>Run <code>omx doctor</code>, then the <code>codex login status</code> plus <code>omx exec</code> smoke test above.</li>
         <li>Start Codex CLI with <code>omx --madmax --xhigh</code> for a normal strong trusted session, or add <code>--worktree=&lt;task&gt;</code> when launching from a git repository.</li>
-        <li>Use <code>$deep-interview "clarify the auth change"</code> when intent or boundaries are still unclear.</li>
-        <li>Use <code>$ralplan "approve the auth plan and review tradeoffs"</code> to lock the implementation plan; hand off only after Architect review evidence and then Critic review evidence are recorded.</li>
-        <li>Choose <code>$autopilot</code>, <code>$ultrawork</code>, or <code>$ralph</code> as the execution spine when appropriate; add <code>/goal</code> when the task needs durable objective/checkpoint structure.</li>
+        <li>Use <code>$autopilot "ship the auth change"</code> for the canonical supervised <code>$deep-interview -&gt; $ralplan -&gt; $ultragoal</code> workflow.</li>
+        <li>Use <code>$deep-interview</code>, <code>$ralplan</code>, <code>$ultragoal</code>, or <code>$team</code> directly only when you intentionally want an individual stage or execution surface.</li>
       </ol>
 
       <h2><code>/goal</code> and Skill Selection</h2>
       <p>Use <code>/goal</code> when Codex should keep a durable objective and checkpoint structure across turns. Start with a focused execution spine, then add only the relevant supporting skills.</p>
       <pre><code>omx --madmax --xhigh
 /goal Ship the checkout bug fix with checkpoints for reproduction, implementation, regression tests, and final verification.
-$ralplan "approve the checkout bug-fix plan and review tradeoffs"
-$ultrawork "execute the approved checkout fix with checkpoint evidence"</code></pre>
+$plan "approve the checkout bug-fix plan and review tradeoffs"
+$ultragoal "execute the approved checkout fix with checkpoint evidence"</code></pre>
       <p>By default, add only 2-5 relevant skills. More is allowed when the task scope justifies it, but loading a large catalog is usually a context-budget and attention-quality problem, not a hard parser/runtime blocker unless a concrete command errors.</p>
       <pre><code># Anti-pattern: loading 20 skills by default before the task is known.
 omx --madmax --xhigh

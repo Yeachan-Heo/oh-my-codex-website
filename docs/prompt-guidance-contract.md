@@ -185,8 +185,7 @@ If a change only affects posture overlays or native agent metadata, document it 
 The main role catalog is the installable specialized-agent set used by native agent generation and internal role prompt composition.
 
 - Files like `prompts/executor.md`, `prompts/planner.md`, and `prompts/architect.md` are canonical XML-tagged role prompt surfaces.
-- `prompts/sisyphus-lite.md` should be treated as a specialized worker-behavior prompt, not as a first-class main catalog role.
-- Worker/runtime overlays may compose that behavior under worker protocol constraints without promoting it to the primary public role catalog.
+- Worker/runtime overlays may compose specialized worker behavior under worker protocol constraints without promoting it to the primary public role catalog. (`prompts/sisyphus-lite.md` was removed in OMX 0.21; do not compose it.)
 
 ## Contributor checklist for prompt changes
 

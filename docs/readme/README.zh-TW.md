@@ -33,7 +33,7 @@ Spark Initiative 是一個強化 OMX 原生探索與檢查路徑的版本發布�
 ```text
 $deep-interview "clarify the auth change"
 $ralplan "approve the auth plan and review tradeoffs"
-$ralph "carry the approved plan to completion"
+$ultragoal "carry the approved plan to completion"
 $team 3:executor "execute the approved plan in parallel"
 ```
 
@@ -49,7 +49,7 @@ omx team shutdown <team-name>
 
 1. `$deep-interview` — 當範圍或邊界仍不清楚時，先用它釐清需求。
 2. `$ralplan` — 把釐清後的範圍整理成可核准的架構與實作計畫。
-3. `$team` 或 `$ralph` — 需要協調平行執行時用 `$team`，需要單一負責人持續推進到完成並驗證時用 `$ralph`。
+3. `$ultragoal` 或 `$team` — 需要持久目標追蹤時用 `$ultragoal`，需要協調平行執行時用 `$team`。（OMX 0.21 降級了 `$ralph`，使其成為 sunset stub，僅在明確選擇單一負責人持續推進時作為後備。）
 
 ## 核心模型
 
@@ -227,13 +227,13 @@ OMX_TEAM_AUTO_INTERRUPT_RETRY=0  # 選用：停用自適應 queue->resend 回退
 - 代理：`architect`、`planner`、`executor`、`debugger`、`verifier`、`security-reviewer`
 - 技能：`deep-interview`、`ralplan`、`team`、`ralph`、`plan`、`cancel`
 
-### 視覺品管迴圈（`$visual-verdict`）
+### 視覺品質驗證迴圈（`$visual-ralph`）
 
-當任務需要視覺保真度驗證（參考圖片 + 生成截圖）時，請使用 `$visual-verdict`。
+當任務需要視覺保真度驗證（參考圖片 + 生成截圖）時，請使用 `$visual-ralph`。（OMX 0.21 移除了 `$visual-verdict`。）
 
 - 回傳結構化 JSON：`score`、`verdict`、`category_match`、`differences[]`、`suggestions[]`、`reasoning`
 - 建議通過門檻：**90 分以上**
-- 對於視覺任務，在每次下一輪編輯前先執行 `$visual-verdict`
+- 對於視覺任務，在每次下一輪編輯前先執行 `$visual-ralph`
 - 使用像素差異 / pixelmatch 疊加圖作為**輔助除錯工具**（而非主要通過/失敗判斷依據）
 
 ## 專案結構

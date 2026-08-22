@@ -23,25 +23,22 @@
       <p class="muted">All skills with category grouping and <code>$name</code> usage syntax.</p>
 
       <h2>Canonical Workflow</h2>
+      <p><code>$autopilot</code> is the first-class canonical orchestrator. Its defining default chain is <code>$deep-interview -&gt; $ralplan -&gt; $ultragoal</code>. Each stage is also independently invocable when its input contract is already satisfied.</p>
       <ol>
         <li><code>$deep-interview</code> - clarify intent, boundaries, and non-goals when the task is still fuzzy.</li>
         <li><code>$ralplan</code> - approve the plan and tradeoffs before execution; completion/skipping requires recorded Architect review evidence followed by Critic review evidence, not just PRD/test-spec files. Scholastic is available as a separate advisory ontology reviewer/persona for concept-heavy planning evidence.</li>
-        <li><code>$prometheus-strict</code> - harden high-risk plans with Metis clarification, Momus critique, and Oracle synthesis.</li>
         <li><code>$ultragoal</code> - execute and verify through durable goal/ledger checkpoints; launch <code>$team</code> only when parallel lanes are warranted.</li>
         <li><code>$code-review</code> then <code>$ultraqa</code> - finish with merge-readiness and adversarial QA gates.</li>
       </ol>
 
       <h2>Execution Modes</h2>
       <ul>
+        <li><code>$autopilot</code> - supervised end-to-end orchestration through <code>$deep-interview -&gt; $ralplan -&gt; $ultragoal</code></li>
         <li><code>$team</code> - coordinated multi-agent execution for the approved plan</li>
-        <li><code>$ralph</code> - persistence loop until completion</li>
-        <li><code>$autopilot</code> - strict autonomous loop over <code>$deep-interview -> $ralplan -> $ultragoal (+ $team if needed) -> $code-review -> $ultraqa</code>, returning to planning when review or QA is not clean and never leaving ralplan until Architect/Critic consensus evidence is recorded</li>
-        <li><code>$ultrawork</code> - max parallel execution</li>
         <li><code>$ultragoal</code> - durable multi-goal planning and execution over <code>.omx/ultragoal</code> artifacts plus Codex goal handoff</li>
-        <li><code>$visual-verdict</code> - structured visual QA loop for screenshot/reference matching</li>
-        <li><code>$ecomode</code> - token-efficient model routing</li>
+        <li><code>$visual-ralph</code> - measured visual-reference loop; <em>Removed in OMX 0.21:</em> <code>$visual-verdict</code></li>
         <li><code>$ultraqa</code> - test/verify/fix loop</li>
-        <li><code>$swarm</code> - team compatibility facade</li>
+        <li><em>Removed in OMX 0.21:</em> <code>$ralph</code>, <code>$ultrawork</code>, <code>$pipeline</code> (sunset stubs for one release)</li>
       </ul>
 
       <h2>Planning & Clarification</h2>
@@ -49,49 +46,43 @@
         <li><code>$deep-interview</code> - requirements clarification before planning or execution</li>
         <li><code>$ralplan</code> - planner/architect/critic consensus planning with durable Architect→Critic approval evidence before execution handoff; may cite separate Scholastic advisory evidence for concept-heavy plans</li>
         <li><code>$plan</code> - supporting strategic planning when you are not using the canonical path</li>
-        <li><code>$prometheus-strict</code> - clean-room interview-driven planner that writes durable plans under <code>.omx/plans/prometheus-strict/</code> when warranted and hands off to <code>$ultragoal</code>/<code>$team</code>; credit: Inspired by OMO Prometheus (<code>code-yeongyu/oh-my-openagent</code>), reimplemented from concept under MIT.</li>
         <li><code>$best-practice-research</code> - bounded official/upstream best-practice evidence wrapper when current external guidance affects correctness</li>
+        <li><code>$deep-interview</code> is the independent, resumable Socratic requirements stage before <code>$ralplan</code>; it is not an alias for <code>$plan --interview</code>.</li>
+        <li><em>Removed in OMX 0.21:</em> <code>$prometheus-strict</code> (sunset stub; use <code>$plan</code>).</li>
       </ul>
 
       <h2>Research and Planning Boundaries</h2>
       <ul>
         <li><code>$best-practice-research</code> is the ordinary pre-planning wrapper for external official docs, upstream references, standards, release notes, and best-practice checks. It produces cited evidence for a caller; it is not the architecture plan.</li>
         <li><code>$autoresearch</code> is for a bounded validator-gated research deliverable or artifact. Use it when the research output itself must pass an explicit evaluator before the loop can finish.</li>
-        <li><code>$autoresearch-goal</code> is the Codex goal-mode version for research missions that need durable goal focus plus professor/critic-style validation.</li>
-        <li><code>$ralplan</code> is where architecture and implementation planning are synthesized from requirements and prior evidence. Autoresearch findings gathered before planning should feed into <code>$ralplan</code> as evidence, not appear as a final architecture component unless the user explicitly asks for ongoing research automation.</li>
+        <li><em>Removed in OMX 0.21:</em> <code>$autoresearch-goal</code> (sunset stub; use <code>$autoresearch</code>)</li>
+        <li><code>$plan</code> is where architecture and implementation planning are synthesized from requirements and prior evidence. Autoresearch findings gathered before planning should feed into <code>$plan</code> as evidence, not appear as a final architecture component unless the user explicitly asks for ongoing research automation.</li>
       </ul>
 
       <h2>Agent Shortcuts</h2>
       <ul>
-        <li><code>$analyze</code></li>
-        <li><code>$deepsearch</code></li>
-        <li><code>$tdd</code></li>
-        <li><code>$build-fix</code></li>
-        <li><code>$code-review</code></li>
-        <li><code>$security-review</code></li>
+        <li><code>$analyze</code> - read-only deep analysis with ranked synthesis</li>
+        <li><code>$code-review</code> - merge-readiness review</li>
         <li><code>$design</code> - maintain repo-local <code>DESIGN.md</code></li>
         <li><code>$visual-ralph</code> - measured visual-reference implementation loop</li>
-        <li><code>$frontend-ui-ux</code> (deprecated; use <code>$design</code> or <code>$visual-ralph</code>)</li>
-        <li><code>$git-master</code></li>
-        <li><code>$review</code></li>
+        <li><code>$git-master</code> - alias for the git workflow surface</li>
+        <li><em>Removed in OMX 0.21:</em> <code>$deepsearch</code> (use <code>$analyze</code>), <code>$tdd</code>, <code>$build-fix</code>, <code>$security-review</code> and <code>$review</code> (use <code>$code-review</code>)</li>
       </ul>
 
       <h2>Utilities</h2>
       <ul>
-        <li><code>$cancel</code>, <code>$doctor</code>, <code>$help</code>, <code>$note</code>, <code>$trace</code></li>
+        <li><code>$cancel</code>, <code>$doctor</code></li>
         <li><code>$skill</code></li>
         <li><code>$hud</code>, <code>$omx-setup</code>, <code>$configure-notifications</code></li>
-        <li><code>$ralph-init</code></li>
         <li><code>$worker</code> (internal) - team worker protocol / lifecycle</li>
+        <li><em>Removed in OMX 0.21:</em> <code>$help</code> (use <code>$omx-setup</code>), <code>$note</code>, <code>$trace</code>, <code>$ralph-init</code> (use <code>$ultragoal</code>)</li>
       </ul>
 
       <h2>Usage Examples</h2>
       <pre><code>$deep-interview "clarify the auth change"
 $ralplan "approve the auth plan and review tradeoffs"
-$prometheus-strict "stress-test the plan before durable execution"
 $ultragoal "carry the approved plan to completion"
 $team 3:executor "execute the active Ultragoal story in parallel"
-$ralph "carry the approved plan to completion with the explicit legacy loop"
 $best-practice-research "find current official best practices for this API"
 $code-review "review current branch"
 $doctor</code></pre>

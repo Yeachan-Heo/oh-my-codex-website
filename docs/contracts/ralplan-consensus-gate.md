@@ -1,18 +1,19 @@
-# Ralplan Consensus Gate Contract
+# Ralplan consensus and Autopilot advisory contract
 
-The `ralplan -> ultragoal` transition is fail-closed. Architect and Critic lifecycle evidence is useful diagnostic data, but cannot authorize a transition by itself.
+The hard `ralplan -> ultragoal` host-receipt gate was removed by #3492. Restoring
+Autopilot's canonical chain does not restore a host-authority gate: ordinary
+progression may continue when phase, review, or consensus evidence is incomplete,
+but that omission must remain visible.
 
 ## Authority boundary
 
-A successful transition requires a documented, versioned, official host-issued consensus receipt verified directly through an official host integration. The receipt must bind the exact transition session, installed Architect and Critic roles, distinct host thread identities, approved artifact digests, strict Architect-before-Critic order, issuer, version, and replay protection.
+Local lifecycle evidence, repository files, environment variables, transcripts,
+trackers, markers, task names, prompts, and review artifacts are not host-issued
+authority. They are evidence for workflow quality, not security claims.
 
-No current official host receipt integration exists. Production consensus therefore returns the exact blocker:
-
-```text
-documented_host_consensus_receipt_unavailable
-```
-
-The gate must not read a receipt from `.omx`, repository files, user-local files, environment variables, stdin, CLI arguments, transcripts, pointers, trackers, markers, task names, prompts, or review artifact fields. Those carriers are same-user writable and are not authority.
+Identity, scope, and corruption checks remain fail-closed. A foreign session or
+workspace, an invalid ownership/provenance binding, or malformed state must still
+reject the write without mutation. The advisory policy never weakens those checks.
 
 ## Routing and lifecycle evidence
 
@@ -24,20 +25,46 @@ Review artifacts can describe native lifecycle observations using:
 - `thread_id`: the native lane thread id
 - `tracker_path`: `.omx/state/subagent-tracking.json`
 
-`agent_type`, `agent_role`, `provenance_kind`, session/thread IDs, tracker roles/modes/completion, task names, routing markers, transcripts, and local review artifacts are routing, lifecycle, or diagnostic data only. A same-user child can forge them. They never satisfy the receipt requirement.
+`agent_type`, `agent_role`, `provenance_kind`, session/thread IDs, tracker
+roles/modes/completion, task names, routing markers, transcripts, and local
+review artifacts are routing, lifecycle, or diagnostic data only. They may inform
+review, and missing or incomplete records produce an advisory rather than a
+workflow refusal.
 
-Typed `native_subagent` Architect and Critic lanes may still be tracked for diagnostics. A valid lifecycle pair uses distinct threads, completed lanes, and Architect-before-Critic ordering. A roleless legacy lane, `omx_adapted` lane, pending/bound role intent, claimant token, leader attestation, or historical routing marker is inert and cannot release consensus.
+Typed `native_subagent` Architect and Critic lanes may still be tracked for
+diagnostics and review quality. Their lifecycle does not create a host-security
+boundary around ordinary progression.
 
-## Diagnostics
+## Visible advisory behavior
 
-When lifecycle evidence is present, the gate may render diagnostics for the expected tracker schema, current session, Architect/Critic thread IDs, session/thread existence, thread kinds, completion, distinctness, ordering, and remediation. These diagnostics explain lifecycle quality; they are not a receipt verifier.
+The Autopilot completion transition helper returns either `null` or exactly one
+structured advisory:
 
-Every production result remains incomplete until the official verifier is available and validates a receipt. The unavailable result includes `blockedReason: "documented_host_consensus_receipt_unavailable"`.
+```ts
+interface AutopilotCompletionAdvisory {
+  skippedGate: string;
+  missingEvidence: string;
+  message: string;
+}
+```
 
-Fresh default Autopilot checks verifier capability before starting `deep-interview` or Ralplan review lanes. Deterministic verifier absence terminalizes the fresh Autopilot run with the same exact blocker, avoiding review work that cannot advance. The capability check is not receipt verification and never authorizes a transition; direct/manual Ralplan and existing active Autopilot sessions keep their diagnostic and resumability behavior.
+The first matching phase/review/consensus check wins. Each permitted-but-
+incomplete transition appends that object to the persisted `skipped_gates` array
+without duplicating an existing `skippedGate`. The mode update, state operation,
+and keyword transports all expose the same advisory. A terminal state carrying a
+skipped gate stores `completion_status: "complete-with-skipped-gates"` and must be
+reported as **complete with skipped gates**, never clean success.
 
-## Future enablement
+Diagnostics may report tracker schema, session/thread existence, completion,
+distinctness, ordering, and remediation. They describe review quality only; they
+must not be converted into a missing-receipt blocker or weaken authority-
+decreasing recovery.
 
-Enable a positive path only after official documentation specifies a non-user-mintable host receipt channel and OMX implements direct verification for that documented version and surface. Tests must prove that injected local JSON, environment, transcript, tracker, marker, and review artifacts cannot mint or substitute the receipt. Until then, preserve the fail-closed blocker and treat typed routing/lifecycle as non-authoritative.
+## Current contract
+
+Keep typed routing and lifecycle records non-authoritative while allowing the
+canonical Autopilot progression to proceed. Security-sensitive capabilities may
+define their own documented authority checks, but they must not reintroduce the
+retired project-wide Ralplan/Autopilot host-receipt gate.
 
 See [ADR 3212](../adr/3212-same-user-native-child-auth-boundary.md) and [ADR 3194](../adr/3194-codex-01445-documented-leader-proof.md).

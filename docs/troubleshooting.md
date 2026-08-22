@@ -93,6 +93,14 @@ State writes fail closed with `Cannot resolve writable state scope: session.json
 
 ### Exact-session reconciliation (stale-dead pointer)
 
+To remove a verified-dead selected pointer and preserve its exact forensic bytes, use the official recovery command:
+
+```bash
+omx session pointer recover --cwd /path/to/project
+```
+
+The command serializes with the canonical pointer lock and moves only an authoritative, positively dead `session.json` to an adjacent no-clobber quarantine path. It refuses live or usable owners, uncertain or reused identities, malformed or foreign pointers, root/lineage mismatches, concurrent changes, I/O failures, and existing quarantine destinations. A successful recovery leaves the canonical pointer absent so an ordinary relaunch can publish a fresh pointer.
+
 When the pointer's recorded PID is definitively dead, bind the exact current session explicitly and retry the same command — no manual file surgery:
 
 ```bash
@@ -178,3 +186,16 @@ Adjust the terminal pattern if your client advertises a different terminfo name.
 - For explicit shell-native read-only evidence or `--tmux-pane` summaries, use `omx sparkshell -- <command>`.
 
 The earlier explore harness fallback boundaries (sparkshell-backend fallback and in-harness model fallback) no longer apply to a user-facing command, because the command no longer runs a harness. Internal harness-resolution helpers remain only to support `omx doctor`/native-asset diagnostics.
+
+## `omx update` refuses to run on a working-tree build
+
+A checkout that you run directly, or link into a global root with `npm link`, is not owned by any package manager. `omx update` refuses it explicitly:
+
+```
+[omx] This build runs from a working tree (/path/to/oh-my-codex), which no package manager owns.
+      Self-update is refused; pull and rebuild the checkout instead.
+```
+
+Update such a build with `git pull && npm run build`. The launch-time check makes the same determination silently and records the cadence, so a linked dev build never nags on startup and never overwrites your tree.
+
+This is distinct from `[omx] Unable to determine whether this global install is owned by npm or Bun`, which means the package root *is* inside a global `node_modules` but neither manager could be validated as its owner — reinstall globally with npm or Bun.

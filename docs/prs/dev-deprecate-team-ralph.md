@@ -57,7 +57,7 @@ That coupling made the runtime harder to reason about without providing enough v
 - `src/team/state/types.ts`
 - `src/scripts/notify-hook.ts`
 - `src/team/followup-planner.ts`
-- `src/pipeline/stages/team-exec.ts`
+- `src/pipeline/stages/team-exec.ts` (removed in OMX 0.21 with the rest of `src/pipeline/**`)
 
 ## Deleted surfaces
 - `src/team/linked-ralph-bridge.ts`
@@ -86,7 +86,7 @@ That coupling made the runtime harder to reason about without providing enough v
 
 Verification command:
 ```bash
-npm run build && node --test   dist/cli/__tests__/team.test.js   dist/team/__tests__/followup-planner.test.js   dist/pipeline/__tests__/stages.test.js   dist/hooks/__tests__/keyword-detector.test.js   dist/hooks/__tests__/consensus-execution-handoff.test.js   dist/hooks/__tests__/deep-interview-contract.test.js   dist/team/__tests__/runtime.test.js   dist/team/__tests__/state.test.js   dist/team/__tests__/api-interop.test.js
+npm run build && node --test   dist/cli/__tests__/team.test.js   dist/team/__tests__/followup-planner.test.js   dist/hooks/__tests__/keyword-detector.test.js   dist/hooks/__tests__/consensus-execution-handoff.test.js   dist/hooks/__tests__/deep-interview-contract.test.js   dist/team/__tests__/runtime.test.js   dist/team/__tests__/state.test.js   dist/team/__tests__/api-interop.test.js
 ```
 
 Result:
