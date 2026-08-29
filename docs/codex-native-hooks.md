@@ -139,6 +139,8 @@ or child-write allowance exists in this Option C implementation.
 
 The native planning/Conductor boundary retains one narrowly authenticated recovery surface: exact canonical `omx cancel` and workflow-supported `omx cancel --force`. An inherited non-empty `NODE_EXTRA_CA_CERTS` does not independently block that exact command because it supplies TLS trust material rather than executable, shell-startup, or loader substitution. Every independent raw-command, canonical executable, PATH/PATHEXT, shell function/startup, `NODE_OPTIONS`, loader/import, `OPENSSL_CONF`, output, dynamic-loader, assignment, chaining, and workflow-force check remains fail-closed.
 
+On Windows, cancellation and native-owner validation treat a path `lstat()` device value of zero and a populated opened-handle device value as the same file only when the nonzero inode also matches. The reverse mismatch, different nonzero devices, zero inode, and changed inode remain rejected.
+
 When a resumed session has current pointer/native-owner/target agreement but a stale top-level `owner_codex_session_id` in session-scoped `skill-active-state.json`, exact cancellation may replace that one field inside its existing exact-session transaction. The stale value never becomes an alias or authority; nested, live, malformed, ambiguous, or cross-session evidence denies without successful mutation. OMX does not infer root `SessionStart` authority for this repair because documented native hooks cannot distinguish a root event from unreadable or malformed child evidence. The transaction provides frozen all-target validation and in-process reverse rollback, not crash-atomic multi-file visibility.
 
 ## Document-refresh warning MVP
