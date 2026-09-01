@@ -258,6 +258,26 @@ npm test
 
 Inspiré par [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode), adapté pour Codex CLI.
 
+## Langues
+
+- [English](../../README.md)
+- [한국어](./README.ko.md)
+- [日本語](./README.ja.md)
+- [简体中文](./README.zh.md)
+- [繁體中文](./README.zh-TW.md)
+- [Tiếng Việt](./README.vi.md)
+- [Español](./README.es.md)
+- [Português](./README.pt.md)
+- [Русский](./README.ru.md)
+- [Türkçe](./README.tr.md)
+- [Deutsch](./README.de.md)
+- [Français](./README.fr.md)
+- [Italiano](./README.it.md)
+- [Ελληνικά](./README.el.md)
+- [Polski](./README.pl.md)
+- [Українська](./README.uk.md)
+- [Bahasa Indonesia](./README.id.md)
+
 ## Licence
 
 MIT

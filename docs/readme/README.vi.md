@@ -216,6 +216,8 @@ Nếu gặp tình trạng này, thử:
 - [Italiano](./README.it.md)
 - [Ελληνικά](./README.el.md)
 - [Polski](./README.pl.md)
+- [Українська](./README.uk.md)
+- [Bahasa Indonesia](./README.id.md)
 
 ## Đóng góp
 

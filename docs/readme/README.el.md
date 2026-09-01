@@ -216,6 +216,9 @@ omx sparkshell --tmux-pane %12 --tail-lines 400
 - [Français](./README.fr.md)
 - [Italiano](./README.it.md)
 - [Ελληνικά](./README.el.md)
+- [Polski](./README.pl.md)
+- [Українська](./README.uk.md)
+- [Bahasa Indonesia](./README.id.md)
 
 ## Συνεισφέροντες
 

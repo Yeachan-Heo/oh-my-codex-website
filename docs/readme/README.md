@@ -38,6 +38,7 @@ The repository root keeps only the canonical `README.md` so the top level stays 
 | 简体中文            | [README.zh.md](./README.zh.md)       |
 | Українська          | [README.uk.md](./README.uk.md)       |
 | 繁體中文            | [README.zh-TW.md](./README.zh-TW.md) |
+| Bahasa Indonesia    | [README.id.md](./README.id.md)       |
 
 ## Maintenance rules
 
