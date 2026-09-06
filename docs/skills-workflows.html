@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Skills & Workflows | Oh My Codex - 40+ skills and automated engineering workflows">
+  <meta name="description" content="Skills & Workflows | Oh My Codex - 25 live skills and automated engineering workflows">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs/skills-workflows.html">
   <meta property="og:title" content="Skills & Workflows | Oh My Codex">
-  <meta property="og:description" content="Master the 40+ skills and complex multi-agent workflows of oh-my-codex.">
+  <meta property="og:description" content="Master the 25 live skills and complex multi-agent workflows of oh-my-codex.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>Skills & Workflows | Oh My Codex</title>
@@ -327,7 +327,7 @@
         <!-- Skills Catalog -->
         <section id="skills-catalog">
           <h2><span class="anchor-link">#</span>Skills Catalog</h2>
-          <p>OMX provides over 40 built-in skills categorized by their role in the development lifecycle.</p>
+          <p>OMX provides 25 live skills (29 skill directories, including 4 sunset stubs) categorized by their role in the development lifecycle.</p>
 
           <h3>Execution Modes</h3>
           <div class="table-wrapper">
@@ -335,13 +335,10 @@
               <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
               <tbody>
                 <tr><td><code>autopilot</code></td><td>Full autonomous execution</td><td><code>$autopilot build auth</code></td></tr>
-                <tr><td><code>ralph</code></td><td>Persistence loop until completion</td><td><code>$ralph implementation</code></td></tr>
-                <tr><td><code>ultrawork</code></td><td>Max parallel execution</td><td><code>$ultrawork "batch"</code></td></tr>
-                <tr><td><code>visual-verdict</code></td><td>Structured visual QA loop</td><td><code>$visual-verdict "compare"</code></td></tr>
+                <tr><td><code>ultragoal</code></td><td>Create and execute durable repo-native multi-goal plans over Codex goal mode artifacts.</td><td><code>$ultragoal "plan and execute"</code></td></tr>
                 <tr><td><code>team</code></td><td>tmux-based coordinated workers with Codex/Claude/Gemini support</td><td><code>$team 3:executor "build"</code></td></tr>
                 <tr><td><code>ultraqa</code></td><td>Test-Verify-Fix cycle</td><td><code>$ultraqa</code></td></tr>
-                <tr><td><code>swarm</code></td><td>N coordinated workers</td><td><code>$swarm 3 "refactor"</code></td></tr>
-                <tr><td><code>ecomode</code></td><td>Token-efficient model routing</td><td><code>$ecomode on</code></td></tr>
+                <tr><td><code>visual-ralph</code></td><td>Visual Ralph orchestration for frontend UI from generated references, static references, or live URL targets, using $ultragoal with built-in visual verdict and pixel-diff evidence until the implementation matches and leaves a reproducible design system.</td><td><code>$visual-ralph "compare"</code></td></tr>
               </tbody>
             </table>
           </div>
@@ -354,10 +351,10 @@
                 <tr><td><code>plan</code></td><td>Strategic planning workflow</td><td><code>$plan the feature</code></td></tr>
                 <tr><td><code>ralplan</code></td><td>Consensus-based planning</td><td><code>$ralplan architecture</code></td></tr>
                 <tr><td><code>analyze</code></td><td>Deep analysis and investigation</td><td><code>$analyze the codebase</code></td></tr>
-                <tr><td><code>deepsearch</code></td><td>Thorough codebase search</td><td><code>$deepsearch "regex"</code></td></tr>
-                <tr><td><code>research</code></td><td>Parallel research agents</td><td><code>$research "new tech"</code></td></tr>
                 <tr><td><code>autoresearch</code></td><td>Autonomous iterative topic exploration</td><td><code>$autoresearch "compare ORMs"</code></td></tr>
+                <tr><td><code>best-practice-research</code></td><td>[OMX] Bounded best-practice research wrapper using official/upstream evidence first</td><td><code>$best-practice-research "current guidance"</code></td></tr>
                 <tr><td><code>deep-interview</code></td><td>Socratic ambiguity gating</td><td><code>$deep-interview "fix bug"</code></td></tr>
+                <tr><td><code>performance-goal</code></td><td>Run an evaluator-gated performance optimization workflow over Codex goal mode with durable OMX artifacts and safe goal handoffs.</td><td><code>$performance-goal "optimize the API"</code></td></tr>
               </tbody>
             </table>
           </div>
@@ -367,11 +364,9 @@
             <table>
               <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
               <tbody>
-                <tr><td><code>build-fix</code></td><td>Fix build/TypeScript errors</td><td><code>$build-fix</code></td></tr>
+                <tr><td><code>ai-slop-cleaner</code></td><td>Run an anti-slop cleanup/refactor/deslop workflow</td><td><code>$ai-slop-cleaner "clean up this module"</code></td></tr>
                 <tr><td><code>code-review</code></td><td>Comprehensive code review</td><td><code>$code-review</code></td></tr>
-                <tr><td><code>security-review</code></td><td>Full security audit</td><td><code>$security-review</code></td></tr>
-                <tr><td><code>tdd</code></td><td>Test-Driven Development</td><td><code>$tdd "add tests"</code></td></tr>
-                <tr><td><code>frontend-ui-ux</code></td><td>Designer-developer for UI/UX</td><td><code>$frontend-ui-ux "polish"</code></td></tr>
+                <tr><td><code>design</code></td><td>Canonical repo-local DESIGN.md workflow for product, UI/UX, and frontend decision source of truth</td><td><code>$design "polish the dashboard"</code></td></tr>
                 <tr><td><code>git-master</code></td><td>Atomic commits and rebasing</td><td><code>$git-master commit</code></td></tr>
               </tbody>
             </table>
@@ -385,13 +380,27 @@
                 <tr><td><code>omx-setup</code></td><td>Initialize OMX environment</td><td><code>$omx-setup</code></td></tr>
                 <tr><td><code>configure-notifications</code></td><td>Setup Slack/Discord/Telegram</td><td><code>$configure-notifications</code></td></tr>
                 <tr><td><code>doctor</code></td><td>Diagnose installation health</td><td><code>$doctor</code></td></tr>
-                <tr><td><code>psm</code></td><td>Manage worktree sessions</td><td><code>$psm create fix-bug</code></td></tr>
-                <tr><td><code>skill</code></td><td>Manage local skill catalog</td><td><code>$skill list</code></td></tr>
+                <tr><td><code>ask</code></td><td>Ask a local external advisor CLI (Claude or Gemini) and capture a reusable artifact</td><td><code>$ask claude "second opinion"</code></td></tr>
+                <tr><td><code>skill</code></td><td>Manage local skill catalog</td><td><code>/skill list</code></td></tr>
                 <tr><td><code>worker</code></td><td>(internal) Team worker protocol / lifecycle</td><td><code>$worker</code></td></tr>
                 <tr><td><code>hud</code></td><td>Configure the OMX HUD</td><td><code>$hud toggle</code></td></tr>
-                <tr><td><code>note</code></td><td>Save to persistent notepad</td><td><code>$note "API change"</code></td></tr>
-                <tr><td><code>trace</code></td><td>Show flow trace timeline</td><td><code>$trace</code></td></tr>
+                <tr><td><code>wiki</code></td><td>Persistent markdown project wiki stored under repository omx_wiki with keyword search and lifecycle capture</td><td><code>$wiki</code></td></tr>
                 <tr><td><code>cancel</code></td><td>Stop active execution</td><td><code>$cancel</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Retired Skill Aliases</h3>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Keyword</th><th>Status</th><th>Replacement</th></tr></thead>
+              <tbody>
+                <tr><td><code>visual-verdict (retired)</code></td><td>Retired; use <code>$visual-ralph</code> instead.</td><td><code>$visual-ralph</code></td></tr>
+                <tr><td><code>swarm (retired)</code></td><td>Retired; use <code>$team</code> instead.</td><td><code>$team</code></td></tr>
+                <tr><td><code>ecomode (retired)</code></td><td>Retired; use <code>$team</code> instead.</td><td><code>$team</code></td></tr>
+                <tr><td><code>deepsearch (retired)</code></td><td>Retired; use <code>$analyze</code> instead.</td><td><code>$analyze</code></td></tr>
+                <tr><td><code>security-review (retired)</code></td><td>Retired; use <code>$code-review</code> instead.</td><td><code>$code-review</code></td></tr>
+                <tr><td><code>frontend-ui-ux (retired)</code></td><td>Retired; use <code>$design</code> instead.</td><td><code>$design</code></td></tr>
               </tbody>
             </table>
           </div>
@@ -409,9 +418,9 @@
 
           <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
             <div class="card glass tilt-3d-polish pixel-border" style="padding: 1.5rem;">
-              <h3 style="margin-top:0; color: var(--accent-primary);">ralph</h3>
-              <p>Triggers the persistence loop. Codex will keep trying until the architect verifies the change. Automatically includes <code>ultrawork</code>.</p>
-              <code>"ralph fix all the bugs"</code>
+              <h3 style="margin-top:0; color: var(--accent-primary);">ultragoal</h3>
+              <p>Triggers durable multi-goal planning and execution over Codex goal mode artifacts.</p>
+              <code>"ultragoal complete the migration"</code>
             </div>
             <div class="card glass tilt-3d-polish pixel-border" style="padding: 1.5rem;">
               <h3 style="margin-top:0; color: var(--accent-primary);">ralplan</h3>
@@ -419,9 +428,9 @@
               <code>"ralplan this new feature"</code>
             </div>
             <div class="card glass tilt-3d-polish pixel-border" style="padding: 1.5rem;">
-              <h3 style="margin-top:0; color: var(--accent-primary);">ulw / ultrawork</h3>
-              <p>Triggers max parallelism. Splits tasks across multiple workers for maximum throughput.</p>
-              <code>"ulw refactor the API"</code>
+              <h3 style="margin-top:0; color: var(--accent-primary);">team</h3>
+              <p>Triggers coordinated worker execution in tmux-backed sessions.</p>
+              <code>"team refactor the API"</code>
             </div>
             <div class="card glass tilt-3d-polish pixel-border" style="padding: 1.5rem;">
               <h3 style="margin-top:0; color: var(--accent-primary);">plan</h3>
@@ -443,17 +452,17 @@
         <!-- Workflows -->
         <section id="workflows">
           <h2><span class="anchor-link">#</span>Workflow Examples</h2>
-          <p>Combine skills to create powerful, automated engineering pipelines.</p>
+          <p>Combine skills to create powerful, automated engineering workflows.</p>
 
           <article class="card glass" style="margin-bottom: 2rem; padding: 2rem;">
-            <h3>The "Full-Auto" Pipeline</h3>
+            <h3>The "Full-Auto" Workflow</h3>
             <p>Best for large features. Combines consensus planning, parallel execution, and persistent verification.</p>
             <div class="workflow">
               <div class="workflow-step"><span class="workflow-step__label">ralplan</span></div>
               <div class="workflow-arrow">&rarr;</div>
               <div class="workflow-step"><span class="workflow-step__label">team</span></div>
               <div class="workflow-arrow">&rarr;</div>
-              <div class="workflow-step"><span class="workflow-step__label">ralph</span></div>
+              <div class="workflow-step"><span class="workflow-step__label">ultragoal</span></div>
             </div>
             <div class="code-block-wrapper">
               <div class="code-block-header"><span class="code-lang">BASH</span></div>
@@ -464,7 +473,7 @@ $ralplan "implement user dashboard"
 $team 4 "follow the plan in .omx/plans/latest.md"
 
 # 3. Final polish and verification
-$ralph "ensure dashboard is 100% complete"</code></pre>
+$ultragoal "ensure dashboard is 100% complete"</code></pre>
             </div>
           </article>
 
@@ -474,7 +483,7 @@ $ralph "ensure dashboard is 100% complete"</code></pre>
             <div class="workflow">
               <div class="workflow-step"><span class="workflow-step__label">plan</span></div>
               <div class="workflow-arrow">&rarr;</div>
-              <div class="workflow-step"><span class="workflow-step__label">ralph</span></div>
+              <div class="workflow-step"><span class="workflow-step__label">ultragoal</span></div>
               <div class="workflow-arrow">&rarr;</div>
               <div class="workflow-step"><span class="workflow-step__label">ultraqa</span></div>
             </div>
@@ -484,7 +493,7 @@ $ralph "ensure dashboard is 100% complete"</code></pre>
 $plan "fix the race condition in auth.js"
 
 # 2. Implement fix with persistence
-$ralph "apply the fix and verify"
+$ultragoal "apply the fix and verify"
 
 # 3. Exhaustive QA cycle
 $ultraqa "run all edge cases"</code></pre>
@@ -497,11 +506,11 @@ $ultraqa "run all edge cases"</code></pre>
           <h2><span class="anchor-link">#</span>Usage Examples</h2>
           
           <h3>Invoking Skills</h3>
-          <p>Skills can be invoked using the <code>$</code> prefix or via the <code>/skills</code> magic command.</p>
+          <p>Skills can be invoked using the <code>$</code> prefix. Use the singular <code>/skill</code> command to manage the skill catalog.</p>
           <div class="code-block-wrapper">
             <div class="code-block-header"><span class="code-lang">OMX</span></div>
             <pre><code>$analyze "why is the build slow?"
-/skills:analyze "optimize the build"</code></pre>
+$analyze "optimize the build"</code></pre>
           </div>
 
           <h3>Agent Role Prompts</h3>
