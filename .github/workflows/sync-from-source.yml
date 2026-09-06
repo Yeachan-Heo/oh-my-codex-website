@@ -44,6 +44,11 @@ jobs:
           OMX_SOURCE_DIR: ${{ github.workspace }}/oh-my-codex-source
         run: node scripts/sync-version.mjs
 
+      - name: Check published docs against the source capability surface
+        env:
+          OMX_SOURCE_DIR: ${{ github.workspace }}/oh-my-codex-source
+        run: node scripts/check-doc-parity.mjs
+
       - name: Check for changes
         id: check
         run: |
