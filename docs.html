@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Oh My Codex v0.21.3 Documentation - durable HUD/session ownership, safer Autopilot replay, stricter plugin hooks, clearer Team runtime behavior, and tighter release evidence for Codex CLI">
+  <meta name="description" content="Oh My Codex v0.21.3 Documentation - duplicate Team wake de-duplication, a 5000-line detached scrollback clamp, and composer drift triage for Codex CLI">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yeachan-heo.github.io/oh-my-codex-website/docs.html">
   <meta property="og:title" content="Documentation | Oh My Codex">
-  <meta property="og:description" content="Complete documentation for oh-my-codex v0.18.8 - durable HUD/session ownership, safer Autopilot replay, stricter plugin hook/cache behavior, clearer Team runtime safety, and tighter release evidence.">
+  <meta property="og:description" content="Complete documentation for oh-my-codex v0.21.3 - duplicate Team wakes retired instead of re-woken, the detached leader scrollback clamp raised to 5000 lines, and composer drift triage.">
   <meta property="og:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Documentation | Oh My Codex">
-  <meta name="twitter:description" content="v0.18.8 is live: stronger HUD/session ownership, safer Autopilot replay, stricter plugin hook/cache behavior, clearer Team runtime safety, and tighter release evidence.">
+  <meta name="twitter:description" content="v0.21.3 is live: duplicate Team wakes eliminated, the detached leader tmux scrollback clamp raised from 500 to 5000 lines, and composer drift triage documented.">
   <meta name="twitter:image" content="https://yeachan-heo.github.io/oh-my-codex-website/social-preview.png">
 
   <title>Documentation | Oh My Codex</title>
@@ -877,12 +877,12 @@
           <div class="docs-hero tilt-3d-polish">
             <div class="docs-hero__inner">
               <div>
-                <p class="docs-hero__lede">v0.18.8 keeps the runtime reliability train moving: HUD/session ownership is more durable, Autopilot replay and context handling are safer, plugin hook/cache correctness is stricter, Team startup/disablement behavior is clearer, and release/CI evidence is tighter.</p>
+                <p class="docs-hero__lede">v0.21.3 is a reliability patch: Team no longer re-wakes on already-terminal projections (they are retired instead), and the detached leader tmux scrollback clamp rose from 500 to 5000 lines so long assistant responses are no longer discarded.</p>
                 <div class="docs-hero__chips">
-                  <span class="docs-hero__chip"><strong>HUD</strong> ownership</span>
-                  <span class="docs-hero__chip"><strong>Autopilot</strong> replay</span>
-                  <span class="docs-hero__chip"><strong>Plugin</strong> hooks</span>
-                  <span class="docs-hero__chip"><strong>Team</strong> safety</span>
+                  <span class="docs-hero__chip"><strong>Team</strong> wake de-dup</span>
+                  <span class="docs-hero__chip"><strong>5000-line</strong> scrollback</span>
+                  <span class="docs-hero__chip"><strong>Composer</strong> drift triage</span>
+                  <span class="docs-hero__chip"><strong>Patch</strong> release</span>
                 </div>
               </div>
 
@@ -902,20 +902,20 @@ omx update         # check npm and refresh setup</code></pre>
 
           <div class="grid grid--2">
             <div class="card tilt-3d-polish">
-              <h3 style="margin-top:0" class="tilt-3d-child">33 Agent Prompts</h3>
+              <h3 style="margin-top:0" class="tilt-3d-child"><span data-stat="prompts">32</span> Agent Prompts</h3>
               <p>Specialized prompt catalog across build, review, domain, product, and coordination lanes.</p>
             </div>
             <div class="card tilt-3d-polish">
-              <h3 style="margin-top:0" class="tilt-3d-child">37 Skills</h3>
+              <h3 style="margin-top:0" class="tilt-3d-child"><span data-stat="skills">25</span> Skills</h3>
               <p>Execution workflows spanning autopilot, review, orchestration, notifications, research, and recovery.</p>
             </div>
             <div class="card tilt-3d-polish">
-              <h3 style="margin-top:0" class="tilt-3d-child">5 MCP Servers</h3>
-              <p>State, memory, code intelligence, team orchestration, and trace visibility wired into one operator surface.</p>
+              <h3 style="margin-top:0" class="tilt-3d-child"><span data-stat="mcp-servers">6</span> MCP Servers</h3>
+              <p>State, memory, code intelligence, trace visibility, wiki, and the Hermes coordination bridge wired into one operator surface.</p>
             </div>
             <div class="card tilt-3d-polish">
-              <h3 style="margin-top:0" class="tilt-3d-child">v0.18.8 Highlights</h3>
-              <p>Durable HUD ownership, safer Autopilot replay, stricter plugin hooks, clearer Team runtime behavior, and tighter release evidence.</p>
+              <h3 style="margin-top:0" class="tilt-3d-child"><span data-stat="version">v0.21.3</span> Highlights</h3>
+              <p>Duplicate Team wakes eliminated by retiring terminal projections, and the detached leader tmux scrollback clamp raised from 500 to 5000 lines so long assistant responses survive.</p>
             </div>
           </div>
         </section>
@@ -925,15 +925,78 @@ omx update         # check npm and refresh setup</code></pre>
           <h2><span class="anchor-link">#</span>Release Notes</h2>
           <div class="callout info">
             <div class="callout-title">Quick Summary</div>
-            <p>Recent releases add durable HUD/session ownership, safer Autopilot replay, stricter plugin hook/cache behavior, clearer Team runtime safety, and tighter release/CI evidence.</p>
+            <p>Recent releases retire the legacy execution loops behind a uniform sunset-stub resolver, remove the MCP state writer tools, restore <code>omx autoresearch</code> and <code>omx autopilot</code> as canonical CLI commands, and de-duplicate Team wakes.</p>
           </div>
           <!-- One mode-card per version with collapsible details -->
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.21.3</span>
+              Team Wake De-duplication &amp; Scrollback Clamp
+            </div>
+            <details open>
+              <summary>View changes in v0.21.3</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Duplicate Team wakes:</strong> Team no longer re-wakes on already-terminal projections; terminal projections are retired instead of lingering (#3608).</li>
+                <li><strong>Long responses lost from tmux scrollback:</strong> the detached leader scrollback clamp was 500 lines, so long sessions discarded multi-line assistant responses; the clamp is now 5000 lines.</li>
+                <li><strong>Composer drift triage:</strong> <code>docs/troubleshooting.md</code> gains the prompt-drift symptom entry with a measured repro matrix and scrollback semantics.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Published September 3, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.21.2</span>
+              HUD Finish Progress &amp; Runtime Hydration
+            </div>
+            <details>
+              <summary>View changes in v0.21.2</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Optional GitGuardex HUD finish progress:</strong> live review/autofix progress with project-root configuration and bounded stream discovery.</li>
+                <li><strong>Bahasa Indonesia README:</strong> Indonesian translation with synchronized localized language navigation (#3599).</li>
+                <li><strong>macOS arm64 <code>omx-runtime</code> hydration:</strong> global install/reinstall and script-suppressed updates hydrate the verified runtime.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Published September 1, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.21.1</span>
+              Ralplan Advisory &amp; Trusted Publication
+            </div>
+            <details>
+              <summary>View changes in v0.21.1</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Ralplan Advisory / Contract A:</strong> cooperative Planner &rarr; Architect &rarr; Critic planning evidence without granting execution authority.</li>
+                <li><strong>Trusted release publication:</strong> tag publication is bound to <code>main</code> ancestry and an exact SHA, with verified native release assets.</li>
+                <li><strong>Canonical state and process ownership:</strong> state leases, locks, session pointers, and recovery distinguish exact process incarnations.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Patch release. Published August 31, 2026.</p>
+            </details>
+          </div>
+          <div class="mode-card tilt-3d-polish">
+            <div class="mode-card__header tilt-3d-child">
+              <span class="mode-card__keyword">v0.21.0</span>
+              Retired Loops, Sunset Stubs &amp; Canonical CLI
+            </div>
+            <details>
+              <summary>View changes in v0.21.0</summary>
+              <ul style="list-style-type: disc;">
+                <li><strong>Uniform sunset-stub resolver:</strong> retired keywords resolve to a direct replacement instead of silently doing nothing &mdash; <code>$ralph</code> &rarr; <code>$ultragoal</code>, <code>$ultrawork</code> &rarr; <code>$team</code>, <code>$pipeline</code> &rarr; <code>$plan</code> + <code>$team</code>, <code>$autoresearch-goal</code> &rarr; <code>$autoresearch</code>.</li>
+                <li><strong>MCP state writer tools removed:</strong> <code>state_write</code> and <code>state_clear</code> are gone from the MCP surface and return explicit deprecation errors; durable writes go through the CLI.</li>
+                <li><strong>Merged-away execution loops:</strong> the standalone autopilot/pipeline loops are merged into the unified planning/execution surface.</li>
+                <li><strong>Hard workflow gates removed:</strong> the Autopilot/Ralplan consensus-receipt gate and the planning-gate requirement are gone.</li>
+                <li><strong><code>omx autopilot</code> canonical orchestrator:</strong> a first-class CLI command restoring the staged <code>$deep-interview</code> &rarr; <code>$ralplan</code> flow.</li>
+                <li><strong>Ultragoal ordinary/strict modes:</strong> the completion cohort gate is advisory in ordinary mode and strict in strict mode.</li>
+              </ul>
+              <p style="margin-top: 0.75rem; color: var(--text-tertiary); font-size: 0.85rem;">Minor release. Published August 22, 2026.</p>
+            </details>
+          </div>
           <div class="mode-card tilt-3d-polish">
             <div class="mode-card__header tilt-3d-child">
               <span class="mode-card__keyword">v0.18.8</span>
               Runtime Reliability, Plugin Hooks &amp; Release Evidence
             </div>
-            <details open>
+            <details>
               <summary>View changes in v0.18.8</summary>
               <ul style="list-style-type: disc;">
                 <li><strong>HUD/session ownership:</strong> HUD panes are scoped by leader/source pane, duplicate fallback panes are deduped, deleted-cwd doctor panes are avoided, escaped tmux separators parse correctly, and native session-id drift preserves ownership.</li>
@@ -1513,7 +1576,7 @@ omx team shutdown &lt;team-name&gt;</code></pre>
 
         <section id="agent-tiers" data-section>
           <h2><span class="anchor-link">#</span>Agent Tiers & Catalog</h2>
-          <p>OMX organizes 30+ specialized agents into functional lanes. Use <code>/prompts:name</code> to invoke them.</p>
+          <p>OMX organizes <span data-stat="prompts">32</span> specialized agents into functional lanes. Use <code>/prompts:name</code> to invoke them.</p>
 
           <div class="grid grid--2">
             <!-- Build/Analysis -->
@@ -1728,18 +1791,26 @@ omx team shutdown &lt;team-name&gt;</code></pre>
         <section id="mcp-tools" data-section>
           <h2><span class="anchor-link">#</span>MCP Tools</h2>
           
-          <h3>State & Runtime</h3>
+          <h3>Servers</h3>
+          <p>Six first-party MCP servers ship with the plugin: <code>omx_state</code>, <code>omx_memory</code>, <code>omx_code_intel</code>, <code>omx_trace</code>, <code>omx_wiki</code>, and <code>omx_hermes</code>. They expose 43 configured tools in total.</p>
+
+          <h3>State &amp; Runtime</h3>
           <ul>
-            <li><strong>State tools:</strong> <code>state_read</code>, <code>state_write</code>, <code>state_clear</code> for managing execution mode state.</li>
-            <li><strong>Notepad:</strong> <code>notepad_read</code>, <code>notepad_write_priority</code>, <code>notepad_write_working</code>, <code>notepad_write_manual</code>.</li>
+            <li><strong>State (read-only):</strong> <code>state_read</code>, <code>state_list_active</code>, <code>state_get_status</code>. The MCP state surface does not write: durable mutations go through the CLI, and legacy writer/team-mutation tool names are hard-deprecated and return an error.</li>
+            <li><strong>Notepad:</strong> <code>notepad_read</code>, <code>notepad_write_priority</code>, <code>notepad_write_working</code>, <code>notepad_write_manual</code>, <code>notepad_prune</code>, <code>notepad_stats</code>.</li>
+            <li><strong>Project memory:</strong> <code>project_memory_read</code>, <code>project_memory_write</code>, <code>project_memory_add_note</code>, <code>project_memory_add_directive</code>.</li>
+            <li><strong>Trace:</strong> <code>trace_timeline</code>, <code>trace_summary</code>.</li>
           </ul>
 
           <h3>Code Intelligence</h3>
-          <p><strong>LSP Tools:</strong> <code>lsp_hover</code>, <code>lsp_goto_definition</code>, <code>lsp_find_references</code>, <code>lsp_diagnostics</code>, <code>lsp_rename</code>.</p>
+          <p><strong>LSP tools:</strong> <code>lsp_hover</code>, <code>lsp_find_references</code>, <code>lsp_document_symbols</code>, <code>lsp_workspace_symbols</code>, <code>lsp_diagnostics</code>, <code>lsp_diagnostics_directory</code>, <code>lsp_servers</code>.</p>
           <p><strong>AST Grep:</strong> <code>ast_grep_search</code>, <code>ast_grep_replace</code> for structural refactoring.</p>
 
-          <h3>Utilities</h3>
-          <p><strong>Python REPL:</strong> Persistent environment for data analysis.</p>
+          <h3>Wiki</h3>
+          <p><code>wiki_read</code>, <code>wiki_query</code>, <code>wiki_list</code>, <code>wiki_add</code>, <code>wiki_ingest</code>, <code>wiki_refresh</code>, <code>wiki_lint</code>, <code>wiki_delete</code>.</p>
+
+          <h3>Hermes bridge</h3>
+          <p>Bounded session coordination: <code>hermes_start_session</code>, <code>hermes_send_prompt</code>, <code>hermes_read_status</code>, <code>hermes_read_tail</code>, <code>hermes_list_sessions</code>, <code>hermes_read_artifact</code>, <code>hermes_list_artifacts</code>, <code>hermes_report_status</code>, <code>hermes_list_questions</code>, <code>hermes_list_question_events</code>, <code>hermes_submit_question_answer</code>.</p>
           
           <h3 id="mcp-working-directory-policy">MCP workingDirectory policy (optional hardening)</h3>
           <p>By default, MCP state/memory/trace tools accept caller-provided <code>workingDirectory</code>. To constrain this, set an allowlist of roots:</p>
@@ -1757,17 +1828,32 @@ omx team shutdown &lt;team-name&gt;</code></pre>
             <table>
               <thead><tr><th>Keyword</th><th>Description</th><th>Example</th></tr></thead>
               <tbody>
-                <tr><td><code>autopilot</code></td><td>Autonomous execution</td><td>"autopilot build a login page"</td></tr>
-                <tr><td><code>ralph</code></td><td>Persistence mode</td><td>"ralph refactor the API"</td></tr>
-                <tr><td><code>ulw</code></td><td>Ultrawork (Parallel)</td><td>"ulw fix these 5 bugs"</td></tr>
-                <tr><td><code>$team</code></td><td>tmux Team workers</td><td>"$team 3:executor build it"</td></tr>
-                <tr><td><code>plan</code></td><td>Strategic planning</td><td>"plan the migration"</td></tr>
-                <tr><td><code>$ralplan</code></td><td>Consensus planning</td><td>"$ralplan the API"</td></tr>
+                <tr><td><code>$autopilot</code></td><td>Full autonomous execution from idea to working code</td><td>"$autopilot build a login page"</td></tr>
+                <tr><td><code>$ultragoal</code></td><td>Durable goal ledger that runs every deliverable to completion</td><td>"$ultragoal refactor the API"</td></tr>
+                <tr><td><code>$team</code></td><td>N coordinated workers on a shared task list</td><td>"$team 3:executor build it"</td></tr>
+                <tr><td><code>$worker</code></td><td>Team worker protocol: ACK, mailbox, task lifecycle</td><td>"$worker"</td></tr>
+                <tr><td><code>$plan</code></td><td>Strategic planning</td><td>"$plan the migration"</td></tr>
+                <tr><td><code>$ralplan</code></td><td>Consensus planning across planner, architect and critic</td><td>"$ralplan the API"</td></tr>
+                <tr><td><code>$deep-interview</code></td><td>Requirements interview that produces a spec before any mutation</td><td>"$deep-interview 'vague idea'"</td></tr>
+                <tr><td><code>$design</code></td><td>Canonical product/UI decision workflow recorded in DESIGN.md</td><td>"$design the settings page"</td></tr>
+                <tr><td><code>$analyze</code></td><td>Repository analysis pass before planning or implementation</td><td>"$analyze this service"</td></tr>
+                <tr><td><code>$code-review</code></td><td>Review across all quality dimensions</td><td>"$code-review this PR"</td></tr>
+                <tr><td><code>$ultraqa</code></td><td>Adversarial QA with end-to-end expectations</td><td>"$ultraqa"</td></tr>
+                <tr><td><code>$autoresearch</code></td><td>Goal-directed research mission ending on a structured verdict</td><td>"$autoresearch which queue fits"</td></tr>
+                <tr><td><code>$best-practice-research</code></td><td>Bounded best-practice research using official/upstream evidence</td><td>"$best-practice-research retries"</td></tr>
+                <tr><td><code>$performance-goal</code></td><td>Evaluator-gated performance optimization workflow</td><td>"$performance-goal cut p99"</td></tr>
+                <tr><td><code>$visual-ralph</code></td><td>Visual frontend orchestration from generated references</td><td>"$visual-ralph the dashboard"</td></tr>
+                <tr><td><code>$ai-slop-cleaner</code></td><td>Anti-slop cleanup, refactor and deslop workflow</td><td>"$ai-slop-cleaner this module"</td></tr>
+                <tr><td><code>$git-master</code></td><td>Atomic commits, rebasing and history management</td><td>"$git-master tidy this branch"</td></tr>
+                <tr><td><code>$ask</code></td><td>Ask a local external advisor CLI (Claude or Gemini)</td><td>"$ask gemini about this trace"</td></tr>
+                <tr><td><code>$wiki</code></td><td>Repository wiki generation and lookup</td><td>"$wiki"</td></tr>
+                <tr><td><code>$configure-notifications</code></td><td>Unified notification setup for all platforms</td><td>"$configure-notifications"</td></tr>
+                <tr><td><code>$omx-setup</code></td><td>Set up and configure oh-my-codex</td><td>"$omx-setup"</td></tr>
               </tbody>
             </table>
           </div>
           <p>Skills are invoked with <code>$name</code> inside Codex CLI. Agent prompts are loaded with <code>/prompts:name</code>.</p>
-          <p><strong>Utility Skills:</strong> <code>$cancel</code>, <code>$note</code>, <code>$hud</code>, <code>$omc-doctor</code>.</p>
+          <p><strong>Utility skills:</strong> <code>$cancel</code>, <code>$hud</code>, <code>$doctor</code>, <code>$skill</code>. The CLI equivalent of the doctor skill is <code>omx doctor</code>.</p>
         </section>
 
         <!-- State & Memory -->

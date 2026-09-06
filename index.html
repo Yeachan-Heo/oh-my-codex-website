@@ -1324,8 +1324,8 @@ $ultragoal "carry the plan to completion"</code></pre>
   <!-- Release Highlights Section -->
   <section class="section release-section" id="release" data-reveal>
     <div class="section__header">
-      <h2 class="section__title">v0.21.3</h2>
-      <p class="section__subtitle">Released: <strong>June 1, 2026</strong> &mdash; HUD/session ownership is more durable, Autopilot replay and context handling are safer, plugin hook/cache correctness is stricter, Team startup/disablement behavior is clearer, and release/CI evidence is tighter.</p>
+      <h2 class="section__title"><span data-stat="version">v0.21.3</span></h2>
+      <p class="section__subtitle">Released: <strong>September 3, 2026</strong> &mdash; duplicate Team wakes are eliminated by retiring terminal projections, the detached leader tmux scrollback clamp rises from 500 to 5000 lines, and composer prompt-drift triage is documented. The 0.21 line also retired the legacy execution loops behind a sunset-stub resolver and removed the MCP state writer tools.</p>
     </div>
 
     <div class="features-grid">
@@ -1335,8 +1335,8 @@ $ultragoal "carry the plan to completion"</code></pre>
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Durable HUD Ownership</h3>
-        <p class="feature-card__description">HUD panes are scoped by leader/source pane, duplicate legacy panes are deduped after prompt revive, deleted-cwd doctor panes are avoided, escaped tmux separators parse correctly, and native session-id drift preserves ownership.</p>
+        <h3 class="feature-card__title">Team Wake De-duplication</h3>
+        <p class="feature-card__description">Team no longer re-wakes on already-terminal projections; terminal projections are retired instead of lingering, so a finished worker stops generating wake churn.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1346,8 +1346,8 @@ $ultragoal "carry the plan to completion"</code></pre>
             <path d="M3 12h3M18 12h3M12 3v3M12 18v3"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Safer Autopilot Replay</h3>
-        <p class="feature-card__description">Completed terminal turns no longer reactivate Autopilot, context snapshots are seeded and hardened, task-seed provenance is clearer, and planning phases avoid editing under native session drift.</p>
+        <h3 class="feature-card__title">5000-Line Scrollback Clamp</h3>
+        <p class="feature-card__description">The detached leader scrollback clamp was 500 lines, so long sessions silently discarded multi-line assistant responses. It now holds 5000 lines.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1357,8 +1357,8 @@ $ultragoal "carry the plan to completion"</code></pre>
             <path d="M12 6v6l4 2"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Stricter Plugin Hooks</h3>
-        <p class="feature-card__description">Stale plugin hook cache refresh is fixed, setup mode survives update refresh, launcher JSON fallback behavior is preserved, and mirror sync verifies plugin hook metadata.</p>
+        <h3 class="feature-card__title">Sunset-Stub Resolver</h3>
+        <p class="feature-card__description">Retired keywords resolve to a direct replacement instead of failing quietly: <code>$ralph</code> &rarr; <code>$ultragoal</code>, <code>$ultrawork</code> &rarr; <code>$team</code>, <code>$pipeline</code> &rarr; <code>$plan</code> + <code>$team</code>, <code>$autoresearch-goal</code> &rarr; <code>$autoresearch</code>.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1374,8 +1374,8 @@ $ultragoal "carry the plan to completion"</code></pre>
             <path d="M16.24 7.76l2.83-2.83"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Clearer Team Runtime</h3>
-        <p class="feature-card__description">Team mode can be disabled, tmux worktree startup compatibility is fixed, native executor lanes remain leaf-only, and default native subagent routing guidance is corrected.</p>
+        <h3 class="feature-card__title">Read-Only MCP State</h3>
+        <p class="feature-card__description">The MCP state writer tools <code>state_write</code> and <code>state_clear</code> are removed from the surface and return explicit deprecation errors; durable writes go through the CLI.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1387,8 +1387,8 @@ $ultragoal "carry the plan to completion"</code></pre>
             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
           </svg>
         </div>
-        <h3 class="feature-card__title">Tighter Release Evidence</h3>
-        <p class="feature-card__description">Self-hosted Linux runner selection and GJC evidence lane optimization reduce avoidable CI churn while release readiness records local, e2e, live, pack, and publication gates.</p>
+        <h3 class="feature-card__title">Canonical <code>omx autopilot</code></h3>
+        <p class="feature-card__description">A first-class CLI command restores the staged <code>$deep-interview</code> &rarr; <code>$ralplan</code> flow, and the standalone autopilot/pipeline loops are merged into the unified planning surface.</p>
       </div>
     </div>
   </section>
@@ -1495,7 +1495,7 @@ OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini \
           </svg>
         </div>
         <h3 class="feature-card__title">Workflow Skills</h3>
-        <p class="feature-card__description">37 workflow skills and command surfaces via <code>$name</code> syntax for autopilot, team orchestration, planning, recovery, and QA cycles.</p>
+        <p class="feature-card__description"><span data-stat="skills">25</span> workflow skills via <code>$name</code> syntax for autopilot, team orchestration, planning, recovery, and QA cycles.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1518,7 +1518,7 @@ OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini \
           </svg>
         </div>
         <h3 class="feature-card__title">MCP Servers</h3>
-        <p class="feature-card__description">State, memory, code intelligence, and trace servers (5 total) for persistent context and cross-session learning.</p>
+        <p class="feature-card__description">State, memory, code intelligence, trace, wiki, and Hermes servers (<span data-stat="mcp-servers">6</span> total) for persistent context and cross-session learning.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
