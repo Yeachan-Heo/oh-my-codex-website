@@ -87,14 +87,31 @@ function countPrompts() {
   return readdirSync(dir).filter((f) => f.endsWith('.md')).length;
 }
 
-/** Count skill directories (each skill ships as skills/<name>/SKILL.md). */
+/**
+ * Count live skill directories.
+ *
+ * A removed skill keeps a `skills/<name>/SKILL.md` tombstone whose description
+ * is a "Sunset stub" pointing at its successor (0.21 retired $ultrawork,
+ * $ralph, $pipeline and $autoresearch-goal this way). Counting those would
+ * advertise capabilities the runtime no longer routes.
+ */
 function countSkills() {
   const dir = join(sourceRoot, 'skills');
   if (!existsSync(dir)) return null;
   return readdirSync(dir).filter((entry) => {
     const path = join(dir, entry);
-    return statSync(path).isDirectory() || entry.endsWith('.md');
+    if (!statSync(path).isDirectory()) return entry.endsWith('.md');
+    return !isSunsetStub(join(path, 'SKILL.md'));
   }).length;
+}
+
+/** Report whether a SKILL.md is a sunset tombstone rather than a live skill. */
+function isSunsetStub(skillPath) {
+  if (!existsSync(skillPath)) return false;
+  const front = readFileSync(skillPath, 'utf8').slice(0, 600);
+  const description = front.match(/^description:\s*(.*)$/m);
+  if (!description) return false;
+  return /sunset stub|\bremoved\b/i.test(description[1]);
 }
 
 /** Count MCP servers declared by the bundled plugin manifest. */

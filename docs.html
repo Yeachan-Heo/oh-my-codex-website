@@ -1282,7 +1282,7 @@ omx update         # check npm and refresh setup</code></pre>
               <ul style="list-style-type: disc;">
                 <li><strong>Setup:</strong> Added scope-aware setup (user and project).</li>
                 <li><strong>Routing:</strong> Added Spark worker routing via <code>--spark</code> and <code>--madmax-spark</code>.</li>
-                <li><strong>Cleanup:</strong> Consolidated the catalog by removing deprecated prompts and 29 skills.</li>
+                <li><strong>Cleanup:</strong> Consolidated the catalog by removing deprecated prompts and 25 skills.</li>
                 <li><strong>Logging:</strong> Added notifier verbosity levels.</li>
               </ul>
             </details>
@@ -2223,12 +2223,12 @@ omx team 2:executor "task"</code></pre>
               <span class="workflow__arrow">&rarr;</span>
               <span class="workflow__step">$team</span>
               <span class="workflow__arrow">&rarr;</span>
-              <span class="workflow__step">$ralph</span>
+              <span class="workflow__step">$ultragoal</span>
             </div>
             <ol>
               <li>$ralplan gathers requirements and creates a plan with planner + architect + critic consensus.</li>
               <li>$team spawns parallel tmux workers to build in parallel.</li>
-              <li>$ralph persists until everything is verified complete.</li>
+              <li>$ultragoal keeps a durable ledger and runs until every deliverable is verified.</li>
             </ol>
           </article>
 
@@ -2238,14 +2238,14 @@ omx team 2:executor "task"</code></pre>
             <div class="workflow">
               <span class="workflow__step">$autopilot</span>
               <span class="workflow__arrow">&rarr;</span>
-              <span class="workflow__step">$ultrawork</span>
+              <span class="workflow__step">$team</span>
               <span class="workflow__arrow">&rarr;</span>
-              <span class="workflow__step">$ralph</span>
+              <span class="workflow__step">$ultragoal</span>
             </div>
             <ol>
               <li>$autopilot takes the wheel and runs autonomously.</li>
-              <li>$ultrawork parallelizes subtasks for speed.</li>
-              <li>$ralph persists until verified ("The boulder never stops").</li>
+              <li>$team parallelizes subtasks across worker panes for speed.</li>
+              <li>$ultragoal persists until every goal in the ledger is complete.</li>
             </ol>
           </article>
 
@@ -2255,13 +2255,13 @@ omx team 2:executor "task"</code></pre>
             <div class="workflow">
               <span class="workflow__step">$plan</span>
               <span class="workflow__arrow">&rarr;</span>
-              <span class="workflow__step">$ralph</span>
+              <span class="workflow__step">$ultragoal</span>
               <span class="workflow__arrow">&rarr;</span>
               <span class="workflow__step">$ultraqa</span>
             </div>
             <ol>
               <li>$plan investigates the problem and creates a fix strategy.</li>
-              <li>$ralph implements fixes and keeps going until done.</li>
+              <li>$ultragoal implements fixes and keeps going until the ledger is clear.</li>
               <li>$ultraqa cycles through test -&gt; verify -&gt; fix until all tests pass.</li>
             </ol>
           </article>
@@ -2276,7 +2276,7 @@ omx team 2:executor "task"</code></pre>
               <span class="workflow__arrow">&rarr;</span>
               <span class="workflow__step">$ralplan</span>
               <span class="workflow__arrow">&rarr;</span>
-              <span class="workflow__step">$ralph + $ultrawork</span>
+              <span class="workflow__step">$ultragoal + $team</span>
               <span class="workflow__arrow">&rarr;</span>
               <span class="workflow__step">$ultraqa</span>
             </div>
@@ -2284,7 +2284,7 @@ omx team 2:executor "task"</code></pre>
               <li>Start architect workers to analyze all issues and draft one complete plan.</li>
               <li>Run workers in parallel on separate worktrees, each submitting a PR to dev.</li>
               <li>Review and merge open PRs, then run $ralplan to resolve conflicts safely.</li>
-              <li>Finish with $ralph, $ultrawork, and $ultraqa until all tests pass.</li>
+              <li>Finish with $ultragoal, $team, and $ultraqa until all tests pass.</li>
             </ol>
           </article>
 
