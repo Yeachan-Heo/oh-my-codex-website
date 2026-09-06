@@ -155,7 +155,13 @@ for (const path of publishedFiles(ROOT)) {
     }
   }
 
-  if (hits.size) findings.push({ rel, hits: [...hits].sort() });
+  if (hits.size) {
+    // A page mirrored from the source repo cannot be fixed here: the sync
+    // overwrites it on every run. Report it, but only fail on pages this
+    // repository actually owns.
+    const mirrored = existsSync(join(sourceRoot, rel));
+    findings.push({ rel, hits: [...hits].sort(), mirrored });
+  }
 }
 
 console.log(`Source: ${sourceRoot}`);
@@ -167,8 +173,24 @@ if (!findings.length) {
   process.exit(0);
 }
 
-console.error('\nFAIL: published pages advertise capabilities the source no longer ships:');
-for (const { rel, hits } of findings) {
+const owned = findings.filter((f) => !f.mirrored);
+const mirrored = findings.filter((f) => f.mirrored);
+
+if (mirrored.length) {
+  console.warn('\nWARNING: mirrored source pages still name retired capabilities.');
+  console.warn('These are overwritten by the sync, so they must be fixed upstream in oh-my-codex:');
+  for (const { rel, hits } of mirrored) {
+    console.warn(`  ${rel}: ${hits.join(', ')}`);
+  }
+}
+
+if (!owned.length) {
+  console.log('\nOK: every page this repository owns is clean.');
+  process.exit(0);
+}
+
+console.error('\nFAIL: website-owned pages advertise capabilities the source no longer ships:');
+for (const { rel, hits } of owned) {
   console.error(`  ${rel}: ${hits.join(', ')}`);
 }
 console.error(
