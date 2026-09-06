@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&display=block" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07110f;
+    --bg-2: #0d1817;
+    --line: #1f3a35;
+    --text: #f5fffd;
+    --text-2: #b0c7c1;
+    --muted: #7c9992;
+    --accent: #10a37f;
+    --accent-light: #34d399;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 640px; overflow: hidden; }
+  body {
+    background: radial-gradient(ellipse 60% 80% at 82% 55%, #12261f 0%, var(--bg) 60%);
+    color: var(--text);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(16,163,127,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16,163,127,.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,.2));
+  }
+  .frame {
+    position: absolute; inset: 0;
+    display: grid;
+    grid-template-columns: 720px 1fr;
+    padding: 64px 72px 56px 72px;
+  }
+  .left { display: flex; flex-direction: column; }
+  .title {
+    font-family: "Press Start 2P", monospace;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -1px;
+    white-space: nowrap;
+  }
+  .title .a { color: var(--accent); }
+  .title .b { color: var(--text); }
+  .tagline {
+    margin-top: 26px;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text-2);
+  }
+  .tagline b { color: var(--accent-light); font-weight: 700; }
+  hr {
+    border: 0; border-top: 2px solid var(--line);
+    margin: 34px 0 30px;
+    width: 600px;
+  }
+  .cols { display: grid; grid-template-columns: 300px 300px; }
+  .col h2 {
+    font-family: "Press Start 2P", monospace;
+    font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 22px;
+    letter-spacing: 0;
+  }
+  .col ul { list-style: none; }
+  .col li {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .col li::before {
+    content: "";
+    width: 12px; height: 12px;
+    background: var(--accent);
+    flex: 0 0 auto;
+  }
+  .col li span { color: var(--muted); }
+  .chips {
+    margin-top: auto;
+    display: flex; gap: 12px; align-items: center;
+    width: 600px;
+  }
+  .chip {
+    border: 2px solid var(--line);
+    background: rgba(12,22,20,.8);
+    padding: 8px 14px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+  .chip b { color: var(--text); font-weight: 700; }
+  .chip.codex { border-color: rgba(16,163,127,.5); color: var(--accent-light); }
+  .right {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .robot {
+    width: 410px;
+    height: auto;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 22px rgba(52,211,153,.55)) drop-shadow(0 0 60px rgba(16,163,127,.25));
+  }
+  .shadow {
+    position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+    width: 340px; height: 14px;
+    background: rgba(16,163,127,.35);
+    filter: blur(10px);
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="frame">
+    <div class="left">
+      <div class="title"><span class="a">oh-my-</span><span class="b">codex</span></div>
+      <div class="tagline">Your <b>codex</b> is not <b>alone</b>.</div>
+      <hr>
+      <div class="cols">
+        <div class="col">
+          <h2>WORKFLOWS</h2>
+          <ul>
+            <li>$deep-interview</li>
+            <li>$ralplan</li>
+            <li>$ralph</li>
+            <li>$team</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h2>MODES</h2>
+          <ul>
+            <li>$autopilot</li>
+            <li>$ultrawork</li>
+            <li>$ultraqa</li>
+            <li>$plan</li>
+          </ul>
+        </div>
+      </div>
+      <div class="chips">
+        <span class="chip"><b data-stat="prompts">32</b> prompts</span>
+        <span class="chip"><b data-stat="skills">29</b> skills</span>
+        <span class="chip"><b data-stat="mcpServers">6</b> MCP servers</span>
+        <span class="chip codex">Built for OpenAI Codex CLI</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="shadow"></div>
+      <img class="robot" src="omx-robot.png" alt="">
+    </div>
+  </div>
+</body>
+</html>
