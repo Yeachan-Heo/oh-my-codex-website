@@ -1485,7 +1485,7 @@ OMX_TEAM_WORKER_CLI_MAP=codex,claude,gemini \
           </svg>
         </div>
         <h3 class="feature-card__title">Role Prompts</h3>
-        <p class="feature-card__description">33 specialized prompts via <code>/prompts:name</code> for targeted expertise across implementation, review, domain, and coordination lanes.</p>
+        <p class="feature-card__description"><span data-stat="prompts">32</span> specialized prompts via <code>/prompts:name</code> for targeted expertise across implementation, review, domain, and coordination lanes.</p>
       </div>
 
       <div class="feature-card pixel-border glass tilt-3d-polish">
@@ -1610,7 +1610,7 @@ npm install -g oh-my-codex</code>
   <section class="section agents-section" id="agents" data-reveal>
     <div class="section__header">
       <h2 class="section__title">Agent Tiers</h2>
-      <p class="section__subtitle">33 specialized prompts organized by domain, review depth, and orchestration responsibility</p>
+      <p class="section__subtitle"><span data-stat="prompts">32</span> specialized prompts organized by domain, review depth, and orchestration responsibility</p>
     </div>
 
     <div class="tiers-grid">
@@ -1626,6 +1626,9 @@ npm install -g oh-my-codex</code>
           <span class="agent-tag">debugger</span>
           <span class="agent-tag">verifier</span>
           <span class="agent-tag">explore</span>
+          <span class="agent-tag">explore-harness</span>
+          <span class="agent-tag">analyst</span>
+          <span class="agent-tag">code-simplifier</span>
         </div>
       </div>
 
@@ -1640,6 +1643,9 @@ npm install -g oh-my-codex</code>
           <span class="agent-tag">api-reviewer</span>
           <span class="agent-tag">security-reviewer</span>
           <span class="agent-tag">performance-reviewer</span>
+          <span class="agent-tag">code-reviewer</span>
+          <span class="agent-tag">critic</span>
+          <span class="agent-tag">quality-strategist</span>
         </div>
       </div>
 
@@ -1655,6 +1661,9 @@ npm install -g oh-my-codex</code>
           <span class="agent-tag">designer</span>
           <span class="agent-tag">writer</span>
           <span class="agent-tag">qa-tester</span>
+          <span class="agent-tag">git-master</span>
+          <span class="agent-tag">researcher</span>
+          <span class="agent-tag">vision</span>
         </div>
       </div>
 
@@ -1668,6 +1677,17 @@ npm install -g oh-my-codex</code>
           <span class="agent-tag">ux-researcher</span>
           <span class="agent-tag">product-analyst</span>
           <span class="agent-tag">information-architect</span>
+        </div>
+      </div>
+
+      <div class="tier-card tier-card--build glass tilt-3d-polish">
+        <div class="tier-card__header">
+          <span class="tier-card__badge">Team Mode</span>
+        </div>
+        <h3 class="tier-card__title">Team Orchestration</h3>
+        <div class="tier-card__agents">
+          <span class="agent-tag">team-orchestrator</span>
+          <span class="agent-tag">team-executor</span>
         </div>
       </div>
     </div>
@@ -1716,9 +1736,24 @@ npm install -g oh-my-codex</code>
             <td>Strategic planning with consensus and review modes</td>
           </tr>
           <tr>
-            <td><code>research</code></td>
-            <td>research</td>
-            <td>Parallel scientist agents for comprehensive research</td>
+            <td><code>ralplan</code></td>
+            <td>ralplan</td>
+            <td>Iterative planning consensus that ends on a reconciled receipt</td>
+          </tr>
+          <tr>
+            <td><code>ultragoal</code></td>
+            <td>ultragoal</td>
+            <td>Durable goal ledger that tracks every deliverable to completion</td>
+          </tr>
+          <tr>
+            <td><code>autoresearch</code></td>
+            <td>autoresearch</td>
+            <td>Goal-directed research mission that ends on a structured verdict</td>
+          </tr>
+          <tr>
+            <td><code>deep-interview</code></td>
+            <td>deep-interview</td>
+            <td>Requirements interview that produces a spec before any mutation</td>
           </tr>
           <tr>
             <td><code>cancel</code></td>
@@ -1726,14 +1761,19 @@ npm install -g oh-my-codex</code>
             <td>Stop execution modes and clear active state</td>
           </tr>
           <tr>
-            <td><code>tdd</code></td>
-            <td>tdd</td>
-            <td>Test-first development with red-green-refactor cycle</td>
+            <td><code>design</code></td>
+            <td>design</td>
+            <td>Canonical product/UI decision workflow recorded in DESIGN.md</td>
           </tr>
           <tr>
-            <td><code>build-fix</code></td>
-            <td>build-fix</td>
-            <td>Fix build errors, type errors, and toolchain failures</td>
+            <td><code>analyze</code></td>
+            <td>analyze</td>
+            <td>Repository analysis pass before planning or implementation</td>
+          </tr>
+          <tr>
+            <td><code>hud</code></td>
+            <td>hud</td>
+            <td>Live session HUD with ownership-scoped panes</td>
           </tr>
           <tr>
             <td><code>code-review</code></td>
@@ -1741,9 +1781,19 @@ npm install -g oh-my-codex</code>
             <td>Comprehensive code review across all quality dimensions</td>
           </tr>
           <tr>
-            <td><code>security-review</code></td>
-            <td>security-review</td>
-            <td>Security audit focusing on vulnerabilities and trust boundaries</td>
+            <td><code>ultraqa</code></td>
+            <td>ultraqa</td>
+            <td>Adversarial QA with end-to-end expectations</td>
+          </tr>
+          <tr>
+            <td><code>pipeline</code></td>
+            <td>pipeline</td>
+            <td>Staged multi-phase delivery with gated handoffs</td>
+          </tr>
+          <tr>
+            <td><code>doctor</code></td>
+            <td>doctor</td>
+            <td>Diagnose and repair a broken OMX runtime or plugin install</td>
           </tr>
         </tbody>
       </table>
