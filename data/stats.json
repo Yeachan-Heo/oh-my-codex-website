@@ -1,11 +1,10 @@
 {
-  "agents": 33,
-  "skills": 37,
-  "mcpServers": 5,
   "version": "0.21.3",
-  "promptFiles": 33,
-  "skillFiles": 37,
+  "prompts": 32,
+  "skills": 29,
+  "mcpServers": 6,
   "downloads": 22247,
   "stars": 32997,
-  "lastUpdated": "2026-09-06T09:50:14.744Z"
+  "forks": 2534,
+  "lastUpdated": "2026-09-06T09:42:18.527Z"
 }

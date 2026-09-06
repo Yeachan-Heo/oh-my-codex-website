@@ -8,12 +8,13 @@ const OMX_CONFIG = {
   docsUrl: "https://yeachan-heo.github.io/oh-my-codex",
   installCommand: "npm install -g oh-my-codex",
   setupCommand: "omx setup",
-  version: "0.21.3",
-  stats: {
-    agents: 33,
-    skills: 37,
-    mcpServers: 5,
-    downloads: 59642,
-    stars: 30086
+  // Live metadata endpoints. Version/downloads/stars are resolved at runtime by
+  // js/services/stats.js; data/stats.json is only the offline fallback and is
+  // kept fresh by .github/workflows/sync-stats.yml + sync-from-source.yml.
+  api: {
+    githubRepo: "https://api.github.com/repos/Yeachan-Heo/oh-my-codex",
+    npmLatest: "https://registry.npmjs.org/oh-my-codex/latest",
+    npmDownloads: "https://api.npmjs.org/downloads/point/last-month/oh-my-codex",
+    localStats: "data/stats.json"
   }
 };

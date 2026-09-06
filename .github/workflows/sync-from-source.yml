@@ -9,6 +9,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: sync-from-source
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -33,24 +37,18 @@ jobs:
           node-version: '20'
 
       - name: Sync docs from source
-        run: |
-          # Copy all docs from source repo
-          cp -r oh-my-codex-source/docs/* docs/
-          # Keep website post-publish corrections that intentionally supersede
-          # stale pre-publication source collateral until the source catches up.
-          git checkout -- docs/qa/release-readiness-0.17.0.md
+        run: cp -r oh-my-codex-source/docs/* docs/
 
-      - name: Sync version
+      - name: Sync version and capability counts
         env:
-          OMX_SOURCE_PACKAGE_JSON: ${{ github.workspace }}/oh-my-codex-source/package.json
-        run: |
-          node scripts/sync-version.mjs
+          OMX_SOURCE_DIR: ${{ github.workspace }}/oh-my-codex-source
+        run: node scripts/sync-version.mjs
 
       - name: Check for changes
         id: check
         run: |
-          # Check for changes, excluding the source checkout directory
-          git add docs/ data/ js/ index.html scripts/
+          # Stage website paths only; the source checkout stays untracked.
+          git add docs/ data/ js/ index.html docs.html
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "No changes to commit"
@@ -64,5 +62,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -m "site: auto-sync from oh-my-codex source ($(date +%Y-%m-%d))"
+          git commit -m "site: auto-sync from oh-my-codex source v$(node -e "console.log(require('./oh-my-codex-source/package.json').version)")"
           git push
