@@ -892,3 +892,69 @@
   background: rgba(255,255,255,.035);
 }
 .geo-bench .feature-card:hover { border-color: rgba(16,163,127,.44); }
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.team-card {
+  text-align: center;
+  padding: 2rem 1.6rem 1.8rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%), var(--bg-panel, var(--bg-secondary));
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl, 1.25rem);
+}
+
+.team-card__photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 1.1rem;
+  border: 2px solid rgba(var(--accent-color-rgb, 16, 163, 127), 0.45);
+}
+
+.team-card__name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.team-card__role {
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 0.85rem;
+}
+
+.team-card__bio {
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.team-card__links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.team-card__links a {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.team-card__links a:hover {
+  color: var(--accent-color);
+}
+
+.team-card__links span {
+  color: var(--text-tertiary);
+}
