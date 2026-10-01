@@ -193,7 +193,7 @@ OMX_TEAM_AUTO_INTERRUPT_RETRY=0  # オプション：適応型queue->resendフ�
   - `notify = ["node", "..."]`
   - `model_reasoning_effort = "medium"`
   - `developer_instructions = "..."`
-  - `[features] multi_agent = true, child_agents_md = true`
+  - `[features] multi_agent = true` (存在している場合)
   - MCPサーバーエントリ（`omx_state`、`omx_memory`、`omx_code_intel`、`omx_trace`、`omx_wiki`（リポジトリ Wiki サーバー）、`omx_hermes`（セッション状態/調整用の制限付きブリッジ））
   - `[tui] status_line`
 - スコープ別`AGENTS.md`

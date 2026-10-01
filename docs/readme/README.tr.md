@@ -192,7 +192,7 @@ Notlar:
   - `notify = ["node", "..."]`
   - `model_reasoning_effort = "medium"`
   - `developer_instructions = "..."`
-  - `[features] multi_agent = true, child_agents_md = true`
+  - `[features] multi_agent = true` (mevcut olduğunda)
   - MCP sunucu girişleri (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki` (repository wiki sunucusu), `omx_hermes` (sınırlı oturum durumu/koordinasyon köprüsü))
   - `[tui] status_line`
 - Kapsama özel `AGENTS.md`

@@ -193,7 +193,7 @@ OMX_TEAM_AUTO_INTERRUPT_RETRY=0  # 선택: 적응형 queue->resend 폴백 비활
   - `notify = ["node", "..."]`
   - `model_reasoning_effort = "medium"`
   - `developer_instructions = "..."`
-  - `[features] multi_agent = true, child_agents_md = true`
+  - `[features] multi_agent = true` (기본 설정)
   - MCP 서버 항목 (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki` (저장소 위키 서버), `omx_hermes` (세션 상태/조정을 위한 제한된 브리지))
   - `[tui] status_line`
 - 범위별 `AGENTS.md`

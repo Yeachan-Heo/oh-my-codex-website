@@ -212,7 +212,7 @@ OMX_TEAM_AUTO_INTERRUPT_RETRY=0  # 選用：停用自適應 queue->resend 回退
   - `notify = ["node", "..."]`
   - `model_reasoning_effort = "medium"`
   - `developer_instructions = "..."`
-  - `[features] multi_agent = true, child_agents_md = true`
+  - `[features] multi_agent = true` (存在時)
   - MCP 伺服器項目（`omx_state`、`omx_memory`、`omx_code_intel`、`omx_trace`、`omx_wiki`（儲存庫 Wiki 伺服器）、`omx_hermes`（受限的工作階段狀態／協調橋接））
   - `[tui] status_line`
 - 範圍專屬 `AGENTS.md`

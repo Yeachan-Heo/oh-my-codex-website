@@ -192,7 +192,7 @@ OMX_TEAM_AUTO_INTERRUPT_RETRY=0  # опционально: отключить а
   - `notify = ["node", "..."]`
   - `model_reasoning_effort = "medium"`
   - `developer_instructions = "..."`
-  - `[features] multi_agent = true, child_agents_md = true`
+  - `[features] multi_agent = true` (если указано)
   - Записи MCP-серверов (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki` (сервер вики репозитория), `omx_hermes` (ограниченный мост статуса и координации сессий))
   - `[tui] status_line`
 - `AGENTS.md` для выбранной области

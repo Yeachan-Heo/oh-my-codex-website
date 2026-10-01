@@ -192,7 +192,7 @@ Note:
   - `notify = ["node", "..."]`
   - `model_reasoning_effort = "medium"`
   - `developer_instructions = "..."`
-  - `[features] multi_agent = true, child_agents_md = true`
+  - `[features] multi_agent = true` (quando presente)
   - Voci server MCP (`omx_state`, `omx_memory`, `omx_code_intel`, `omx_trace`, `omx_wiki` (server wiki del repository), `omx_hermes` (ponte limitato per stato e coordinamento delle sessioni))
   - `[tui] status_line`
 - `AGENTS.md` specifico dello scope

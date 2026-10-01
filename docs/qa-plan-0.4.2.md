@@ -69,8 +69,8 @@ Pass criteria:
 
 ### D. Config generator migration
 - Run setup/generator path on fresh and existing configs.
-- Verify `[features]` includes `multi_agent = true` and `child_agents_md = true`.
-- Verify deprecated `collab` key is not reintroduced.
+- Verify `[features]` includes `multi_agent = true` (when present) and no `child_agents_md`.
+- Verify deprecated `collab` and `child_agents_md` keys are not reintroduced.
 
 ### E. `/exit` process termination
 - Launch `omx` and invoke `/exit`.
