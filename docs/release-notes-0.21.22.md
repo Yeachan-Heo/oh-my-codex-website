@@ -1,6 +1,6 @@
 # oh-my-codex 0.21.22
 
-`0.21.22` is a patch release for fail-closed cache recovery guidance in setup repair (1 commit, 5 files, +66/−6; PR #3842).
+`0.21.22` is a patch release for fail-closed cache recovery guidance in setup repair (3 commits, 13 files, +178/−28; PR #3842).
 
 Versioning continues the 0.21.x patch train. This release improves the `omx setup --repair-plugin-cache` command to emit fail-closed guidance instead of recommending blind removal of plugin snapshots pinned by live Codex sessions or non-directory symlink entries.
 

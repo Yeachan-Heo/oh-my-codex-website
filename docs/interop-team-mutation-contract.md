@@ -89,6 +89,36 @@ and a human-readable `data.reason`. The outer envelope may still have `ok: true`
 clients must inspect `data.ok`, not just the process exit status or envelope. A
 rejection leaves the task, completion events and completion monitor marker unchanged.
 
+### Generated plans
+
+CLI-generated tasks default completion evidence on for execution-capable roles,
+including implementation and test-writing roles. Implicit implementation or repair
+requests routed to `debugger` also require evidence, including polite request
+prefixes such as "please" or "could you" and combinations such as "could you please".
+Recognized analysis deliverables remain optional even when heuristic routing falls
+back to an execution role; mixed requests with explicit implementation or test-writing
+actions still require evidence. Explicit analysis roles remain optional.
+Short analysis requests are also evidence-optional. CLI and DAG generation share
+the same intent rules for mutation verbs, and DAG subjects and descriptions are
+classified independently so either field can establish a coding requirement.
+Localized mutation vocabulary supported by role routing and implementation actions
+in temporal/purpose clauses also require evidence. Explanations, questions, and
+negated purpose clauses retain their read-only context. List splitting preserves
+analysis headers and later independent implementation instructions. Explicit report
+output files require evidence; analysis labels and candidate options retain their
+read-only context. Explicit no-change directives and analysis requests prefixed
+with "only" or "just" remain read-only. Analysis list items retain their header
+and individual assignments, including any later implementation request.
+Auto-generated implementation, test-writing, and additional implementation aspects
+inherit the original task's evidence requirement regardless of heuristic role
+routing. Analysis-only tasks and explicitly selected analysis/read-only roles
+remain optional after splitting.
+DAG imports use the effective
+role's tool access when `requires_code_change` is absent; an explicit boolean
+still wins. Known analysis/read-only roles stay optional. Unknown roles default
+to requiring evidence. Existing task records and direct API clients retain the
+compatibility rules below.
+
 ### Compatibility
 
 - Tasks with `requires_code_change: false` or an absent flag retain their existing
