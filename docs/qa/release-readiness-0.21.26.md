@@ -12,7 +12,15 @@
 
 ## Change summary
 
-- **Commits:** 6 total (4 feature/fix commits + 1 back-merge + 1 version bump)
+Pinned candidate (before version bump) `8910439a`: 6 commits
+
+- **Feature commits:** 4 commits (PRs #3859, #3862, #3863, #3861 back-merge)
+- **CI evidence pinned to:** commit 8910439a (17 success, 8 skipped, 0 failures)
+- **Ancestry verification:** ✓ v0.21.25 is ancestor of 8910439a
+
+Full release (with version bump) `cf72bbc1`: 7 commits
+
+- **Commits:** 6 commits + 1 version bump commit = 7 total
 - **Files changed:** 19 files in range
 - **Insertions:** +722
 - **Deletions:** −269
@@ -57,7 +65,7 @@ confirms all six Rust workspace crates resolve to `0.21.26`.
 
 ### Pinned candidate CI status
 
-Pinned SHA `cf72bbc1f0dc0bbcc4a627e8d0b9c34fbadc8c73` (initial pinned dev commit before version bump):
+Pinned SHA `8910439aa4598f1a4e9819b45e11934b0116ab06` (pinned dev candidate before version bump):
 
 | Status | Count |
 |---|---|
@@ -65,7 +73,9 @@ Pinned SHA `cf72bbc1f0dc0bbcc4a627e8d0b9c34fbadc8c73` (initial pinned dev commit
 | Skipped | 8 |
 | Failure | 0 |
 
-**Latest-per-name checks:** All green at commit `8910439aa4598f1a4e9819b45e11934b0116ab06` (pinned SHA before version bump). No failures or re-runs needed.
+**Latest-per-name checks:** All green at commit 8910439a. No failures or re-runs needed.
+
+Release branch version-bump commit `cf72bbc1f0dc0bbcc4a627e8d0b9c34fbadc8c73` added documentation updates, and merge commit `5a4f8e81` (v0.21.26 tag target) finalized the release.
 
 ## Known gaps
 
