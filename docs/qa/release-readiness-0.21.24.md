@@ -4,12 +4,13 @@
 
 ## Compare range
 
-**Range:** `v0.21.19...v0.21.24`
+**Range:** `v0.21.23...v0.21.24`
 
-- **Previous:** `v0.21.19`
-- **Release candidate merge:** PR #3835 (Merge pull request #3835 from Yeachan-Heo/release/omx-0.21.24)
-- **Release commit:** b5410bf8 (npm gitHead)
-- **Ancestor check:** ✓ v0.21.19 is an ancestor of release commit
+- **Previous:** `v0.21.23`
+- **Release candidate merge:** PR #3855 (Merge pull request #3855 from Yeachan-Heo/release/omx-0.21.24)
+- **Release commit:** 85822422 (main branch head at tag v0.21.24)
+- **npm gitHead:** b5410bf8
+- **Ancestor check:** ✓ v0.21.23 is an ancestor of release commit
 
 ## Change summary
 
