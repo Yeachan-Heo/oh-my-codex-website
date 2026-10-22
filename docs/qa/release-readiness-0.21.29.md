@@ -18,13 +18,13 @@ Pinned candidate (before version bump) `71029cdfc80946da1e0b6770d47e31aae38cf5ab
 - **CI evidence pinned to:** commit 71029cdfc80946da1e0b6770d47e31aae38cf5ab (run #39737386059, 17 success, 8 skipped, 0 failures, concluded 07:19Z)
 - **Ancestry verification:** ✓ v0.21.28 is ancestor of 71029cdfc80946da1e0b6770d47e31aae38cf5ab
 
-Full release (with version bump) - commits counted from tag:
+Full release (with version bump and release collateral) - commits counted from tag:
 
-- **Commits:** 1 core commit + version bump commit = 2 total
-- **Files changed:** 21 files in range (includes version bump)
-- **Insertions:** +627
-- **Deletions:** −79
-- **Net change:** +548 lines
+- **Commits:** 1 core commit + version bump commit + release collateral = 3 total
+- **Files changed:** 25 files in range (core fix, version surfaces, release docs)
+- **Insertions:** +801
+- **Deletions:** −89
+- **Net change:** +712 lines
 
 Core fix statistics (excluding version bump):
 

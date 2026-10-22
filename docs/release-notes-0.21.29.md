@@ -1,6 +1,6 @@
 # oh-my-codex 0.21.29
 
-`0.21.29` is a patch release for Team dispatch state recovery and Codex startup UI protection (1 commit, 4 files, +89/−32; PR #3876).
+`0.21.29` is a patch release for Team dispatch state recovery and Codex startup UI protection (1 commit, 16 files, +616/−68; PR #3876).
 
 Versioning continues the 0.21.x patch train. This release fixes critical regressions in Team event delivery recovery and prevents inbox/notification messages from being injected into Codex startup or folder-trust UI prompts.
 
