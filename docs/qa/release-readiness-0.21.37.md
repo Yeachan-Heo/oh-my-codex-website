@@ -37,6 +37,8 @@ At the pinned source candidate, `git diff --stat v0.21.36..18963b5604aa296d4fe8a
 
 The initial release-collateral branch head contained 12 commits in `v0.21.36..HEAD`; `git diff --stat v0.21.36..HEAD` reported **15 files changed, 621 insertions(+), 73 deletions(-)**, including the four release-collateral files. Release PR and later readiness evidence are recorded separately below and will be included in the final PR-head range stat.
 
+At the final tag target `e03812664f1609d2e21654822ef5334819e13a90`, `git log v0.21.36..e03812664f1609d2e21654822ef5334819e13a90` contains **15 commits** and `git diff --stat` reports **15 files changed, 625 insertions(+), 73 deletions(-)**. This is the exact released tag-target range, including release collateral and the release PR merge commit.
+
 ## PR inventory
 
 | PR | Author | Title | Status / scope |
@@ -84,7 +86,7 @@ All local gates below passed on the release branch at source candidate `18963b56
 - ✓ Focused compiled tests: `update.test.js`, `plugin-cache-symlink-provenance-3552.test.js`, `doctor-warning-copy.test.js`, `version-sync-contract.test.js`, and `generate-release-body.test.js` via `node dist/scripts/run-test-files.js`; all test files exited successfully.
 - ✓ After the first release-PR CI run failed one pre-existing real-tmux assertion, the entire `launch-fallback.test.js` file passed locally (39 tests, 0 failures), including the specific detached-HUD restoration test.
 - ✓ `git diff --check`.
-- Final release-body generation will be recorded before tag push. The generator needs a resolvable `v0.21.37` ref; the direct pre-tag attempt before that ref exists correctly refused to render.
+- ✓ Ran `node dist/scripts/generate-release-body.js` before pushing the tag; the generated body contained the correct `v0.21.36...v0.21.37` compare link and release highlights. Local generation used the shortlog fallback. Contributors were checked against merged PR authors, and the published GitHub Release body was corrected to the curated sentence in `RELEASE_BODY.md`; this notes-only update did not move the tag or change the npm package.
 
 ## CI gates
 
@@ -98,13 +100,15 @@ Pinned dev candidate: `18963b5604aa296d4fe8a019651d0ddef9584106`.
 ## Release PR, merge, and publication
 
 - Release PR [#3925](https://github.com/Yeachan-Heo/oh-my-codex/pull/3925), initial head `9d95e0789ff62b82e19c0b7256975decc4adb609`.
-- Initial PR CI run [40542865035](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40542865035) had 25 success, 1 skipped, and 1 failure. The sole failed job was `Test (Node 20 / cli-core-rest)` (job [122325983906](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40542865035/job/122325983906)); one unrelated existing tmux test in `launch-fallback.test.js` observed HUD height 7 instead of the expected 2. That test file is unchanged by this release diff; the pinned dev candidate's CI was green, and the same full file passed locally after the failure. The failed PR run is not treated as green; a new exact-head CI result is required before merge.
-- Updated PR head `e85819af5fa8287099b3d7082a06f42e111a90e4` passed CI run [40548292792](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40548292792): latest-per-name checks were **27 success, 1 skipped, 0 failures**; CI Status passed (job [122354854036](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40548292792/job/122354854036)). Both release-PR macOS Ralplan preflights passed: Node 20 (job [122344891580](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40548292792/job/122344891580)) and Node 26.5.1 (job [122344891673](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40548292792/job/122344891673)).
-- Codex code review completed on exact PR head `e85819af5fa8287099b3d7082a06f42e111a90e4` with no findings. The required inline-thread gate on this head printed `[]`; it must be run again immediately before merge on the final head.
-- A subsequent readiness-only evidence update will trigger a fresh CI/review cycle; merge remains blocked until those checks are green and the final exact-head gate prints `[]`.
-- Main merge commit and latest-per-name CI: pending.
-- Annotated tag and tag-triggered Release workflow/assets: pending.
-- npm publication/readback and non-draft GitHub Release verification: pending.
+- Initial PR CI run [40542865035](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40542865035) had 25 success, 1 skipped, and 1 failure. The sole failed job was `Test (Node 20 / cli-core-rest)` (job [122325983906](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40542865035/job/122325983906)); one unrelated existing tmux test in `launch-fallback.test.js` observed HUD height 7 instead of the expected 2. That test file is unchanged by this release diff; the pinned dev candidate's CI was green, and the same full file passed locally after the failure. This run was not treated as green; the later exact-head run below passed before merge.
+- Final PR head `8d99e2250064f6f6586edae75c9fde16109c224a` passed CI run [40551755557](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40551755557): latest-per-name checks were **27 success, 1 skipped, 0 failures**; CI Status passed (job [122368153435](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40551755557/job/122368153435)). Both release-PR macOS Ralplan preflights passed: Node 20 (job [122357194659](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40551755557/job/122357194659)) and Node 26.5.1 (job [122357194857](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40551755557/job/122357194857)).
+- Codex code review completed on exact PR head `8d99e2250064f6f6586edae75c9fde16109c224a` with no findings. Immediately before merge, the required inline-thread gate printed `[]`.
+- PR #3925 merged with merge commit `e03812664f1609d2e21654822ef5334819e13a90` (also the release tag target).
+- Main CI run [40556340874](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40556340874) completed successfully: latest-per-name checks were **24 success, 1 skipped, 0 failures**; CI Status passed (job [122384310835](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40556340874/job/122384310835)). Both macOS Ralplan preflights passed: Node 20 (job [122373400548](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40556340874/job/122373400548)) and Node 26.5.1 (job [122373400618](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40556340874/job/122373400618)).
+- Annotated tag `v0.21.37` peels to `e03812664f1609d2e21654822ef5334819e13a90`; it is published on main.
+- Release workflow [40560295624](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40560295624) completed successfully. GitHub Release [v0.21.37](https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.21.37) was published at `2026-10-27T18:41:28Z`, is non-draft/non-prerelease, and has 57 assets including `native-release-manifest.json`.
+- Trusted npm workflow run [40564569702](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40564569702) completed successfully; `Publish npm (trusted publishing)` job [122402270471](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40564569702/job/122402270471) passed.
+- Registry readback: `npm view oh-my-codex dist-tags.latest` returned `0.21.37`; `npm view oh-my-codex@0.21.37 gitHead` returned `e03812664f1609d2e21654822ef5334819e13a90`, matching `v0.21.37^{commit}` and `main`.
 
 ## Back-merge and cleanup
 
