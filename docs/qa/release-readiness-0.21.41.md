@@ -13,7 +13,7 @@ The range also includes the model-selection documentation correction (#3951), v0
 
 ## Compare-range metrics
 
-The pinned dev range `v0.21.40..4a0f645b898e74d381ee7d4da1ced0bf26280896` contains **6 commits, 31 files changed, 1,838 insertions(+), and 64 deletions(-)**. The release candidate now contains **8 commits, 35 files changed, 1,998 insertions(+), and 84 deletions(-)** (`git diff --stat v0.21.40..release/omx-0.21.41`), including release collateral and the main-CI Windows history-race correction.
+The pinned dev range `v0.21.40..4a0f645b898e74d381ee7d4da1ced0bf26280896` contains **6 commits, 31 files changed, 1,838 insertions(+), and 64 deletions(-)**. The corrected release-branch candidate `64ff0d22d7a7e60de92b92d0b6831bcaa9909eb0` contains **8 commits, 35 files changed, 1,998 insertions(+), and 84 deletions(-)** (`git diff --stat v0.21.40..64ff0d22d7a7e60de92b92d0b6831bcaa9909eb0`). The shipped tag range has 10 commits because main adds the #3957 release merge and #3958 fix merge; the tree remains 35 files, +1,998/−84.
 
 ## PR inventory
 
@@ -24,8 +24,9 @@ The pinned dev range `v0.21.40..4a0f645b898e74d381ee7d4da1ced0bf26280896` contai
 | [#3953](https://github.com/Yeachan-Heo/oh-my-codex/pull/3953) | @Yeachan-Heo | chore: back-merge main (v0.21.40) to dev and bump to 0.21.41 | Back-merge shipped main and synchronize package/plugin/Cargo version surfaces |
 | [#3954](https://github.com/Yeachan-Heo/oh-my-codex/pull/3954) | @Yeachan-Heo | back-merge: main to dev for v0.21.40 | Internal follow-up merge aligning main and dev |
 | [#3956](https://github.com/Yeachan-Heo/oh-my-codex/pull/3956) | @Yeachan-Heo | feat(#3955): Add configurable custom quality gates via .omx-config | Add validated stage-specific gates, listing CLI, Ralplan integration, tests, and skill guidance |
+| [#3958](https://github.com/Yeachan-Heo/oh-my-codex/pull/3958) | @Yeachan-Heo | fix(history): detect same-mtime content mutations during publication | Compare file change time as well as identity, size, and mtime to reject mutated history |
 
-The six pre-release compare-range commits are represented by these PRs and their merge commits; the seventh commit is this release preparation, which adds the required release collateral. PRs #3939, #3900, #3907, #3915, and #3919 are excluded. #3898 remains held for the owner design decision.
+The release PR #3957 is an internal release-preparation merge and is intentionally omitted from the user-facing inventory. The #3959 dev-targeted fix PR is not part of the tag range. PRs #3939, #3900, #3907, #3915, and #3919 are excluded. #3898 remains held for the owner design decision.
 
 ## Version synchronization
 
@@ -54,6 +55,7 @@ All coupled release surfaces are already at `0.21.41`; this release candidate do
 - ✓ `npm run verify:generated` passed: plugin bundle, capabilities lock, prompt-guidance fragments, and generated catalog all match.
 - ✓ Version sync check and six-crate Cargo metadata verification passed.
 - ✓ `git diff --cached --check` passed after staging release collateral.
+- ✓ The same-inode/same-size/restored-mtime history mutation regression passed locally after adding `ctimeMs` to history-file version checks.
 
 ## CI gates
 
@@ -67,7 +69,17 @@ Pinned dev candidate: `4a0f645b898e74d381ee7d4da1ced0bf26280896`.
 
 The initial release PR [#3957](https://github.com/Yeachan-Heo/oh-my-codex/pull/3957) merged at `b4a02c194acb0a344c7c3f7254e71740fb368932`. Its exact-head Codex review completed with zero findings, the in-thread reply gate printed `[]`, and PR CI passed (run [40922096829](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40922096829): 24 success, 1 skipped, 0 failed; both macOS preflights and CI Status passed).
 
-Main push CI run [40924728006](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40924728006) failed the Windows history-materialization test `skips same-inode history content mutations during file publication`: same-size content was changed and the original modification time restored, while the implementation compared only file identity, size, and modification time. This exposed a real race-detection gap even though the test passed on the first dev and release-PR runs. Follow-up PR [#3958](https://github.com/Yeachan-Heo/oh-my-codex/pull/3958) includes `ctimeMs` in history file-version comparisons. The focused regression test passes locally; the PR's exact-head Windows job and subsequent main CI must pass before tagging. No tag or publication has occurred.
+Main push CI run [40924728006](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40924728006) exposed a real gap in history-mutation detection: the Windows test changed same-size content and restored mtime, while comparison omitted `ctimeMs`. Follow-up PR [#3958](https://github.com/Yeachan-Heo/oh-my-codex/pull/3958) added the missing change-time check. Its exact-head Codex review completed with zero findings, the in-thread gate printed `[]`, and CI run [40929210160](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40929210160) passed (24 success, 1 skipped, 0 failures): Windows history materialization job [123642922247](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40929210160/job/123642922247), macOS Ralplan preflights Node 20 [123642922285](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40929210160/job/123642922285) and Node 26.5.1 [123642922398](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40929210160/job/123642922398), and CI Status [123653698446](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40929210160/job/123653698446) all passed. The fix PR merged at `b8cd1dec4eaf5ed1769a20ca4d264f58a2dc3c7b`.
+
+Main push CI after the fix, run [40932787626](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40932787626), passed with 24 success, 1 skipped, and 0 failures across 25 unique jobs. Both macOS Ralplan preflights passed (Node 26.5.1 job [123655450889](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40932787626/job/123655450889), Node 20 job [123655450981](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40932787626/job/123655450981)); CI Status job [123664532155](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40932787626/job/123664532155) passed.
+
+Dev-targeted fix PR [#3959](https://github.com/Yeachan-Heo/oh-my-codex/pull/3959) merged at `ded70c83409aac48f7e04a8147f65c40817495e8`; its exact-head Codex review completed with zero findings and its reply gate printed `[]`. The PR CI run [40929615467](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40929615467) passed (17 success, 8 skipped), including Windows history materialization and both macOS Ralplan preflights. The subsequent dev push run [40932849072](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40932849072) had one initial failed attempt in `Test (Node 20 / cli-core-rest)` with child-process `EPIPE`/`spawn codex ENOENT` failures in `team.test.js`; the single monitor-authorized retry (attempt 2) passed. Final per-name result: 17 success, 8 skipped, 0 failures across 25 unique names; both macOS Ralplan preflights and CI Status passed. No test-fix PR was needed.
+
+The annotated tag `v0.21.41` points to `b8cd1dec4eaf5ed1769a20ca4d264f58a2dc3c7b`. Release workflow [40937219986](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40937219986) completed successfully, including native build, manifest verification, and packed-install smoke test. GitHub Release [v0.21.41](https://github.com/Yeachan-Heo/oh-my-codex/releases/tag/v0.21.41) is published and non-draft/non-prerelease with 57 assets (published `2026-10-29T19:25:18Z`).
+
+Trusted npm publish was dispatched with `release_tag=v0.21.41` and full `release_sha=b8cd1dec4eaf5ed1769a20ca4d264f58a2dc3c7b`. CI workflow run [40941694577](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40941694577) completed successfully (25 success, 0 skipped or failed); publish job [123686461016](https://github.com/Yeachan-Heo/oh-my-codex/actions/runs/40941694577/job/123686461016) passed. Registry readback: `npm view oh-my-codex dist-tags.latest` → `0.21.41`; `npm view oh-my-codex@0.21.41 version gitHead` → version `0.21.41`, gitHead `b8cd1dec4eaf5ed1769a20ca4d264f58a2dc3c7b`.
+
+Evidence PR [#3960](https://github.com/Yeachan-Heo/oh-my-codex/pull/3960) carries this publication proof to main. The single merge-commit back-merge main→dev and the dev base-version bump to `0.21.42` remain pending.
 
 —
 *[repo owner's gaebal-gajae (clawdbot) 🦞]*
