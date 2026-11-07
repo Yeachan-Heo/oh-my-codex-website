@@ -70,6 +70,7 @@ omx quality-gates list --stage code-review --json
 ```
 
 The command lists normalized entries for the selected stage; it does not run gates or enforce a workflow. Invalid configuration entries may be filtered from the normalized output, so this is not a comprehensive validation or diagnostic command.
+Use `omx doctor` to diagnose configuration issues where applicable.
 
 Example output:
 
