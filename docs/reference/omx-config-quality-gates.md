@@ -55,5 +55,5 @@ omx quality-gates list --stage code-review --json
 
 This command reports normalized configuration; it does not execute the gate. Replace `code-review` with `deep-interview` or `ralplan` to inspect another stage.
 
-See also: [Code Review](../../skills/code-review/SKILL.md), [Ralplan](../../skills/ralplan/SKILL.md), and the [full configuration reference](./omx-config-schema-routing.md).
+See also: [Skills reference](../skills.html), and the [full configuration reference](./omx-config-schema-routing.md).
 
