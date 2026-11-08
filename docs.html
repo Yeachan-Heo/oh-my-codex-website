@@ -2453,7 +2453,8 @@ omx team 4:executor "feature work" --worktree=feature-branch</code></pre>
         contentSelector: '.docs-content',
         searchInput: '#search-input',
         results: '#search-results',
-        overlay: '#search-overlay'
+        overlay: '#search-overlay',
+        onSelect: () => { if (window.innerWidth <= 1024) closeMenu(); }
       });
 
       new Accordion();

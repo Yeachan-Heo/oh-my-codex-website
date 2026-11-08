@@ -7,12 +7,20 @@ export class SearchService {
     this.results = document.querySelector(options.results || '#search-results');
     this.overlay = document.querySelector(options.overlay || '#search-overlay');
     this.sidebar = document.querySelector(options.sidebar || '.docs-sidebar');
+    this.onSelect = options.onSelect;
     this.graph = buildSidebarTargetGraph(this.sidebar);
     this.records = this.graph.records;
     this.onInput = () => this.search(this.input.value);
     this.input?.addEventListener('input', this.onInput);
     this.input?.addEventListener('keydown', event => {
       if (event.key === 'Escape') this.hide();
+      if (event.key === 'Enter') {
+        const first = this.results?.querySelector('.search-result');
+        if (first) {
+          event.preventDefault();
+          first.click();
+        }
+      }
     });
     this.overlay?.addEventListener('click', () => this.hide());
 
@@ -36,7 +44,10 @@ export class SearchService {
       result.href = `#${encodeURIComponent(record.id)}`;
       result.className = 'search-result';
       result.textContent = record.title;
-      result.addEventListener('click', () => this.hide());
+      result.addEventListener('click', () => {
+        this.hide();
+        this.onSelect?.(record);
+      });
       this.results.append(result);
     });
     this.results.style.display = matches.length ? 'block' : 'none';
