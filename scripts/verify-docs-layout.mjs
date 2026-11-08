@@ -260,7 +260,7 @@ try {
   record('gitIdentity', { actualMain, actualHead });
   const mutableStatus = (await gitOutput(['status', '--porcelain=v1', '--untracked-files=all'])).split('\n').filter(Boolean).filter(line => !line.slice(3).startsWith('.gjc/'));
   const changedPaths = (await gitOutput(['diff', '--name-only', 'origin/main...HEAD'])).split('\n').filter(Boolean);
-  const allowedPaths = ['docs.html', 'js/ui/accordion.js', 'js/ui/searchService.js', 'js/ui/sidebarSpy.js', 'scripts/verify-docs-layout.mjs'];
+  const allowedPaths = ['docs.html', 'js/ui/accordion.js', 'js/ui/searchService.js', 'js/ui/sidebarSpy.js', 'scripts/test-mobile-search-menu.mjs', 'scripts/verify-docs-layout.mjs'];
   if (mutableStatus.length) throw new Error(`served tree is dirty: ${mutableStatus.join(', ')}`);
   if (mode === 'baseline' && changedPaths.length) throw new Error(`baseline branch diff is not empty: ${changedPaths.join(', ')}`);
   if (mode === 'postfix' && (changedPaths.length !== allowedPaths.length || changedPaths.some(file => !allowedPaths.includes(file)))) throw new Error(`postfix branch diff violates allowlist: ${changedPaths.join(', ')}`);
