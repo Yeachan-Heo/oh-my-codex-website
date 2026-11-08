@@ -16,7 +16,12 @@ concurrency:
 
 jobs:
   sync-stats:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    if: >-
+      github.event_name == 'push' ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: [self-hosted, Linux, X64, gajae-layofflabs-2]
     steps:
       - name: Checkout website repo
@@ -33,6 +38,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/sync-stats.mjs
+
+      - name: Validate API-derived stats (fail closed)
+        run: |
+          for key in downloads stars forks; do
+            val=$(jq -r --arg k "$key" '.[$k] | if type == "number" then tostring else "invalid" end' data/stats.json)
+            if ! printf '%s' "$val" | grep -Eq '^[0-9]+$'; then
+              echo "ERROR: data/stats.json $key is not ^[0-9]+$: refusing to continue" >&2
+              exit 1
+            fi
+          done
+          ver=$(jq -r '.version | if type == "string" then . else "invalid" end' data/stats.json)
+          if ! printf '%s' "$ver" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.+-]+)?$'; then
+            echo "ERROR: data/stats.json version is not a semver string: refusing to continue" >&2
+            exit 1
+          fi
 
       - name: Propagate published version into static markup
         env:
