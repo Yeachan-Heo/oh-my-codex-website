@@ -20,14 +20,16 @@ jobs:
     runs-on: [self-hosted, Linux, X64, gajae-layofflabs-2]
     timeout-minutes: 5
     steps:
-      - name: Workspace state at job start (before checkout)
+      - name: Workspace must be empty at job start (before checkout)
         run: |
-          echo "files in workspace before checkout: $(find "$GITHUB_WORKSPACE" -mindepth 1 -maxdepth 1 | wc -l)"
-          find "$GITHUB_WORKSPACE" -mindepth 1 -maxdepth 1 | head -20
+          count=$(find "$GITHUB_WORKSPACE" -mindepth 1 -maxdepth 1 | wc -l)
+          echo "entries in workspace before checkout: $count"
+          if [ "$count" -ne 0 ]; then echo "ERROR: dirty workspace at job start" >&2; exit 1; fi
 
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          clean: false
 
       - name: Runner identity
         run: |
