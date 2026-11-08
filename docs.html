@@ -2480,14 +2480,24 @@ omx team 4:executor "feature work" --worktree=feature-branch</code></pre>
         }
       }
 
-      function closeMenu() {
+      function resetMenuState() {
         sidebar.classList.remove('open');
         overlay.classList.remove('active');
         mobileBtn.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
         docsMain?.removeAttribute('inert');
+      }
+
+      function closeMenu() {
+        resetMenuState();
         mobileBtn.focus();
       }
+
+      // Leaving the mobile breakpoint must not strand the desktop page inert/unscrollable.
+      const desktopQuery = window.matchMedia('(min-width: 1025px)');
+      desktopQuery.addEventListener('change', event => {
+        if (event.matches) resetMenuState();
+      });
 
       mobileBtn.addEventListener('click', toggleMenu);
       overlay.addEventListener('click', closeMenu);
