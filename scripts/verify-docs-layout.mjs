@@ -283,7 +283,7 @@ try {
       await cdp.send('Fetch.continueRequest', { requestId: params.requestId }, sessionId);
     } else {
       record('externalFulfilled', { url: params.request.url, status: 204 });
-      await cdp.send('Fetch.fulfillRequest', { requestId: params.requestId, responseCode: 204, responseHeaders: [{ name: 'content-type', value: 'text/plain' }], body: '' }, sessionId);
+      await cdp.send('Fetch.fulfillRequest', { requestId: params.requestId, responseCode: 204, responseHeaders: [{ name: 'content-type', value: 'text/plain' }, { name: 'access-control-allow-origin', value: '*' }], body: '' }, sessionId);
     }
   });
   await Promise.all(['Page.enable', 'Runtime.enable', 'Log.enable', 'Network.enable'].map(method => cdp.send(method, {}, sessionId)));
