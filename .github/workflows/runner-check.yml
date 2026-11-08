@@ -1,0 +1,53 @@
+name: Runner Check
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/runner-check.yml'
+      - 'scripts/validate-stats.sh'
+      - 'scripts/test-validate-stats.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  runner-check:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: [self-hosted, Linux, X64, gajae-layofflabs-2]
+    timeout-minutes: 5
+    steps:
+      - name: Workspace state at job start (before checkout)
+        run: |
+          echo "files in workspace before checkout: $(find "$GITHUB_WORKSPACE" -mindepth 1 -maxdepth 1 | wc -l)"
+          find "$GITHUB_WORKSPACE" -mindepth 1 -maxdepth 1 | head -20
+
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Runner identity
+        run: |
+          echo "runner.name=$RUNNER_NAME os=$RUNNER_OS arch=$RUNNER_ARCH"
+          echo "runs-on labels: self-hosted, Linux, X64, gajae-layofflabs-2"
+          echo "user=$(id -un) uid=$(id -u)"
+          if [ "$(id -u)" -eq 0 ]; then echo "ERROR: running as root" >&2; exit 1; fi
+
+      - name: Workspace clean after checkout
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then echo "ERROR: dirty workspace" >&2; git status --short; exit 1; fi
+          echo "workspace clean at $(git rev-parse --short HEAD)"
+
+      - name: No persisted credentials
+        run: |
+          if git config --local --get-regexp 'http\..*extraheader' >/dev/null; then
+            echo "ERROR: extraheader credentials persisted" >&2; exit 1
+          fi
+          if grep -rqi 'AUTHORIZATION' .git/config; then echo "ERROR: auth in .git/config" >&2; exit 1; fi
+          echo "no checkout credentials in .git/config"
+
+      - name: Validate-stats fixtures
+        run: bash scripts/test-validate-stats.sh
