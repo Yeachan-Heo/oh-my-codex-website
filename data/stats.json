@@ -1,10 +1,10 @@
 {
-  "version": "0.22.9",
+  "version": "0.22.10",
   "prompts": 32,
   "skills": 25,
   "mcpServers": 6,
   "downloads": 31920,
   "stars": 33795,
-  "forks": 2547,
-  "lastUpdated": "2026-11-16T17:42:42.459Z"
+  "forks": 2548,
+  "lastUpdated": "2026-11-16T23:59:13.749Z"
 }
